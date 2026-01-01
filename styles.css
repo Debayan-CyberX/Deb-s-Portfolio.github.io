@@ -18,7 +18,7 @@ body{
 
 section {
     min-height: 100vh;
-    padding: 10rem 9% 2rem;
+    padding:  10rem 9% 3rem;
 }
 
 .header {
@@ -27,7 +27,7 @@ section {
     left: 0;
     width: 100%;
     padding: 2rem 9%;
-    background: transparent;
+    background: #1f242d;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +49,7 @@ section {
 .navbar a {
     display: inline-block;
     font-size: 1.7rem;
-    color: #f76b15;
+    color: rgb(255, 0, 0);
     text-decoration: none;
     font-weight: 500;
     margin-left: 4rem;
@@ -95,7 +95,7 @@ section {
     animation-delay: .7s;
 }
 .home-content span {
-    color: #f76b15;
+    color: red;
 }
 .home-content h3:nth-of-type(2){
     margin-bottom: 20px;
@@ -134,11 +134,11 @@ section {
     width: 40px;
     height: 40px;
     background: transparent;
-    border: 2px solid #d04848;
+    border: 2px solid red;
     text-decoration: none;
     border-radius: 50%;
     font-size: 20px;
-    color: #f76b15;
+    color: red;
     text-transform: none;
     margin: 30px 15px 30px 0;
     transform: .5s ease;
@@ -148,17 +148,17 @@ section {
 }
 
 .social-media a:hover {
-    background: #f76b15;
+    background: red;
     color: #1f242d;
-    box-shadow: 0 0 20px #f76b15;
+    box-shadow: 0 0 20px red;
 }
 
 .btn {
     display: inline-block;
     padding: 12px 28px;
-    background: #f76b15;
+    background: red;
     border-radius: 40px;
-    box-shadow: 0 0 10px #f76b15;
+    box-shadow: 0 0 10px red;
     font-size: 16px;
     color: #1f242d;
     letter-spacing: 1px;
@@ -264,7 +264,7 @@ section {
 .about-content h2 {
     text-align: left;
     line-height: 1.2;
-    color: #f76b15;
+    color: red;
 }
 
 .about-content span {
@@ -287,7 +287,7 @@ section {
 }
 
 .services span {
-    color: #f76b15;
+    color: red;
 }
 
 .services-container {
@@ -310,13 +310,13 @@ section {
 }
 
 .services-container .services-box:hover {
-    border-color: #d04848;
+    border-color: red;
     transform: scale(1.02);
 }
 
 .services-box i {
     font-size: 7rem;
-    color: #f76b15;
+    color: red;
 }
 
 .services-box h3 {
@@ -460,12 +460,12 @@ section {
 }
 
 .footer-iconTop a:hover {
-    box-shadow: 0 0 1rem #f76b15;
+    box-shadow: 0 0 1rem red;
 }
 
 .footer-iconTop a i {
     font-size: 2.4rem;
-    color: #f76b15;
+    color: red;
 }
 
 
@@ -475,6 +475,73 @@ html{
     overflow-x: hidden;
   }
 
+/* ================== RESPONSIVE ================== */
+
+@media (max-width: 991px) {
+    section {
+        padding: 8rem 4%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    #menu-icon {
+        display: block;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #1f242d;
+        display: none;
+        flex-direction: column;
+        padding: 2rem 0;
+    }
+
+    .navbar.active {
+        display: flex;
+    }
+
+    .navbar a {
+        margin: 1.5rem 0;
+        font-size: 2rem;
+    }
+
+    .home {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .home-img img {
+        width: 70vw;
+        margin-top: 3rem;
+    }
+
+    .about {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .about-img img {
+        width: 70vw;
+    }
+
+    .portfolio-container {
+        grid-template-columns: 1fr;
+    }
+
+    .services-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 450px) {
+    html {
+        font-size: 55%;
+    }
+}
 
 
 
