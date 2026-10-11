@@ -1151,6 +1151,98 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 }
 
 
+/* ============================================================= Feature: Kami's Skybox Weather HUD */
+.weather-hud {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 18px 7px 10px;
+  background: rgba(10, 14, 18, 0.88);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  color: var(--bone);
+  font-family: inherit;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.03);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transition: all .35s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  cursor: pointer;
+}
+.weather-hud:hover {
+  border-color: rgba(224, 35, 28, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.7), 0 0 20px rgba(224, 35, 28, 0.2);
+}
+.weather-hud-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(224, 35, 28, 0.12);
+  border: 1px solid rgba(224, 35, 28, 0.35);
+  color: var(--vermilion);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all .4s ease;
+  flex-shrink: 0;
+}
+.weather-hud-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.weather-hud-tag {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--bone-dim);
+  opacity: .85;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.weather-hud-tag-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vermilion);
+  display: inline-block;
+  box-shadow: 0 0 8px var(--vermilion);
+  transition: background .4s ease, box-shadow .4s ease;
+}
+.weather-hud-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: var(--bone);
+  transition: color .3s ease;
+}
+@media (max-width: 680px) {
+  .weather-hud {
+    bottom: 16px;
+    left: 16px;
+    padding: 6px 14px 6px 8px;
+    gap: 8px;
+  }
+  .weather-hud-badge {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+  }
+  .weather-hud-name {
+    font-size: 11px;
+  }
+}
+
 /* ============================================================= Feature 1: Cyber Terminal */
 .terminal-pill {
   position: fixed;
@@ -2205,6 +2297,11 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
         <option value="gold">Golden Ember</option>
       </select>
     </div>
+
+    <button class="ambient-audio-btn" id="audioToggleBtn" onclick="toggleAmbientAudio()" title="Toggle Kyoto Soundscape">
+      <span class="audio-waves"><span class="audio-bar"></span><span class="audio-bar"></span><span class="audio-bar"></span></span>
+      <span id="audioStatusText">Sound: OFF</span>
+    </button>
   
   </nav>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
@@ -4519,12 +4616,13 @@ function buildAtmosphere() {
   const rnd = mulberry32(66);
   for (let i = 0; i < (LOW ? 4 : 6); i++) {
     const s = 12 + rnd() * 15;
+    const baseOp = .05 + rnd() * .07;
     const h = new THREE.Mesh(new THREE.PlaneGeometry(s, s * .55),
       new THREE.MeshBasicMaterial({ map: hazeTex, transparent: true, blending: THREE.AdditiveBlending,
-        depthWrite: false, fog: false, opacity: .05 + rnd() * .07 }));
+        depthWrite: false, fog: false, opacity: baseOp }));
     h.position.set((rnd() - .5) * 44, 1.5 + rnd() * 10, -38 + rnd() * 40);
     h.renderOrder = 4;
-    h.userData = { sp: .06 + rnd() * .12, ph: rnd() * TAU, x0: h.position.x };
+    h.userData = { sp: .06 + rnd() * .12, ph: rnd() * TAU, x0: h.position.x, baseOpacity: baseOp };
     scene.add(h); WORLD.haze.push(h);
   }
 
@@ -4539,13 +4637,19 @@ function buildAtmosphere() {
   g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   g.setAttribute('aSeed', new THREE.BufferAttribute(seed, 1));
   const emb = new THREE.Points(g, new THREE.ShaderMaterial({
-    uniforms: { uT: WORLD.uT, uTex: { value: tx(texGlow('rgba(255,190,140,1)', 'rgba(255,120,60,.35)')) },
-      uSize: { value: vpH() * .5 } },
+    uniforms: {
+      uT: WORLD.uT,
+      uTex: { value: tx(texGlow('rgba(255,190,140,1)', 'rgba(255,120,60,.35)')) },
+      uSize: { value: vpH() * .5 },
+      uColor: { value: new THREE.Vector3(1.6, 0.78, 0.42) },
+      uAlphaMult: { value: 1.0 },
+      uSpeedMult: { value: 1.0 }
+    },
     transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
     vertexShader:
-      'attribute float aSeed; uniform float uT; uniform float uSize; varying float vA;\n' +
+      'attribute float aSeed; uniform float uT; uniform float uSize; uniform float uSpeedMult; varying float vA;\n' +
       'void main(){ vec3 p=position;\n' +
-      ' p.y = mod(p.y + uT*(0.14+aSeed*0.28), 11.5);\n' +
+      ' p.y = mod(p.y + uT*(0.14+aSeed*0.28)*uSpeedMult, 11.5);\n' +
       ' p.x += sin(uT*0.36 + aSeed*22.0)*0.85;\n' +
       ' p.z += cos(uT*0.29 + aSeed*17.0)*0.7;\n' +
       ' vec4 mv = modelViewMatrix * vec4(p,1.0);\n' +
@@ -4553,44 +4657,46 @@ function buildAtmosphere() {
       ' gl_PointSize = uSize*(0.010+aSeed*0.020)/max(-mv.z,0.6);\n' +
       ' gl_Position = projectionMatrix * mv; }',
     fragmentShader:
-      'uniform sampler2D uTex; varying float vA;\n' +
+      'uniform sampler2D uTex; uniform vec3 uColor; uniform float uAlphaMult; varying float vA;\n' +
       'void main(){ vec4 t=texture2D(uTex, gl_PointCoord);\n' +
-      ' gl_FragColor = vec4(t.rgb*vec3(1.6,0.78,0.42), t.a*vA*0.75); }'
+      ' gl_FragColor = vec4(t.rgb*uColor, t.a*vA*0.75*uAlphaMult); }'
   }));
   emb.frustumCulled = false; emb.renderOrder = 5;
   scene.add(emb); WORLD.embers = emb;
 
   /* rain in the slot of open sky */
-  if (!LOW) {
-    const D = 900, rp = new Float32Array(D * 2 * 3), rt = new Float32Array(D * 2), rs = new Float32Array(D * 2), rl = new Float32Array(D * 2);
-    for (let i = 0; i < D; i++) {
-      const x = (rnd() - .5) * 40, z = -30 + rnd() * 34, y = rnd() * 17, sp = 7 + rnd() * 9, ln = .30 + rnd() * .55;
-      for (let k = 0; k < 2; k++) {
-        const o = (i * 2 + k) * 3;
-        rp[o] = x; rp[o + 1] = y; rp[o + 2] = z;
-        rt[i * 2 + k] = k; rs[i * 2 + k] = sp; rl[i * 2 + k] = ln;
-      }
+  const D = LOW ? 400 : 1200;
+  const rp = new Float32Array(D * 2 * 3), rt = new Float32Array(D * 2), rs = new Float32Array(D * 2), rl = new Float32Array(D * 2);
+  for (let i = 0; i < D; i++) {
+    const x = (rnd() - .5) * 44, z = -34 + rnd() * 40, y = rnd() * 20, sp = 8 + rnd() * 11, ln = .38 + rnd() * .65;
+    for (let k = 0; k < 2; k++) {
+      const o = (i * 2 + k) * 3;
+      rp[o] = x; rp[o + 1] = y; rp[o + 2] = z;
+      rt[i * 2 + k] = k; rs[i * 2 + k] = sp; rl[i * 2 + k] = ln;
     }
-    const rg = new THREE.BufferGeometry();
-    rg.setAttribute('position', new THREE.BufferAttribute(rp, 3));
-    rg.setAttribute('aTop', new THREE.BufferAttribute(rt, 1));
-    rg.setAttribute('aSpeed', new THREE.BufferAttribute(rs, 1));
-    rg.setAttribute('aLen', new THREE.BufferAttribute(rl, 1));
-    const rain = new THREE.LineSegments(rg, new THREE.ShaderMaterial({
-      uniforms: { uT: WORLD.uT },
-      transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
-      vertexShader:
-        'attribute float aTop; attribute float aSpeed; attribute float aLen; uniform float uT; varying float vA;\n' +
-        'void main(){ vec3 p=position;\n' +
-        ' float y = mod(p.y - uT*aSpeed, 17.0);\n' +
-        ' p.y = y + aTop*aLen;\n' +
-        ' vA = smoothstep(0.0,3.0,y)*smoothstep(17.0,11.0,y);\n' +
-        ' gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0); }',
-      fragmentShader: 'varying float vA;\nvoid main(){ gl_FragColor = vec4(0.55,0.74,0.82, vA*0.024); }'
-    }));
-    rain.frustumCulled = false; rain.renderOrder = 6;
-    scene.add(rain); WORLD.rain = rain;
   }
+  const rg = new THREE.BufferGeometry();
+  rg.setAttribute('position', new THREE.BufferAttribute(rp, 3));
+  rg.setAttribute('aTop', new THREE.BufferAttribute(rt, 1));
+  rg.setAttribute('aSpeed', new THREE.BufferAttribute(rs, 1));
+  rg.setAttribute('aLen', new THREE.BufferAttribute(rl, 1));
+  const rainMat = new THREE.ShaderMaterial({
+    uniforms: { uT: WORLD.uT, uRainAlpha: { value: 0.0 }, uSlant: { value: 0.07 } },
+    transparent: true, blending: THREE.AdditiveBlending, depthWrite: false,
+    vertexShader:
+      'attribute float aTop; attribute float aSpeed; attribute float aLen; uniform float uT; uniform float uSlant; varying float vA;\n' +
+      'void main(){ vec3 p=position;\n' +
+      ' float y = mod(p.y - uT*aSpeed, 20.0);\n' +
+      ' p.y = y + aTop*aLen;\n' +
+      ' p.x += (p.y - 20.0) * uSlant;\n' +
+      ' vA = smoothstep(0.2,3.5,y)*smoothstep(20.0,14.0,y);\n' +
+      ' gl_Position = projectionMatrix * modelViewMatrix * vec4(p,1.0); }',
+    fragmentShader: 'uniform float uRainAlpha; varying float vA;\nvoid main(){ gl_FragColor = vec4(0.70,0.85,0.98, vA*uRainAlpha); }'
+  });
+  const rain = new THREE.LineSegments(rg, rainMat);
+  rain.frustumCulled = false; rain.renderOrder = 6;
+  rain.visible = false;
+  scene.add(rain); WORLD.rain = rain;
 
   /* ripples on the standing water */
   const ringC = cvs(256, 256), rx2 = ringC.getContext('2d');
@@ -4605,7 +4711,7 @@ function buildAtmosphere() {
       new THREE.MeshBasicMaterial({ map: ringTex, transparent: true, blending: THREE.AdditiveBlending,
         depthWrite: false, fog: true, opacity: 0 }));
     r.rotation.x = -Math.PI / 2; r.renderOrder = 7;
-    r.userData = { t: rnd() * 4, x: (rnd() - .5) * 22, z: -8 + rnd() * 22, sp: .5 + rnd() * .5 };
+    r.userData = { t: rnd() * 4, x: (rnd() - .5) * 22, z: -8 + rnd() * 22, sp: .5 + rnd() * .5, baseSp: .5 + rnd() * .5 };
     scene.add(r); WORLD.ripples.push(r);
   }
 }
@@ -4668,7 +4774,7 @@ function updateLeaves(dt) {
   const seed = !LV.seeded; LV.seeded = true;
   for (let i = 0; i < L.length; i++) {
     const l = L[i];
-    l.y -= l.fall * dt;
+    l.y -= l.fall * dt * (WEATHER ? WEATHER.leafSpeedMult : 1.0);
     l.roll += l.rollSp * dt;
     l.tilt += l.spin * dt;
     if (seed || l.y < cy - 10) {                /* back to the top of the band */
@@ -5315,7 +5421,8 @@ function buildCardCloth() {
 }
 
 function buildLights() {
-  scene.add(new THREE.HemisphereLight(0x53838f, 0x060a08, .13));
+  const hemi = new THREE.HemisphereLight(0x53838f, 0x060a08, .13);
+  scene.add(hemi); WORLD.hemiLight = hemi;
 
   const key = new THREE.DirectionalLight(0xb6dbe4, 1.22);
   key.position.set(2.6, 21, 2.5);
@@ -5335,7 +5442,7 @@ function buildLights() {
   const moonKey = new THREE.DirectionalLight(0xff6a42, .52);
   moonKey.position.set(26, 30, -60);
   moonKey.target.position.set(0, 8, -40); scene.add(moonKey.target);
-  scene.add(moonKey);
+  scene.add(moonKey); WORLD.moonKey = moonKey;
 
   /* The hall's own lamps. They light the podium and the top of the flight and
      nothing else — a range that reaches the roof turns the whole building into
@@ -5353,12 +5460,12 @@ function buildLights() {
   moonL.position.set(11.0, 17.0, -24.0); scene.add(moonL); WORLD.moonLight = moonL;
 
   const fill = new THREE.PointLight(0x86c6d2, 0.95, 30, 2);
-  fill.position.set(-1, 13.5, -16.0); scene.add(fill);
+  fill.position.set(-1, 13.5, -16.0); scene.add(fill); WORLD.fillLight = fill;
 
   /* the flight is the spine of the composition — without a lamp of its own it
      falls into the same black as the ground and the eye has nothing to climb */
   const stairL = new THREE.PointLight(0xffa049, 4.2, 17, 2);
-  stairL.position.set(0, 7.6, -26.0); scene.add(stairL);
+  stairL.position.set(0, 7.6, -26.0); scene.add(stairL); WORLD.stairLight = stairL;
 }
 /* ====================================================== 6 · planar mirror */
 /* ================================================== 7 · post-processing */
@@ -6091,6 +6198,230 @@ function updateWorld(dt) {
   if (CARDS.length) CARDS.forEach(C => { const u = C.cam.userData; u.push = damp(u.push, u.want, 3.4, dt); });
 }
 
+/* ====================================================== Weather & Atmosphere Engine ("Kami's Skybox") */
+const WEATHER = {
+  stages: [
+    { id: 'bloodmoon', kanji: '月夜', name: 'Blood Moon Night', sub: 'Deep Midnight Sky · Charred Embers' },
+    { id: 'rainstorm', kanji: '時雨', name: 'Kyoto Rainstorm', sub: 'Procedural Rain · Distant Thunder' },
+    { id: 'mist', kanji: '霧境', name: 'Sanctuary Mist', sub: 'Volumetric Haze · Piercing Lanterns' },
+    { id: 'forge', kanji: '焔風', name: 'Golden Ember Forge', sub: 'Sacred Flame · Sanctuary Warmth' },
+    { id: 'blossom', kanji: '暁桜', name: 'Dawn Blossom', sub: 'Golden Twilight · Floating Sakura Petals' }
+  ],
+  prevIndex: -1,
+  lightningTimer: 3.5,
+  lightningFlash: 0.0,
+  leafSpeedMult: 1.0
+};
+
+function updateWeatherHUD(idx) {
+  const stage = WEATHER.stages[idx];
+  if (!stage) return;
+  const kanjiEl = document.getElementById('weatherKanji');
+  const nameEl = document.getElementById('weatherName');
+  const tagDot = document.getElementById('weatherTagDot');
+  const hudBadge = document.getElementById('weatherBadge');
+  if (kanjiEl) kanjiEl.textContent = stage.kanji;
+  if (nameEl) nameEl.textContent = stage.name;
+  
+  const colors = [
+    { primary: '#e0231c', border: 'rgba(224, 35, 28, 0.45)', bg: 'rgba(224, 35, 28, 0.14)' }, // Blood Moon
+    { primary: '#4ecdc4', border: 'rgba(78, 205, 196, 0.50)', bg: 'rgba(78, 205, 196, 0.15)' }, // Rainstorm
+    { primary: '#a0e0d0', border: 'rgba(160, 224, 208, 0.45)', bg: 'rgba(160, 224, 208, 0.15)' }, // Mist
+    { primary: '#ffaa33', border: 'rgba(255, 170, 51, 0.50)', bg: 'rgba(255, 170, 51, 0.15)' }, // Forge
+    { primary: '#ff8da1', border: 'rgba(255, 141, 161, 0.55)', bg: 'rgba(255, 141, 161, 0.18)' } // Dawn Blossom
+  ];
+  const c = colors[idx] || colors[0];
+  if (tagDot) {
+    tagDot.style.background = c.primary;
+    tagDot.style.boxShadow = '0 0 8px ' + c.primary;
+  }
+  if (hudBadge) {
+    hudBadge.style.color = c.primary;
+    hudBadge.style.borderColor = c.border;
+    hudBadge.style.background = c.bg;
+  }
+}
+
+function handleWeatherHudClick() {
+  if (typeof playTempleBell === 'function') {
+    playTempleBell(880, 1.8);
+  }
+  const hud = document.getElementById('weatherHud');
+  if (hud) {
+    hud.style.transform = 'scale(0.96) translateY(-2px)';
+    setTimeout(() => { hud.style.transform = ''; }, 180);
+  }
+}
+
+function updateWeather(dt) {
+  const p = clamp(RIG.smooth, 0, 4.0);
+  
+  // Calculate continuous atmospheric weights
+  const wHero    = Math.max(0, 1 - Math.abs(p - 0.0) / 0.82);
+  const wRain    = Math.max(0, 1 - Math.abs(p - 1.0) / 0.80);
+  const wMist    = Math.max(0, 1 - Math.abs(p - 2.0) / 0.82);
+  const wForge   = Math.max(0, 1 - Math.abs(p - 3.0) / 0.82);
+  const wDawn    = Math.max(0, (p - 3.08) / 0.92);
+
+  // HUD Update
+  const curIdx = clamp(Math.round(p), 0, 4);
+  if (curIdx !== WEATHER.prevIndex) {
+    WEATHER.prevIndex = curIdx;
+    updateWeatherHUD(curIdx);
+  }
+
+  // 1. Kyoto Rainstorm & Procedural Streaks
+  if (WORLD.rain) {
+    WORLD.rain.visible = (wRain > 0.012);
+    if (WORLD.rain.material && WORLD.rain.material.uniforms) {
+      WORLD.rain.material.uniforms.uRainAlpha.value = wRain * 0.42;
+      WORLD.rain.material.uniforms.uSlant.value = 0.07 + Math.sin(clock * 0.45) * 0.035;
+    }
+  }
+
+  // Distant Lightning Flashes in Rainstorm
+  if (wRain > 0.15) {
+    WEATHER.lightningTimer -= dt;
+    if (WEATHER.lightningTimer <= 0) {
+      WEATHER.lightningFlash = 1.0;
+      WEATHER.lightningTimer = 5.5 + Math.random() * 7.5;
+      if (typeof playThunderRumble === 'function' && isAudioPlaying) playThunderRumble();
+    }
+  } else {
+    WEATHER.lightningFlash = 0.0;
+  }
+
+  if (WEATHER.lightningFlash > 0) {
+    WEATHER.lightningFlash = Math.max(0, WEATHER.lightningFlash - dt * 3.6);
+  }
+  const flash = WEATHER.lightningFlash * wRain;
+
+  // Directional Key Light response to lightning
+  if (WORLD.key) {
+    WORLD.key.intensity = 1.22 + flash * 3.4;
+    if (flash > 0.02) {
+      WORLD.key.color.setRGB(0.71 + flash * 0.25, 0.86 + flash * 0.14, 0.92 + flash * 0.08);
+    } else {
+      WORLD.key.color.setHex(0xb6dbe4);
+    }
+  }
+
+  // Standing water ripples speed up during rain
+  if (WORLD.ripples) {
+    WORLD.ripples.forEach(r => {
+      if (r.userData && r.userData.baseSp) {
+        r.userData.sp = r.userData.baseSp * (1.0 + wRain * 2.2);
+      }
+    });
+  }
+
+  // 2. Sanctuary Mist & Low-lying Volumetric Fog
+  if (scene.fog) {
+    const baseFogDensity = 0.0168;
+    const targetFogDensity = baseFogDensity + wMist * 0.022 - wDawn * 0.0035;
+    scene.fog.density = damp(scene.fog.density, targetFogDensity, 4.0, dt);
+
+    const fogR = lerp(lerp(0.020, 0.012, wRain), lerp(0.045, 0.115, wDawn), wDawn + wForge * 0.3) + flash * 0.10;
+    const fogG = lerp(lerp(0.039, 0.027, wRain), lerp(0.065, 0.082, wDawn), wMist * 0.8 + wDawn * 0.5) + flash * 0.12;
+    const fogB = lerp(lerp(0.055, 0.043, wRain), lerp(0.085, 0.135, wDawn), wMist * 0.5 + wDawn) + flash * 0.15;
+    scene.fog.color.setRGB(fogR, fogG, fogB);
+  }
+
+  if (scene.background) {
+    const bgR = lerp(0.024, 0.110, wDawn) + flash * 0.15;
+    const bgG = lerp(0.039, 0.075, wDawn) + flash * 0.18;
+    const bgB = lerp(0.051, 0.125, wDawn) + flash * 0.22;
+    scene.background.setRGB(bgR, bgG, bgB);
+  }
+
+  if (WORLD.haze) {
+    WORLD.haze.forEach(h => {
+      const bOp = h.userData.baseOpacity || 0.07;
+      h.material.opacity = bOp * (1.0 + wMist * 2.7);
+    });
+  }
+
+  // Stone lanterns pierce through mist
+  if (WORLD.lanternGlows) {
+    const glowScale = 1.0 + wMist * 0.65 + wForge * 0.35;
+    WORLD.lanternGlows.forEach(g => {
+      g.scale.setScalar(glowScale);
+      if (g.material) g.material.opacity = 0.5 + wMist * 0.35;
+    });
+  }
+
+  // 3. Golden Ember Forge
+  if (WORLD.embers && WORLD.embers.material && WORLD.embers.material.uniforms) {
+    const eU = WORLD.embers.material.uniforms;
+    if (eU.uAlphaMult) {
+      const emberAlpha = 1.0 - wRain * 0.82 + wForge * 1.5 - wDawn * 0.45;
+      eU.uAlphaMult.value = Math.max(0.08, emberAlpha);
+      eU.uSpeedMult.value = 1.0 + wForge * 1.3;
+      const colR = 1.6 + wForge * 0.85;
+      const colG = 0.78 + wForge * 0.65;
+      const colB = 0.42 - wForge * 0.12 + wDawn * 0.4;
+      eU.uColor.value.set(colR, colG, colB);
+    }
+  }
+
+  if (WORLD.stairLight) {
+    WORLD.stairLight.intensity = 4.2 + wForge * 2.8;
+  }
+
+  // 4. Dawn Blossom: Maple leaves transition to Sakura cherry petals
+  if (WORLD.leaves && WORLD.leaves.mesh && WORLD.leaves.mesh.material) {
+    const lMat = WORLD.leaves.mesh.material;
+    lMat.color.setRGB(
+      lerp(0.25, 1.0, wDawn),
+      lerp(0.03, 0.75, wDawn),
+      lerp(0.04, 0.84, wDawn)
+    );
+    lMat.emissive.setRGB(
+      lerp(0.47, 1.0, wDawn),
+      lerp(0.01, 0.42, wDawn),
+      lerp(0.00, 0.56, wDawn)
+    );
+    lMat.emissiveIntensity = 0.72 + wDawn * 0.22;
+    WEATHER.leafSpeedMult = 1.0 - wDawn * 0.38;
+  }
+
+  // Sky backdrop transitions to morning twilight
+  if (WORLD.sky && WORLD.sky.material) {
+    const skyR = lerp(0.60, 1.25, wDawn) + flash * 0.75;
+    const skyG = lerp(0.70, 0.94, wDawn) + flash * 0.85;
+    const skyB = lerp(0.80, 1.10, wDawn) + flash * 1.05;
+    WORLD.sky.material.color.setRGB(skyR, skyG, skyB);
+  }
+
+  // Moon disc softens into pale morning dawn disc
+  if (WORLD.moon && WORLD.moon.material) {
+    WORLD.moon.material.color.setRGB(
+      lerp(3.6, 1.45, wDawn),
+      lerp(0.64, 1.30, wDawn),
+      lerp(0.61, 1.35, wDawn)
+    );
+  }
+  if (WORLD.moonHalo && WORLD.moonHalo.material) {
+    WORLD.moonHalo.material.opacity = lerp(0.44, 0.28, wDawn);
+  }
+
+  if (WORLD.hemiLight) {
+    WORLD.hemiLight.intensity = 0.13 + wDawn * 0.38 + flash * 0.2;
+    if (wDawn > 0.05) {
+      WORLD.hemiLight.color.setRGB(lerp(0.32, 0.55, wDawn), lerp(0.51, 0.62, wDawn), lerp(0.56, 0.74, wDawn));
+      WORLD.hemiLight.groundColor.setRGB(lerp(0.02, 0.20, wDawn), lerp(0.04, 0.14, wDawn), lerp(0.03, 0.11, wDawn));
+    }
+  }
+
+  // Audio atmosphere dynamic modulation
+  if (isAudioPlaying && audioCtx && window.windFilterNode) {
+    try {
+      const targetFreq = (wRain > 0.25) ? 460 : 280;
+      window.windFilterNode.frequency.setValueAtTime(targetFreq, audioCtx.currentTime);
+    } catch(e) {}
+  }
+}
+
 let FRAME = 0;
 function render() {
   FRAME++;
@@ -6133,6 +6464,7 @@ function frame(now) {
 
   applyCamera();
   updateWorld(dt);
+  updateWeather(dt);
   render();
   queue();
 }
@@ -6352,6 +6684,17 @@ function handleContactSubmit(e) {
 </script>
 
 
+<!-- Feature: Kami's Skybox Weather HUD (Dynamic Atmosphere by Scroll) -->
+<div class="weather-hud" id="weatherHud" onclick="if(typeof handleWeatherHudClick==='function')handleWeatherHudClick()" title="Kami's Atmosphere: Changes dynamically as you scroll through each chapter">
+  <div class="weather-hud-badge" id="weatherBadge">
+    <span id="weatherKanji">月夜</span>
+  </div>
+  <div class="weather-hud-info">
+    <span class="weather-hud-tag"><span class="weather-hud-tag-dot" id="weatherTagDot"></span>KAMI'S SKYBOX</span>
+    <span class="weather-hud-name" id="weatherName">Blood Moon Night</span>
+  </div>
+</div>
+
 <!-- Feature 1: Floating Terminal Pill -->
 <button class="terminal-pill" id="termPill" onclick="toggleCyberTerminal()" aria-label="Open Cyber Terminal">
   <span class="terminal-dot"></span>
@@ -6390,16 +6733,16 @@ let termHistory = [];
 let termHistoryIdx = -1;
 let matrixInterval = null;
 
-const TERM_WELCOME = `  ____       _                               
- |  _ \\  ___| |__   __ _ _   _  __ _ _ __   
- | | | |/ _ \\ '_ \\ / _` | | | |/ _` | '_ \\  
- | |_| |  __/ |_) | (_| | |_| | (_| | | | | 
- |____/ \\___|_.__/ \\__,_|\\__, |\\__,_|_| |_| 
-                         |___/              
-[+] System: Kali-DebX v2026.1 (x86_64)
-[+] Identity: Debayan Lahiry — B.Tech Cybersecurity (NMIMS MPSTME)
-[+] Session initialized. Type '<span class="term-highlight">help</span>' for available commands.
-`;
+const TERM_WELCOME = 
+  "  ____       _                               \n" +
+  " |  _ \\  ___| |__   __ _ _   _  __ _ _ __   \n" +
+  " | | | |/ _ \\ '_ \\ / _` | | | |/ _` | '_ \\  \n" +
+  " | |_| |  __/ |_) | (_| | |_| | (_| | | | | \n" +
+  " |____/ \\___|_.__/ \\__,_|\\__, |\\__,_|_| |_| \n" +
+  "                         |___/              \n" +
+  "[+] System: Kali-DebX v2026.1 (x86_64)\n" +
+  "[+] Identity: Debayan Lahiry — B.Tech Cybersecurity (NMIMS MPSTME)\n" +
+  "[+] Session initialized. Type '<span class=\"term-highlight\">help</span>' for available commands.\n";
 
 function toggleCyberTerminal() {
   const modal = document.getElementById('cyberTermModal');
@@ -7224,6 +7567,33 @@ function playTempleBell(freq = 440, duration = 2.5) {
   } catch (e) {}
 }
 
+function playThunderRumble() {
+  if (!audioCtx || !isAudioPlaying) return;
+  try {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    const filter = audioCtx.createBiquadFilter();
+    
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(68, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(26, audioCtx.currentTime + 2.2);
+
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(120, audioCtx.currentTime);
+
+    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+    gain.gain.linearRampToValueAtTime(0.045, audioCtx.currentTime + 0.15);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.2);
+
+    osc.connect(filter);
+    filter.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + 2.2);
+  } catch (e) {}
+}
+
 function startWindAmbience() {
   if (!audioCtx) return;
   try {
@@ -7243,6 +7613,7 @@ function startWindAmbience() {
     const filter = audioCtx.createBiquadFilter();
     filter.type = 'lowpass';
     filter.frequency.setValueAtTime(280, audioCtx.currentTime);
+    window.windFilterNode = filter;
 
     windGainNode = audioCtx.createGain();
     windGainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
@@ -7256,6 +7627,7 @@ function startWindAmbience() {
 }
 
 function stopWindAmbience() {
+  window.windFilterNode = null;
   if (windNoiseNode) {
     try {
       windNoiseNode.stop();
