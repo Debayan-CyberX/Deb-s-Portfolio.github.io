@@ -1226,6 +1226,56 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   color: var(--bone);
   transition: color .3s ease;
 }
+.weather-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  margin-left: 6px;
+  background: rgba(224, 35, 28, 0.12);
+  border: 1px solid rgba(224, 35, 28, 0.35);
+  border-radius: 16px;
+  color: var(--bone);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: all .25s ease;
+  user-select: none;
+  white-space: nowrap;
+}
+.weather-sound-btn:hover {
+  background: rgba(224, 35, 28, 0.25);
+  border-color: var(--vermilion);
+  color: #fff;
+  transform: scale(1.03);
+}
+.weather-sound-btn.playing {
+  background: rgba(0, 255, 102, 0.12);
+  border-color: rgba(0, 255, 102, 0.45);
+  color: #a4f5c2;
+}
+.weather-sound-btn.playing:hover {
+  background: rgba(0, 255, 102, 0.22);
+  border-color: #00ff66;
+}
+.weather-sound-bars {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  height: 9px;
+}
+.weather-sound-bars i {
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+  border-radius: 1px;
+  display: inline-block;
+  transition: height .2s;
+}
+.weather-sound-btn.playing .weather-sound-bars i:nth-child(1) { animation: wave 0.9s infinite ease-in-out; }
+.weather-sound-btn.playing .weather-sound-bars i:nth-child(2) { animation: wave 0.9s infinite ease-in-out .2s; }
+.weather-sound-btn.playing .weather-sound-bars i:nth-child(3) { animation: wave 0.9s infinite ease-in-out .4s; }
 @media (max-width: 680px) {
   .weather-hud {
     bottom: 16px;
@@ -6242,15 +6292,20 @@ function updateWeatherHUD(idx) {
   }
 }
 
+function handleWeatherBadgeClick() {
+  if (typeof toggleAmbientAudio === 'function' && !window.isAudioPlaying) {
+    toggleAmbientAudio();
+  } else if (typeof playTempleBell === 'function') {
+    playTempleBell(660, 2.4);
+  }
+  const badge = document.getElementById('weatherBadge');
+  if (badge) {
+    badge.style.transform = 'scale(0.90)';
+    setTimeout(() => { badge.style.transform = ''; }, 160);
+  }
+}
 function handleWeatherHudClick() {
-  if (typeof playTempleBell === 'function') {
-    playTempleBell(880, 1.8);
-  }
-  const hud = document.getElementById('weatherHud');
-  if (hud) {
-    hud.style.transform = 'scale(0.96) translateY(-2px)';
-    setTimeout(() => { hud.style.transform = ''; }, 180);
-  }
+  handleWeatherBadgeClick();
 }
 
 function updateWeather(dt) {
@@ -6414,11 +6469,8 @@ function updateWeather(dt) {
   }
 
   // Audio atmosphere dynamic modulation
-  if (isAudioPlaying && audioCtx && window.windFilterNode) {
-    try {
-      const targetFreq = (wRain > 0.25) ? 460 : 280;
-      window.windFilterNode.frequency.setValueAtTime(targetFreq, audioCtx.currentTime);
-    } catch(e) {}
+  if (typeof updateAudioAtmosphere === 'function') {
+    updateAudioAtmosphere(dt, p, wRain, wMist, wForge, wDawn);
   }
 }
 
@@ -6685,14 +6737,18 @@ function handleContactSubmit(e) {
 
 
 <!-- Feature: Kami's Skybox Weather HUD (Dynamic Atmosphere by Scroll) -->
-<div class="weather-hud" id="weatherHud" onclick="if(typeof handleWeatherHudClick==='function')handleWeatherHudClick()" title="Kami's Atmosphere: Changes dynamically as you scroll through each chapter">
-  <div class="weather-hud-badge" id="weatherBadge">
+<div class="weather-hud" id="weatherHud" title="Kami's Atmosphere: Changes dynamically as you scroll through each chapter">
+  <div class="weather-hud-badge" id="weatherBadge" onclick="handleWeatherBadgeClick()">
     <span id="weatherKanji">月夜</span>
   </div>
-  <div class="weather-hud-info">
+  <div class="weather-hud-info" onclick="handleWeatherBadgeClick()">
     <span class="weather-hud-tag"><span class="weather-hud-tag-dot" id="weatherTagDot"></span>KAMI'S SKYBOX</span>
     <span class="weather-hud-name" id="weatherName">Blood Moon Night</span>
   </div>
+  <button class="weather-sound-btn" id="weatherSoundBtn" onclick="toggleAmbientAudio(event)" title="Toggle Kyoto Shrine Soundscape">
+    <span class="weather-sound-bars"><i></i><i></i><i></i></span>
+    <span id="weatherSoundText">SOUND: OFF</span>
+  </button>
 </div>
 
 <!-- Feature 1: Floating Terminal Pill -->
@@ -7532,136 +7588,344 @@ function closeResumeModal() {
 <script>
 // ============================================================= Web Audio API Sanctuary Soundscape
 let audioCtx = null;
-let isAudioPlaying = false;
-let windNoiseNode = null;
-let windGainNode = null;
+window.isAudioPlaying = false;
 
-function initAudioContext() {
+const SHRINE_AUDIO = {
+  masterGain: null,
+  windSource: null,
+  windFilter: null,
+  windGain: null,
+  rainSource: null,
+  rainFilter: null,
+  rainGain: null,
+  droneOsc1: null,
+  droneOsc2: null,
+  droneGain: null,
+  chimeCooldown: 0
+};
+
+function getAudioContext() {
   if (!audioCtx) {
-    const AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioCtx = new AudioContext();
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+    audioCtx = new AudioContextClass();
   }
   if (audioCtx.state === 'suspended') {
     audioCtx.resume();
   }
+  return audioCtx;
 }
 
-function playTempleBell(freq = 440, duration = 2.5) {
-  if (!audioCtx || !isAudioPlaying) return;
-  try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-    // Harmonic bell partial
-    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-  } catch (e) {}
+function ensureMasterGain() {
+  const ctx = getAudioContext();
+  if (!ctx) return null;
+  if (!SHRINE_AUDIO.masterGain) {
+    const m = ctx.createGain();
+    m.gain.setValueAtTime(0.55, ctx.currentTime);
+    m.connect(ctx.destination);
+    SHRINE_AUDIO.masterGain = m;
+  }
+  return SHRINE_AUDIO.masterGain;
 }
 
-function playThunderRumble() {
-  if (!audioCtx || !isAudioPlaying) return;
+// Rich Buddhist Bonshō Temple Bell
+function playTempleBell(freq = 432, duration = 3.2) {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const master = ensureMasterGain();
+
   try {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    const filter = audioCtx.createBiquadFilter();
+    const t0 = ctx.currentTime;
     
+    // Fundamental tone
+    const osc1 = ctx.createOscillator();
+    const g1 = ctx.createGain();
+    osc1.type = 'sine';
+    osc1.frequency.setValueAtTime(freq, t0);
+    g1.gain.setValueAtTime(0.35, t0);
+    g1.gain.exponentialRampToValueAtTime(0.0001, t0 + duration);
+    osc1.connect(g1);
+    g1.connect(master);
+    osc1.start(t0);
+    osc1.stop(t0 + duration);
+
+    // Harmonic partial (minor 3rd / sacred resonance)
+    const osc2 = ctx.createOscillator();
+    const g2 = ctx.createGain();
+    osc2.type = 'sine';
+    osc2.frequency.setValueAtTime(freq * 1.503, t0);
+    g2.gain.setValueAtTime(0.18, t0);
+    g2.gain.exponentialRampToValueAtTime(0.0001, t0 + duration * 0.85);
+    osc2.connect(g2);
+    g2.connect(master);
+    osc2.start(t0);
+    osc2.stop(t0 + duration * 0.85);
+
+    // Deep sub-octave gong body
+    const osc3 = ctx.createOscillator();
+    const g3 = ctx.createGain();
+    osc3.type = 'triangle';
+    osc3.frequency.setValueAtTime(freq * 0.5, t0);
+    g3.gain.setValueAtTime(0.20, t0);
+    g3.gain.exponentialRampToValueAtTime(0.0001, t0 + duration * 1.2);
+    osc3.connect(g3);
+    g3.connect(master);
+    osc3.start(t0);
+    osc3.stop(t0 + duration * 1.2);
+  } catch(e) {}
+}
+
+// Deep Distant Kyoto Thunder Rumble
+function playThunderRumble() {
+  if (!window.isAudioPlaying) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const master = ensureMasterGain();
+
+  try {
+    const t0 = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const filter = ctx.createBiquadFilter();
+    const gain = ctx.createGain();
+
     osc.type = 'triangle';
-    osc.frequency.setValueAtTime(68, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(26, audioCtx.currentTime + 2.2);
+    osc.frequency.setValueAtTime(68, t0);
+    osc.frequency.exponentialRampToValueAtTime(24, t0 + 2.4);
 
     filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(120, audioCtx.currentTime);
+    filter.frequency.setValueAtTime(130, t0);
 
-    gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-    gain.gain.linearRampToValueAtTime(0.045, audioCtx.currentTime + 0.15);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.2);
+    gain.gain.setValueAtTime(0.001, t0);
+    gain.gain.linearRampToValueAtTime(0.40, t0 + 0.18);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.4);
 
     osc.connect(filter);
     filter.connect(gain);
-    gain.connect(audioCtx.destination);
+    gain.connect(master);
 
-    osc.start();
-    osc.stop(audioCtx.currentTime + 2.2);
-  } catch (e) {}
+    osc.start(t0);
+    osc.stop(t0 + 2.4);
+  } catch(e) {}
 }
 
-function startWindAmbience() {
-  if (!audioCtx) return;
+// Crystalline Japanese Pentatonic Wind Chime (Fūrin) for Dawn Blossom
+const CHIME_PENTATONIC = [554.37, 659.25, 739.99, 830.61, 987.77, 1108.73];
+function triggerWindChime() {
+  if (!window.isAudioPlaying) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const master = ensureMasterGain();
+
   try {
-    // Generate gentle filtered white noise for Kyoto mountain wind
-    const bufferSize = audioCtx.sampleRate * 2;
-    const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-    const output = noiseBuffer.getChannelData(0);
-    for (let i = 0; i < bufferSize; i++) {
-      output[i] = Math.random() * 2 - 1;
+    const t0 = ctx.currentTime;
+    const note = CHIME_PENTATONIC[Math.floor(Math.random() * CHIME_PENTATONIC.length)];
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(note, t0);
+
+    gain.gain.setValueAtTime(0.18, t0);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 2.2);
+
+    osc.connect(gain);
+    gain.connect(master);
+
+    osc.start(t0);
+    osc.stop(t0 + 2.2);
+  } catch(e) {}
+}
+
+function startShrineSoundscape() {
+  const ctx = getAudioContext();
+  if (!ctx) return;
+  const master = ensureMasterGain();
+
+  try {
+    // 1. Kyoto Mountain Wind (Continuous Loop)
+    const bufSize = ctx.sampleRate * 2;
+    const noiseBuffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+    const data = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufSize; i++) data[i] = Math.random() * 2 - 1;
+
+    const wSource = ctx.createBufferSource();
+    wSource.buffer = noiseBuffer;
+    wSource.loop = true;
+
+    const wFilter = ctx.createBiquadFilter();
+    wFilter.type = 'lowpass';
+    wFilter.frequency.setValueAtTime(360, ctx.currentTime);
+    wFilter.Q.setValueAtTime(1.8, ctx.currentTime);
+
+    const wGain = ctx.createGain();
+    wGain.gain.setValueAtTime(0.20, ctx.currentTime);
+
+    wSource.connect(wFilter);
+    wFilter.connect(wGain);
+    wGain.connect(master);
+    wSource.start();
+
+    SHRINE_AUDIO.windSource = wSource;
+    SHRINE_AUDIO.windFilter = wFilter;
+    SHRINE_AUDIO.windGain = wGain;
+
+    // 2. Procedural Rain Stream (Separate Filtered Channel)
+    const rSource = ctx.createBufferSource();
+    rSource.buffer = noiseBuffer;
+    rSource.loop = true;
+
+    const rFilter = ctx.createBiquadFilter();
+    rFilter.type = 'bandpass';
+    rFilter.frequency.setValueAtTime(2600, ctx.currentTime);
+    rFilter.Q.setValueAtTime(1.2, ctx.currentTime);
+
+    const rGain = ctx.createGain();
+    rGain.gain.setValueAtTime(0.0, ctx.currentTime); // Starts muted, rises on scroll
+
+    rSource.connect(rFilter);
+    rFilter.connect(rGain);
+    rGain.connect(master);
+    rSource.start();
+
+    SHRINE_AUDIO.rainSource = rSource;
+    SHRINE_AUDIO.rainFilter = rFilter;
+    SHRINE_AUDIO.rainGain = rGain;
+
+    // 3. Sacred Meditative Drone (108Hz Sanctuary Frequency)
+    const d1 = ctx.createOscillator();
+    const d2 = ctx.createOscillator();
+    d1.type = 'sine';
+    d1.frequency.setValueAtTime(108, ctx.currentTime);
+    d2.type = 'sine';
+    d2.frequency.setValueAtTime(108.5, ctx.currentTime);
+
+    const dGain = ctx.createGain();
+    dGain.gain.setValueAtTime(0.04, ctx.currentTime);
+
+    d1.connect(dGain);
+    d2.connect(dGain);
+    dGain.connect(master);
+    d1.start();
+    d2.start();
+
+    SHRINE_AUDIO.droneOsc1 = d1;
+    SHRINE_AUDIO.droneOsc2 = d2;
+    SHRINE_AUDIO.droneGain = dGain;
+  } catch(e) {}
+}
+
+function stopShrineSoundscape() {
+  ['windSource', 'rainSource', 'droneOsc1', 'droneOsc2'].forEach(k => {
+    if (SHRINE_AUDIO[k]) {
+      try {
+        SHRINE_AUDIO[k].stop();
+        SHRINE_AUDIO[k].disconnect();
+      } catch(e) {}
+      SHRINE_AUDIO[k] = null;
+    }
+  });
+}
+
+// Real-time audio modulator hooked directly to scroll & weather
+function updateAudioAtmosphere(dt, p, wRain, wMist, wForge, wDawn) {
+  if (!window.isAudioPlaying || !audioCtx) return;
+  const t = audioCtx.currentTime;
+
+  try {
+    // Rain volume modulates with Kyoto Rainstorm
+    if (SHRINE_AUDIO.rainGain) {
+      const targetRain = wRain * 0.30;
+      SHRINE_AUDIO.rainGain.gain.setTargetAtTime(targetRain, t, 0.15);
     }
 
-    windNoiseNode = audioCtx.createBufferSource();
-    windNoiseNode.buffer = noiseBuffer;
-    windNoiseNode.loop = true;
+    // Wind filter responds to weather
+    if (SHRINE_AUDIO.windFilter) {
+      const targetWindFreq = 340 + wRain * 280 + wForge * 120;
+      SHRINE_AUDIO.windFilter.frequency.setTargetAtTime(targetWindFreq, t, 0.2);
+    }
 
-    // Filter to soft low hum (gentle breeze)
-    const filter = audioCtx.createBiquadFilter();
-    filter.type = 'lowpass';
-    filter.frequency.setValueAtTime(280, audioCtx.currentTime);
-    window.windFilterNode = filter;
+    // Sacred drone swells in Sanctuary Mist & Forge
+    if (SHRINE_AUDIO.droneGain) {
+      const targetDrone = 0.03 + (wMist + wForge) * 0.06;
+      SHRINE_AUDIO.droneGain.gain.setTargetAtTime(targetDrone, t, 0.2);
+    }
 
-    windGainNode = audioCtx.createGain();
-    windGainNode.gain.setValueAtTime(0.02, audioCtx.currentTime);
-
-    windNoiseNode.connect(filter);
-    filter.connect(windGainNode);
-    windGainNode.connect(audioCtx.destination);
-
-    windNoiseNode.start();
-  } catch (e) {}
+    // Dawn Blossom Wind Chimes
+    if (wDawn > 0.35) {
+      SHRINE_AUDIO.chimeCooldown -= dt;
+      if (SHRINE_AUDIO.chimeCooldown <= 0) {
+        triggerWindChime();
+        SHRINE_AUDIO.chimeCooldown = 3.0 + Math.random() * 4.0;
+      }
+    }
+  } catch(e) {}
 }
 
-function stopWindAmbience() {
-  window.windFilterNode = null;
-  if (windNoiseNode) {
-    try {
-      windNoiseNode.stop();
-      windNoiseNode.disconnect();
-    } catch (e) {}
-    windNoiseNode = null;
+function updateAudioUI() {
+  const isPlaying = window.isAudioPlaying;
+  
+  // Update Nav Button
+  const navBtn = document.getElementById('audioToggleBtn');
+  const navTxt = document.getElementById('audioStatusText');
+  if (navBtn) {
+    if (isPlaying) navBtn.classList.add('playing');
+    else navBtn.classList.remove('playing');
   }
+  if (navTxt) navTxt.textContent = isPlaying ? 'Sound: ON' : 'Sound: OFF';
+
+  // Update Weather HUD Button
+  const hudBtn = document.getElementById('weatherSoundBtn');
+  const hudTxt = document.getElementById('weatherSoundText');
+  if (hudBtn) {
+    if (isPlaying) hudBtn.classList.add('playing');
+    else hudBtn.classList.remove('playing');
+  }
+  if (hudTxt) hudTxt.textContent = isPlaying ? 'SOUND: ON' : 'SOUND: OFF';
 }
 
-function toggleAmbientAudio() {
-  initAudioContext();
-  const btn = document.getElementById('audioToggleBtn');
-  const txt = document.getElementById('audioStatusText');
+function toggleAmbientAudio(event) {
+  if (event && event.stopPropagation) event.stopPropagation();
+  const ctx = getAudioContext();
+  if (!ctx) return;
 
-  isAudioPlaying = !isAudioPlaying;
-  if (isAudioPlaying) {
-    btn.classList.add('playing');
-    txt.textContent = 'Sound: ON';
-    startWindAmbience();
-    playTempleBell(528, 2.5); // 528 Hz healing chime
+  const runToggle = () => {
+    window.isAudioPlaying = !window.isAudioPlaying;
+    updateAudioUI();
+    if (window.isAudioPlaying) {
+      startShrineSoundscape();
+      playTempleBell(528, 3.2); // Resonant 528 Hz bell strike
+    } else {
+      stopShrineSoundscape();
+    }
+  };
+
+  if (ctx.state === 'suspended') {
+    ctx.resume().then(runToggle).catch(runToggle);
   } else {
-    btn.classList.remove('playing');
-    txt.textContent = 'Sound: OFF';
-    stopWindAmbience();
+    runToggle();
   }
 }
+
+// User interaction listener to un-suspend audio clock
+function unlockAudioOnInteraction() {
+  const ctx = getAudioContext();
+  if (ctx && ctx.state === 'suspended') {
+    ctx.resume().catch(() => {});
+  }
+  window.removeEventListener('click', unlockAudioOnInteraction);
+  window.removeEventListener('touchstart', unlockAudioOnInteraction);
+}
+window.addEventListener('click', unlockAudioOnInteraction);
+window.addEventListener('touchstart', unlockAudioOnInteraction);
 
 // Subtle chime on clicking main navigation links
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-link, .chip').forEach(el => {
     el.addEventListener('click', () => {
-      if (isAudioPlaying) playTempleBell(660, 1.8);
+      if (window.isAudioPlaying) playTempleBell(660, 2.0);
     });
   });
+  updateAudioUI();
 });
 </script>
 
