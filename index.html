@@ -2320,6 +2320,22 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   z-index: 998;
 }
 
+/* ── Hero typewriter ── */
+#hero-tw-line  { font-size:0.82em; }   /* ~18% smaller than main headline */
+#hero-tw-text  { display:inline; }
+.hero-tw-cursor {
+  display:inline-block;
+  width:2px; height:.85em;
+  background:var(--vermilion,#e5360a);
+  vertical-align:middle;
+  margin-left:3px;
+  animation:twBlink .7s step-end infinite;
+}
+@keyframes twBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+@media (prefers-reduced-motion:reduce){
+  .hero-tw-cursor{animation:none;}
+}
+
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -2390,9 +2406,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   <div class="hero-top">
     <div class="eyebrow" data-rv="fade"><span class="dot"></span> B.Tech in Cybersecurity · MPSTME, Mumbai</div>
     <h1 class="display h-hero">
-      <span class="mask-line"><span>Cybersecurity Student</span></span>
-      <span class="mask-line"><span>Security Enthusiast</span></span>
-      <span class="mask-line"><span>Developer</span></span>
+      <span class="mask-line"><span>CYBERSECURITY STUDENT</span></span>
+      <span class="mask-line" id="hero-tw-line"><span><span id="hero-tw-text"></span><span class="hero-tw-cursor" aria-hidden="true"></span></span></span>
     </h1>
     <p class="hero-sub body" data-rv="up">Building at the intersection of cybersecurity, programming, and creative technology. I enjoy exploring how systems work, understanding security vulnerabilities, and developing practical projects that turn technical concepts into real implementations.</p>
   </div>
@@ -8531,6 +8546,65 @@ function stepHandshake() {
 })();
 </script>
 
+
+<script>
+/* ── Hero typewriter — self-contained, no deps ── */
+(function(){
+  var PHRASES = [
+    'BUILDING SECURE SYSTEMS',
+    'BREAKING WEAK DEFENCES',
+    'EXPLORING CYBERSECURITY',
+    'WRITING CODE',
+    'THINKING LIKE AN ATTACKER'
+  ];
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var el   = document.getElementById('hero-tw-text');
+  var line = document.getElementById('hero-tw-line');
+  if (!el || !line) return;
+
+  /* If reduced-motion: show first phrase statically and stop */
+  if (REDUCED) {
+    el.textContent = PHRASES[0];
+    return;
+  }
+
+  var idx = 0, charIdx = 0, deleting = false, timer = null;
+
+  function type() {
+    var phrase = PHRASES[idx];
+    if (!deleting) {
+      el.textContent = phrase.slice(0, ++charIdx);
+      if (charIdx === phrase.length) {
+        deleting = true;
+        timer = setTimeout(type, 2000);   /* pause at full phrase */
+      } else {
+        timer = setTimeout(type, 65);
+      }
+    } else {
+      el.textContent = phrase.slice(0, --charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        idx = (idx + 1) % PHRASES.length;
+        timer = setTimeout(type, 400);    /* pause before next phrase */
+      } else {
+        timer = setTimeout(type, 35);
+      }
+    }
+  }
+
+  /* Start only after the mask-line has been revealed (rv-in added) */
+  var obs = new MutationObserver(function(mutations){
+    mutations.forEach(function(m){
+      if (m.attributeName === 'class' && line.classList.contains('rv-in')) {
+        obs.disconnect();
+        /* small extra delay so the slide-up finishes first */
+        timer = setTimeout(type, 300);
+      }
+    });
+  });
+  obs.observe(line, { attributes: true, attributeFilter: ['class'] });
+})();
+</script>
 
 </body>
 </html>
