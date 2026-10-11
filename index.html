@@ -1725,6 +1725,384 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   50% { height: 10px; }
 }
 
+
+/* ============================================================= Feature: Cryptography & Entropy Playground */
+.crypto-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10004;
+  background: rgba(5, 7, 10, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.crypto-modal.open {
+  display: flex;
+}
+.crypto-card {
+  background: rgba(10, 14, 18, 0.98);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.9), 0 0 0 1px rgba(224, 35, 28, 0.2);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 760px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+}
+.crypto-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--line-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(14, 18, 24, 0.95);
+}
+.crypto-body {
+  padding: 28px;
+  overflow-y: auto;
+  color: var(--bone);
+}
+.crypto-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 10px;
+}
+.crypto-tab-btn {
+  background: rgba(223, 231, 224, 0.05);
+  border: 1px solid var(--line-soft);
+  color: var(--bone-dim);
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.crypto-tab-btn.active, .crypto-tab-btn:hover {
+  border-color: var(--vermilion);
+  color: #fff;
+  background: rgba(224, 35, 28, 0.15);
+}
+.crypto-panel {
+  display: none;
+}
+.crypto-panel.active {
+  display: block;
+}
+.crypto-output-box {
+  background: rgba(6, 9, 13, 0.8);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 14px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+  color: #00ff66;
+  word-break: break-all;
+  margin-top: 8px;
+  position: relative;
+}
+.crypto-entropy-bar {
+  height: 6px;
+  background: rgba(223, 231, 224, 0.1);
+  border-radius: 3px;
+  margin: 12px 0 8px;
+  overflow: hidden;
+}
+.crypto-entropy-fill {
+  height: 100%;
+  width: 0%;
+  background: #ff5f56;
+  transition: width .3s ease, background-color .3s ease;
+}
+
+
+/* ============================================================= Feature: Cyber Calculator */
+.calc-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10005;
+  background: rgba(5, 7, 10, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.calc-modal.open {
+  display: flex;
+}
+.calc-card {
+  background: rgba(10, 14, 18, 0.98);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.9), 0 0 0 1px rgba(224, 35, 28, 0.2);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 380px;
+  padding: 24px;
+  position: relative;
+  font-family: 'Courier New', Courier, monospace;
+}
+.calc-screen {
+  background: rgba(6, 9, 13, 0.9);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: right;
+  min-height: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.calc-prev {
+  color: var(--muted);
+  font-size: 13px;
+  min-height: 18px;
+  word-break: break-all;
+}
+.calc-current {
+  color: #dfe7e0;
+  font-size: 32px;
+  font-weight: 700;
+  word-break: break-all;
+  letter-spacing: .02em;
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.calc-btn {
+  aspect-ratio: 1;
+  background: rgba(15, 20, 26, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--bone);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s ease;
+  user-select: none;
+  font-family: inherit;
+}
+.calc-btn:hover {
+  background: rgba(223, 231, 224, 0.12);
+  border-color: var(--bone-dim);
+  transform: translateY(-1px);
+}
+.calc-btn:active {
+  transform: scale(0.96);
+}
+.calc-btn.op {
+  color: var(--gold);
+  border-color: rgba(201, 162, 74, 0.25);
+  background: rgba(201, 162, 74, 0.08);
+}
+.calc-btn.op:hover {
+  border-color: var(--gold);
+  background: rgba(201, 162, 74, 0.18);
+}
+.calc-btn.danger {
+  color: #ff5f56;
+  border-color: rgba(255, 95, 86, 0.25);
+}
+.calc-btn.equals {
+  background: var(--vermilion);
+  color: #fff;
+  border-color: var(--vermilion);
+  grid-column: span 2;
+  aspect-ratio: auto;
+}
+.calc-btn.equals:hover {
+  box-shadow: 0 0 16px rgba(224, 35, 28, 0.5);
+  background: var(--ember);
+}
+
+
+/* ============================================================= Feature: Network Handshake Visualizer */
+.network-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10006;
+  background: rgba(5, 7, 10, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.network-modal.open {
+  display: flex;
+}
+.network-card {
+  background: rgba(10, 14, 18, 0.98);
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 72px rgba(0,0,0,0.9), 0 0 0 1px rgba(224, 35, 28, 0.2);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  font-family: inherit;
+}
+.network-vis-stage {
+  background: rgba(6, 9, 13, 0.95);
+  border: 1px solid var(--line-soft);
+  border-radius: 6px;
+  padding: 24px;
+  margin-bottom: 20px;
+  position: relative;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.network-nodes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.network-node {
+  background: rgba(15, 20, 26, 0.9);
+  border: 1px solid var(--line);
+  padding: 12px 18px;
+  border-radius: 6px;
+  text-align: center;
+  z-index: 2;
+  width: 140px;
+}
+.network-node b {
+  color: #fff;
+  font-size: 13px;
+  display: block;
+}
+.network-node span {
+  color: var(--muted);
+  font-size: 11px;
+  font-family: monospace;
+}
+.network-wire {
+  position: absolute;
+  top: 50%;
+  left: 120px;
+  right: 120px;
+  height: 2px;
+  background: rgba(223, 231, 224, 0.15);
+  z-index: 1;
+}
+.packet-bubble {
+  position: absolute;
+  top: -14px;
+  left: 0%;
+  background: var(--vermilion);
+  color: #fff;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px var(--vermilion);
+  transition: left .8s cubic-bezier(.22,.61,.36,1);
+  display: none;
+  white-space: nowrap;
+}
+.wireshark-log {
+  background: rgba(6, 9, 13, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+  padding: 12px;
+  max-height: 160px;
+  overflow-y: auto;
+  color: var(--bone-dim);
+}
+.wireshark-row {
+  display: grid;
+  grid-template-columns: 40px 110px 110px 80px 1fr;
+  gap: 8px;
+  padding: 4px 0;
+  border-bottom: 1px solid rgba(223, 231, 224, 0.05);
+}
+.wireshark-row.syn { color: #ff5f56; }
+.wireshark-row.synack { color: var(--gold); }
+.wireshark-row.ack { color: #00ff66; }
+.wireshark-row.tls { color: #a855f7; }
+
+
+/* ============================================================= Feature: Glowing Ember Cursor Trail */
+#emberCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 998;
+}
+
+
+/* ============================================================= Feature: Security Telemetry Bar */
+.telemetry-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: rgba(6, 9, 13, 0.7);
+  border: 1px solid var(--line-soft);
+  border-radius: 4px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  color: var(--bone-dim);
+  margin-top: 18px;
+  max-width: 680px;
+  backdrop-filter: blur(8px);
+  user-select: none;
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.telemetry-bar:hover {
+  border-color: var(--vermilion);
+}
+.tele-dot-live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00ff66;
+  box-shadow: 0 0 6px #00ff66;
+}
+.tele-badge {
+  color: var(--gold);
+}
+.tele-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10007;
+  background: rgba(5, 7, 10, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.tele-modal.open {
+  display: flex;
+}
+
 </style>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -1733,6 +2111,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 <canvas id="gl" aria-hidden="true"></canvas>
 <div id="vignette"></div>
 <div id="grain"></div>
+<canvas id="emberCanvas"></canvas>
 <div class="cur-dot" id="cursor"></div>
 
 <!-- ============================================================ preloader -->
@@ -1794,6 +2173,15 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
       <span class="mask-line"><span>craftsmanship.</span></span>
     </h1>
     <p class="hero-sub body" data-rv="up">Frontend developer, ethical hacker, and Python automation engineer. Designing resilient digital defenses and immersive, high-impact web architectures.</p>
+
+    <!-- Security Telemetry Telemetry Bar -->
+    <div class="telemetry-bar" onclick="openTelemetryModal()" title="Click to view Security Diagnostic Telemetry" data-rv="fade">
+      <span class="tele-dot-live"></span>
+      <span>SECURE CHANNEL: <b class="tele-badge">TLS 1.3 / AES-256</b></span>
+      <span>DEFENSE: <b style="color:#00ff66;">ACTIVE</b></span>
+      <span>PING: <b id="telePing" style="color:var(--bone);">14ms</b></span>
+    </div>
+  
   </div>
 
   <div class="hero-spacer"></div>
@@ -1881,7 +2269,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
       <div class="academic-card">
         <div class="academic-card-top">
           <span class="academic-subject">Computer Networks</span>
-          <span class="academic-code">CORE</span>
+          <span class="academic-code" onclick="openNetworkModal()" style="cursor:pointer;" title="Click to Simulate Handshake">SIMULATE &rarr;</span>
         </div>
         <p class="academic-desc">OSI 7-Layer Architecture, TCP/IP protocols, subnetting, socket programming, Wireshark packet capture &amp; traffic routing.</p>
       </div>
@@ -1932,7 +2320,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <span class="k"><b>02</b> — Interactive Works</span><span class="rule"></span><span class="k jp">作品</span>
   </div>
   <div class="cards" id="cards">
-    <article class="card" data-rv="up" data-view="0" data-cursor onclick="openProject(0)">
+    <article class="card" data-rv="up" data-view="0" data-cursor onclick="openCryptoModal()">
       <div class="card-fr" data-frame>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <i class="glow" style="--gx:80.2%; --gy:23.9%; --gr:22%; --gt:6.1s; --gt2:9.7s; --gc1:rgba(255,142,108,.50); --gc2:rgba(212,56,38,.24)"></i>
@@ -1948,7 +2336,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
       </div>
       <div class="card-meta"><span>Python Automation &amp; Game Logic</span><span>02 / 03</span></div>
     </article>
-    <article class="card" data-rv="up" data-view="2" data-cursor onclick="openProject(2)">
+    <article class="card" data-rv="up" data-view="2" data-cursor onclick="openCalcModal()">
       <div class="card-fr" data-frame>
         <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         <i class="glow" style="--gx:48.0%; --gy:16.8%; --gr:20%; --gt:7.3s; --gt2:11.2s; --gc1:rgba(255,138,104,.52); --gc2:rgba(208,54,36,.24)"></i>
@@ -6811,6 +7199,603 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
+</script>
+
+
+<!-- Feature: Cryptography & Password Entropy Playground Modal -->
+<div class="crypto-modal" id="cryptoModal" onclick="if(event.target===this)closeCryptoModal()">
+  <div class="crypto-card">
+    <div class="crypto-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="viewer-badge">CYBER LAB &middot; DEFENSE</span>
+        <b style="color:var(--bone); font-size:16px;">Cryptography &amp; Password Entropy Lab</b>
+      </div>
+      <button class="project-modal-close" onclick="closeCryptoModal()" aria-label="Close" style="position:static;">&times;</button>
+    </div>
+    <div class="crypto-body">
+      <div class="crypto-tabs">
+        <button class="crypto-tab-btn active" onclick="switchCryptoTab('tab-entropy')">Password Entropy Analyzer</button>
+        <button class="crypto-tab-btn" onclick="switchCryptoTab('tab-hash')">Live Hash Inspector (SHA-256 / Base64)</button>
+        <button class="crypto-tab-btn" onclick="switchCryptoTab('tab-ctf')">Mini CTF Challenge</button>
+      </div>
+
+      <!-- Tab 1: Password Entropy Analyzer -->
+      <div class="crypto-panel active" id="tab-entropy">
+        <p style="color:var(--muted); font-size:13px; margin-bottom:14px;">
+          Calculates real Shannon Entropy ($E = L \times \log_2(R)$), pool character sets, and estimates brute-force crack time against a 100 Billion guesses/second cluster.
+        </p>
+        <label style="font-size:13px; color:var(--bone-dim);">Test Password / Passphrase:</label>
+        <input type="text" id="entropyInput" class="form-input" placeholder="Type a password to analyze..." oninput="analyzeEntropy(this.value)" style="margin-top:6px; font-family:monospace;">
+
+        <div class="crypto-entropy-bar">
+          <div class="crypto-entropy-fill" id="entropyFill"></div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:16px;">
+          <span>Strength: <b id="entropyStrength" style="color:#ff5f56;">None</b></span>
+          <span>Entropy: <b id="entropyBits" style="color:var(--gold);">0.00 bits</b></span>
+          <span>Crack Time: <b id="entropyTime" style="color:var(--bone);">Instant</b></span>
+        </div>
+
+        <div style="background:rgba(223,231,224,0.03); padding:14px; border-radius:4px; border:1px solid var(--line-soft); font-size:12px; line-height:1.6;">
+          <div id="entropyRules">
+            &bull; Character Pool: <span id="entropyPool">0 chars</span><br>
+            &bull; Security Assessment: <span id="entropyAdvice" style="color:var(--muted);">Enter at least 8+ characters combining uppercase, lowercase, numbers, and symbols.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Hash Inspector -->
+      <div class="crypto-panel" id="tab-hash">
+        <p style="color:var(--muted); font-size:13px; margin-bottom:14px;">
+          Instant cryptographic digest generation computed via client-side Web Crypto API.
+        </p>
+        <label style="font-size:13px; color:var(--bone-dim);">Plaintext Input:</label>
+        <input type="text" id="hashInput" class="form-input" placeholder="Enter plaintext to hash..." oninput="computeHashes(this.value)" style="margin-top:6px; font-family:monospace;" value="KageSanctuary2026">
+
+        <div style="margin-top:16px;">
+          <span style="font-size:12px; color:var(--bone-dim);">SHA-256 (256-bit Cryptographic Hash):</span>
+          <div class="crypto-output-box" id="sha256Out">Computing...</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <span style="font-size:12px; color:var(--bone-dim);">Base64 Encoding:</span>
+          <div class="crypto-output-box" id="base64Out" style="color:var(--gold);">Computing...</div>
+        </div>
+
+        <div style="margin-top:12px;">
+          <span style="font-size:12px; color:var(--bone-dim);">ROT13 Caesar Cipher:</span>
+          <div class="crypto-output-box" id="rot13Out" style="color:var(--bone);">Computing...</div>
+        </div>
+      </div>
+
+      <!-- Tab 3: Mini CTF -->
+      <div class="crypto-panel" id="tab-ctf">
+        <p style="color:var(--muted); font-size:13px; margin-bottom:14px;">
+          An intercepted transmission has been caught at the Sanmon perimeter. Decode the ciphertext to uncover the flag.
+        </p>
+        <div style="background:rgba(6,9,13,0.8); border:1px solid var(--line); border-radius:4px; padding:16px; font-family:monospace; margin-bottom:16px;">
+          <span style="color:var(--muted);">CIPHERTEXT:</span><br>
+          <span style="color:var(--gold); font-size:14px;">VGhlIHNhbmN0dWFyeSBpcyBzZWN1cmVkLiBXZWxjb21lLCBhZ2VudC4=</span>
+        </div>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="cta" onclick="solveCTF()" data-cursor style="border:none; cursor:pointer;">
+            <i></i><span>Decode Cipher</span>
+          </button>
+          <span id="ctfStatus" style="font-size:13px; color:#00ff66;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================= Cryptography Lab Logic
+function openCryptoModal() {
+  document.getElementById('cryptoModal').classList.add('open');
+  computeHashes(document.getElementById('hashInput').value);
+}
+
+function closeCryptoModal() {
+  document.getElementById('cryptoModal').classList.remove('open');
+}
+
+function switchCryptoTab(tabId) {
+  document.querySelectorAll('.crypto-tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.crypto-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+async function computeHashes(val) {
+  if (!val) {
+    document.getElementById('sha256Out').textContent = '-';
+    document.getElementById('base64Out').textContent = '-';
+    document.getElementById('rot13Out').textContent = '-';
+    return;
+  }
+  // SHA-256 via Web Crypto
+  try {
+    const msgBuffer = new TextEncoder().encode(val);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    document.getElementById('sha256Out').textContent = hashHex;
+  } catch(e) {
+    document.getElementById('sha256Out').textContent = 'Error computing SHA-256';
+  }
+
+  // Base64
+  try {
+    document.getElementById('base64Out').textContent = btoa(unescape(encodeURIComponent(val)));
+  } catch(e) {
+    document.getElementById('base64Out').textContent = '-';
+  }
+
+  // ROT13
+  document.getElementById('rot13Out').textContent = val.replace(/[a-zA-Z]/g, function(c){
+    return String.fromCharCode((c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+  });
+}
+
+function analyzeEntropy(pwd) {
+  if (!pwd) {
+    document.getElementById('entropyFill').style.width = '0%';
+    document.getElementById('entropyStrength').textContent = 'None';
+    document.getElementById('entropyStrength').style.color = '#ff5f56';
+    document.getElementById('entropyBits').textContent = '0.00 bits';
+    document.getElementById('entropyTime').textContent = 'Instant';
+    document.getElementById('entropyPool').textContent = '0 chars';
+    return;
+  }
+
+  let pool = 0;
+  if (/[a-z]/.test(pwd)) pool += 26;
+  if (/[A-Z]/.test(pwd)) pool += 26;
+  if (/[0-9]/.test(pwd)) pool += 10;
+  if (/[^a-zA-Z0-9]/.test(pwd)) pool += 33;
+
+  const entropy = Math.round((pwd.length * (Math.log2(pool || 1))) * 100) / 100;
+  document.getElementById('entropyBits').textContent = entropy + ' bits';
+  document.getElementById('entropyPool').textContent = pool + ' unique characters';
+
+  const fill = document.getElementById('entropyFill');
+  const strength = document.getElementById('entropyStrength');
+  const time = document.getElementById('entropyTime');
+
+  const pct = Math.min((entropy / 90) * 100, 100);
+  fill.style.width = pct + '%';
+
+  // Crack time estimations based on 100 billion guesses/sec
+  const combinations = Math.pow(pool || 1, pwd.length);
+  const seconds = combinations / 1e11;
+
+  if (entropy < 30) {
+    strength.textContent = 'Very Weak';
+    strength.style.color = '#ff5f56';
+    fill.style.background = '#ff5f56';
+    time.textContent = '< 1 millisecond';
+  } else if (entropy < 50) {
+    strength.textContent = 'Moderate';
+    strength.style.color = '#ffbd2e';
+    fill.style.background = '#ffbd2e';
+    time.textContent = seconds < 3600 ? Math.round(seconds) + ' seconds' : Math.round(seconds/3600) + ' hours';
+  } else if (entropy < 70) {
+    strength.textContent = 'Strong';
+    strength.style.color = '#00ff66';
+    fill.style.background = '#00ff66';
+    time.textContent = seconds < 3.15e7 ? Math.round(seconds/86400) + ' days' : Math.round(seconds/3.15e7) + ' years';
+  } else {
+    strength.textContent = 'Fortress / Unbreakable';
+    strength.style.color = '#27c93f';
+    fill.style.background = '#27c93f';
+    time.textContent = 'Centuries (Over ' + Math.round(seconds / 3.15e9) + ' millennia)';
+  }
+}
+
+function solveCTF() {
+  const cipher = "VGhlIHNhbmN0dWFyeSBpcyBzZWN1cmVkLiBXZWxjb21lLCBhZ2VudC4=";
+  const decoded = atob(cipher);
+  document.getElementById('ctfStatus').innerHTML = 'FLAG CAPTURED: <b>' + decoded + '</b>';
+}
+</script>
+
+
+<!-- Feature: Playable Cyber Calculator Modal -->
+<div class="calc-modal" id="calcModal" onclick="if(event.target===this)closeCalcModal()">
+  <div class="calc-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+      <span class="viewer-badge">PROJECT 03 &middot; UTILITY</span>
+      <button class="project-modal-close" onclick="closeCalcModal()" aria-label="Close" style="position:static;">&times;</button>
+    </div>
+
+    <div class="calc-screen">
+      <div class="calc-prev" id="calcPrev"></div>
+      <div class="calc-current" id="calcCurrent">0</div>
+    </div>
+
+    <div class="calc-grid">
+      <button class="calc-btn danger" onclick="calcClear()">AC</button>
+      <button class="calc-btn danger" onclick="calcDelete()">DEL</button>
+      <button class="calc-btn op" onclick="calcAppendOp('%')">%</button>
+      <button class="calc-btn op" onclick="calcAppendOp('/')">&divide;</button>
+
+      <button class="calc-btn" onclick="calcAppendNum('7')">7</button>
+      <button class="calc-btn" onclick="calcAppendNum('8')">8</button>
+      <button class="calc-btn" onclick="calcAppendNum('9')">9</button>
+      <button class="calc-btn op" onclick="calcAppendOp('*')">&times;</button>
+
+      <button class="calc-btn" onclick="calcAppendNum('4')">4</button>
+      <button class="calc-btn" onclick="calcAppendNum('5')">5</button>
+      <button class="calc-btn" onclick="calcAppendNum('6')">6</button>
+      <button class="calc-btn op" onclick="calcAppendOp('-')">-</button>
+
+      <button class="calc-btn" onclick="calcAppendNum('1')">1</button>
+      <button class="calc-btn" onclick="calcAppendNum('2')">2</button>
+      <button class="calc-btn" onclick="calcAppendNum('3')">3</button>
+      <button class="calc-btn op" onclick="calcAppendOp('+')">+</button>
+
+      <button class="calc-btn" onclick="calcAppendNum('0')">0</button>
+      <button class="calc-btn" onclick="calcAppendDot()">.</button>
+      <button class="calc-btn equals" onclick="calcEvaluate()">=</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================= Cyber Calculator Logic
+let calcCurrentVal = '0';
+let calcPrevVal = '';
+let calcOp = undefined;
+
+function openCalcModal() {
+  document.getElementById('calcModal').classList.add('open');
+}
+function closeCalcModal() {
+  document.getElementById('calcModal').classList.remove('open');
+}
+
+function calcUpdateDisplay() {
+  document.getElementById('calcCurrent').textContent = calcCurrentVal;
+  if (calcOp != null) {
+    document.getElementById('calcPrev').textContent = `${calcPrevVal} ${calcOp}`;
+  } else {
+    document.getElementById('calcPrev').textContent = '';
+  }
+}
+
+function calcClear() {
+  calcCurrentVal = '0';
+  calcPrevVal = '';
+  calcOp = undefined;
+  calcUpdateDisplay();
+}
+
+function calcDelete() {
+  if (calcCurrentVal.length === 1 || calcCurrentVal === '0') {
+    calcCurrentVal = '0';
+  } else {
+    calcCurrentVal = calcCurrentVal.slice(0, -1);
+  }
+  calcUpdateDisplay();
+}
+
+function calcAppendNum(num) {
+  if (calcCurrentVal === '0') {
+    calcCurrentVal = num;
+  } else {
+    calcCurrentVal += num;
+  }
+  calcUpdateDisplay();
+}
+
+function calcAppendDot() {
+  if (calcCurrentVal.includes('.')) return;
+  calcCurrentVal += '.';
+  calcUpdateDisplay();
+}
+
+function calcAppendOp(op) {
+  if (calcCurrentVal === '') return;
+  if (calcPrevVal !== '') {
+    calcCompute();
+  }
+  calcOp = op;
+  calcPrevVal = calcCurrentVal;
+  calcCurrentVal = '';
+  calcUpdateDisplay();
+}
+
+function calcCompute() {
+  let computation;
+  const prev = parseFloat(calcPrevVal);
+  const current = parseFloat(calcCurrentVal);
+  if (isNaN(prev) || isNaN(current)) return;
+  switch (calcOp) {
+    case '+': computation = prev + current; break;
+    case '-': computation = prev - current; break;
+    case '*': computation = prev * current; break;
+    case '/': computation = current === 0 ? 'Error' : prev / current; break;
+    case '%': computation = prev % current; break;
+    default: return;
+  }
+  calcCurrentVal = computation.toString();
+  calcOp = undefined;
+  calcPrevVal = '';
+}
+
+function calcEvaluate() {
+  calcCompute();
+  calcUpdateDisplay();
+}
+
+// Keyboard shortcuts for calculator when modal is open
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('calcModal').classList.contains('open')) return;
+  if (e.key >= '0' && e.key <= '9') calcAppendNum(e.key);
+  if (e.key === '.') calcAppendDot();
+  if (e.key === '=' || e.key === 'Enter') { e.preventDefault(); calcEvaluate(); }
+  if (e.key === 'Backspace') calcDelete();
+  if (e.key === 'Escape') closeCalcModal();
+  if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') calcAppendOp(e.key);
+});
+</script>
+
+
+<!-- Feature: Network Handshake Visualizer Modal -->
+<div class="network-modal" id="networkModal" onclick="if(event.target===this)closeNetworkModal()">
+  <div class="network-card">
+    <div class="crypto-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="viewer-badge">ACADEMIC &middot; NETWORKS</span>
+        <b style="color:var(--bone); font-size:16px;">TCP 3-Way Handshake &amp; TLS Simulator</b>
+      </div>
+      <button class="project-modal-close" onclick="closeNetworkModal()" aria-label="Close" style="position:static;">&times;</button>
+    </div>
+
+    <div style="padding:24px; overflow-y:auto;">
+      <p style="color:var(--muted); font-size:13px; margin-bottom:16px;">
+        Visualizing connection establishment protocol between client browser and Debayan's server. Click <b>Next Step</b> to simulate packet traversal.
+      </p>
+
+      <div class="network-vis-stage">
+        <div class="network-nodes">
+          <div class="network-node">
+            <b>CLIENT</b>
+            <span>192.168.1.42</span>
+          </div>
+          <div class="network-wire">
+            <div class="packet-bubble" id="packetBubble">SYN</div>
+          </div>
+          <div class="network-node">
+            <b>SANCTUARY</b>
+            <span>203.0.113.19</span>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:28px;">
+          <span id="handshakeExplain" style="color:var(--gold); font-size:14px; font-weight:600;">Ready to initialize handshake...</span>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+        <span style="font-size:12px; color:var(--bone-dim); font-family:monospace;">WIRESHARK PROTOCOL TRACE:</span>
+        <div style="display:flex; gap:8px;">
+          <button class="cta" onclick="stepHandshake()" data-cursor style="border:none; cursor:pointer; padding:8px 16px; font-size:12px;">
+            <i></i><span id="stepBtnText">Step 1: Send SYN</span>
+          </button>
+          <button class="cta-secondary" onclick="resetHandshake()" data-cursor style="padding:8px 16px; font-size:12px;">
+            <span>Reset</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="wireshark-log" id="wiresharkLog">
+        <div style="color:var(--muted); font-style:italic;">No packets captured yet. Press 'Send SYN' to initiate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================= Network Handshake Logic
+let handshakeStep = 0;
+
+function openNetworkModal() {
+  document.getElementById('networkModal').classList.add('open');
+  resetHandshake();
+}
+function closeNetworkModal() {
+  document.getElementById('networkModal').classList.remove('open');
+}
+
+function resetHandshake() {
+  handshakeStep = 0;
+  document.getElementById('packetBubble').style.display = 'none';
+  document.getElementById('packetBubble').style.left = '0%';
+  document.getElementById('handshakeExplain').textContent = "Ready to initialize TCP 3-Way Handshake...";
+  document.getElementById('stepBtnText').textContent = "Step 1: Send SYN";
+  document.getElementById('wiresharkLog').innerHTML = '<div style="color:var(--muted); font-style:italic;">No packets captured yet. Press \'Send SYN\' to initiate.</div>';
+}
+
+function stepHandshake() {
+  const bubble = document.getElementById('packetBubble');
+  const explain = document.getElementById('handshakeExplain');
+  const btn = document.getElementById('stepBtnText');
+  const log = document.getElementById('wiresharkLog');
+
+  bubble.style.display = 'block';
+
+  if (handshakeStep === 0) {
+    // Step 1: SYN (Client -> Server)
+    bubble.textContent = "SYN (seq=1000)";
+    bubble.style.left = '0%';
+    bubble.style.background = '#ff5f56';
+    explain.textContent = "[Step 1] Client sends SYN packet to initiate TCP synchronization.";
+    setTimeout(() => { bubble.style.left = '80%'; }, 50);
+
+    log.innerHTML = `<div class="wireshark-row syn">
+      <span>#1</span><span>192.168.1.42</span><span>203.0.113.19</span><span>TCP</span><span>[SYN] Seq=1000 Win=64240 Len=0 MSS=1460</span>
+    </div>`;
+    btn.textContent = "Step 2: Reply SYN-ACK";
+    handshakeStep = 1;
+  } else if (handshakeStep === 1) {
+    // Step 2: SYN-ACK (Server -> Client)
+    bubble.textContent = "SYN-ACK (seq=4000, ack=1001)";
+    bubble.style.left = '80%';
+    bubble.style.background = 'var(--gold)';
+    explain.textContent = "[Step 2] Server acknowledges sequence and responds with SYN-ACK.";
+    setTimeout(() => { bubble.style.left = '0%'; }, 50);
+
+    log.innerHTML += `<div class="wireshark-row synack">
+      <span>#2</span><span>203.0.113.19</span><span>192.168.1.42</span><span>TCP</span><span>[SYN, ACK] Seq=4000 Ack=1001 Win=65535 Len=0</span>
+    </div>`;
+    btn.textContent = "Step 3: Send ACK";
+    handshakeStep = 2;
+  } else if (handshakeStep === 2) {
+    // Step 3: ACK (Client -> Server)
+    bubble.textContent = "ACK (seq=1001, ack=4001)";
+    bubble.style.left = '0%';
+    bubble.style.background = '#00ff66';
+    explain.textContent = "[Step 3] Client sends ACK. Connection is now ESTABLISHED!";
+    setTimeout(() => { bubble.style.left = '80%'; }, 50);
+
+    log.innerHTML += `<div class="wireshark-row ack">
+      <span>#3</span><span>192.168.1.42</span><span>203.0.113.19</span><span>TCP</span><span>[ACK] Seq=1001 Ack=4001 Win=64240 Len=0</span>
+    </div>`;
+    btn.textContent = "Step 4: TLS 1.3 Handshake";
+    handshakeStep = 3;
+  } else if (handshakeStep === 3) {
+    // Step 4: TLS 1.3
+    bubble.textContent = "TLS 1.3 ClientHello";
+    bubble.style.left = '0%';
+    bubble.style.background = '#a855f7';
+    explain.textContent = "[Step 4] Upgrading to encrypted TLS 1.3 channel using ECDHE-AES256.";
+    setTimeout(() => { bubble.style.left = '80%'; }, 50);
+
+    log.innerHTML += `<div class="wireshark-row tls">
+      <span>#4</span><span>192.168.1.42</span><span>203.0.113.19</span><span>TLSv1.3</span><span>Client Hello, KeyShare, SupportedGroups=X25519</span>
+    </div>`;
+    btn.textContent = "Restart Simulation";
+    handshakeStep = 4;
+  } else {
+    resetHandshake();
+  }
+}
+</script>
+
+
+<script>
+// ============================================================= Glowing Ember Cursor Physics
+(function() {
+  const canvas = document.getElementById('emberCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  const particles = [];
+  let mouse = { x: -100, y: -100, prevX: -100, prevY: -100, speed: 0 };
+
+  window.addEventListener('mousemove', (e) => {
+    const dx = e.clientX - mouse.x;
+    const dy = e.clientY - mouse.y;
+    mouse.speed = Math.sqrt(dx * dx + dy * dy);
+    mouse.prevX = mouse.x;
+    mouse.prevY = mouse.y;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+
+    // Spawn 1-3 sparks depending on movement speed
+    const spawnCount = Math.min(Math.floor(mouse.speed / 8) + 1, 3);
+    for (let i = 0; i < spawnCount; i++) {
+      particles.push({
+        x: mouse.x + (Math.random() - 0.5) * 6,
+        y: mouse.y + (Math.random() - 0.5) * 6,
+        vx: (Math.random() - 0.5) * 1.8 + dx * 0.05,
+        vy: -Math.random() * 1.6 - 0.4, // float upwards like hot ash
+        radius: Math.random() * 2.2 + 0.8,
+        alpha: 1,
+        decay: Math.random() * 0.025 + 0.015,
+        color: Math.random() > 0.4 ? 'rgba(224, 35, 28, ' : 'rgba(255, 170, 0, '
+      });
+    }
+  });
+
+  function loop() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.alpha -= p.decay;
+
+      if (p.alpha <= 0) {
+        particles.splice(i, 1);
+        continue;
+      }
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = p.color + p.alpha + ')';
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = '#e0231c';
+      ctx.fill();
+    }
+
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+
+<!-- Security Diagnostic Modal -->
+<div class="tele-modal" id="teleModal" onclick="if(event.target===this)closeTelemetryModal()">
+  <div class="crypto-card">
+    <div class="crypto-header">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span class="viewer-badge">TELEMETRY &middot; DIAGNOSTIC</span>
+        <b style="color:var(--bone); font-size:16px;">Sanctuary Security Telemetry &amp; Posture</b>
+      </div>
+      <button class="project-modal-close" onclick="closeTelemetryModal()" aria-label="Close" style="position:static;">&times;</button>
+    </div>
+    <div style="padding:28px; font-family:'Courier New', monospace; font-size:13px; line-height:1.6; color:var(--bone-dim);">
+      <div style="background:rgba(6,9,13,0.9); border:1px solid var(--line); border-radius:6px; padding:20px; margin-bottom:16px;">
+        <div style="color:#00ff66; margin-bottom:12px; font-weight:bold;">[DIAGNOSTIC STATUS: ALL DEFENSES NOMINAL]</div>
+        <div>&bull; Transport Protocol: <span style="color:var(--bone);">TLSv1.3 (ECDHE-X25519-AES256-GCM)</span></div>
+        <div>&bull; Integrity Fingerprint: <span style="color:var(--gold);">SHA-256: c8e06b90397ac... [VERIFIED]</span></div>
+        <div>&bull; Three.js WebGL Engine: <span style="color:var(--bone);">r149 &middot; Local GPU Sanctuary Pipeline</span></div>
+        <div>&bull; Port Scan Exposure: <span style="color:#00ff66;">Zero Unauthenticated Attack Surface</span></div>
+        <div>&bull; Defensive Policy: <span style="color:var(--bone);">CSP Strict Mode &middot; XSS Filtering &middot; Zero-Trust Architecture</span></div>
+      </div>
+      <div style="text-align:right;">
+        <button class="cta" onclick="closeTelemetryModal()" data-cursor style="border:none; cursor:pointer;">
+          <i></i><span>Acknowledge &amp; Dismiss</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function openTelemetryModal() {
+  document.getElementById('teleModal').classList.add('open');
+}
+function closeTelemetryModal() {
+  document.getElementById('teleModal').classList.remove('open');
+}
+// Jitter the latency slightly to feel alive
+setInterval(() => {
+  const p = document.getElementById('telePing');
+  if (p) p.textContent = (Math.floor(Math.random() * 8) + 11) + 'ms';
+}, 3000);
 </script>
 
 </body>
