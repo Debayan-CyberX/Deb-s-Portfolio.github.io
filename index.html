@@ -4337,9 +4337,9 @@ function buildWordmark() {
      edge while the caps come back down to the height of the headline block. */
   const SZ = 320, TRACK = .40, PAD = 26;
   const m = cvs(4, 4).getContext('2d');
-  m.font = '600 ' + SZ + 'px Wordmark, sans-serif';
+  m.font = '600 ' + SZ + 'px Wordmark, Onest, sans-serif';
   m.textBaseline = 'alphabetic'; m.textAlign = 'left';
-  const word = 'KAGE', gl = [];
+  const word = 'DEBX', gl = [];
   let pen = 0, ascMax = 0, descMax = 0, xMin = 1e9, xMax = -1e9;
   for (const ch of word) {
     const t = m.measureText(ch);
@@ -4355,7 +4355,7 @@ function buildWordmark() {
   gl.forEach((g, i) => {
     const cw = Math.ceil(g.l + g.r) + PAD * 2, chh = Math.ceil(g.asc + g.desc) + PAD * 2;
     const c = cvs(cw, chh), x = c.getContext('2d');
-    x.font = '600 ' + SZ + 'px Wordmark, sans-serif';
+    x.font = '600 ' + SZ + 'px Wordmark, Onest, sans-serif';
     x.textBaseline = 'alphabetic'; x.textAlign = 'left';
     /* the vertical wash is baked per glyph so the whole word shares one ramp */
     const gy0 = PAD + g.asc - ascMax, gy1 = PAD + g.asc + descMax * .4;
@@ -6014,7 +6014,7 @@ function queue() { TIMER ? setTimeout(() => frame(performance.now()), 16) : requ
 
 /* ======================================================== 14 · booting */
 const JOBS = [
-  ['Reading the type', () => document.fonts && document.fonts.load('600 320px Wordmark')],
+  ['Reading the type', () => document.fonts && Promise.all([document.fonts.load('600 320px Wordmark'), document.fonts.load('700 320px Onest'), document.fonts.load('500 320px Onest')])],
   ['Pouring the ground', () => { initGL(); WORLD.uT = { value: 0 }; buildRig(); buildLights(); }],
   ['Cutting the approach', () => buildShell()],
   ['Raising the hall', () => buildTemple()],
