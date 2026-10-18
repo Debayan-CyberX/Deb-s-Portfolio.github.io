@@ -2322,7 +2322,6 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 
 </style>
 <link rel="stylesheet" href="portfolio.css">
-<link rel="stylesheet" href="project-rack.css">
 <noscript><style>#pre,.rail,#gl,#cursor{display:none!important}[data-rv],.word{opacity:1!important;transform:none!important}.mask-line>span{transform:none!important}body{overflow:auto!important}.case-dialog{display:none}</style></noscript>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
@@ -2452,22 +2451,9 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     </span>
   </div>
   <div class="sec-head" data-rv="fade"><span class="k"><b>01</b> — Selected Work</span><span class="rule"></span><span class="k jp">作品</span></div>
-  <div class="section-intro" data-rv="up"><h2>Work from<br>the sanctuary.</h2><p>Six explorations in security, networking, and software engineering. Choose a wooden plaque to discover the work behind it.</p></div>
-  <!-- BEGIN PROJECT_CARDS -->
-<div class="project-rack" id="projectRack">
-  <div class="rack-experience" hidden>
-    <div class="rack-heading"><span><i></i> THE PROJECT COLLECTION</span><span class="rack-caption">Cedar · Vermilion · Moonlight</span></div>
-    <div class="rack-stage" id="rackStage" role="group" aria-label="Interactive wooden project plaques">
-      <div class="rack-mist" aria-hidden="true"></div>
-      <span class="rack-inscription jp" aria-hidden="true">探求と創造</span>
-      <button class="rack-arrow rack-previous" type="button" aria-label="Previous project">←</button>
-      <button class="rack-arrow rack-next" type="button" aria-label="Next project">→</button>
-      <div class="rack-stage-footer"><span id="rackCounter" aria-hidden="true">01 / 06</span><span>Drag to explore <i>·</i> Select a plaque</span></div>
-    </div>
-    <div class="rack-tabs" role="tablist" aria-label="Choose a project"><button type="button" role="tab" id="rack-tab-aegis" aria-controls="project-aegis" aria-selected="true" tabindex="0" data-rack-index="0"><span>01</span>AEGIS-X</button><button type="button" role="tab" id="rack-tab-trishield" aria-controls="project-trishield" aria-selected="false" tabindex="-1" data-rack-index="1"><span>02</span>Tri-Shield</button><button type="button" role="tab" id="rack-tab-inbox" aria-controls="project-inbox" aria-selected="false" tabindex="-1" data-rack-index="2"><span>03</span>InboxIQ</button><button type="button" role="tab" id="rack-tab-tcp" aria-controls="project-tcp" aria-selected="false" tabindex="-1" data-rack-index="3"><span>04</span>TCP/IP Simulator</button><button type="button" role="tab" id="rack-tab-drain" aria-controls="project-drain" aria-selected="false" tabindex="-1" data-rack-index="4"><span>05</span>DrainSentinel</button><button type="button" role="tab" id="rack-tab-library" aria-controls="project-library" aria-selected="false" tabindex="-1" data-rack-index="5"><span>06</span>LibraryLens</button></div>
-    <p class="rack-screen-reader" id="rackAnnouncement" role="status" aria-live="polite" aria-atomic="true"></p>
-  </div>
-  <div class="featured-grid rack-details"><article class="project-card" id="project-aegis">
+  <div class="section-intro" data-rv="up"><h2>Built with curiosity.<br>Explained with evidence.</h2><p>Six projects across security, networking, and software engineering. Open a case study for the problem, my implementation, the tradeoffs, and a walkthrough.</p></div>
+  <div class="featured-grid"><!-- BEGIN PROJECT_CARDS -->
+<article class="project-card" id="project-aegis" data-rv="up">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-sanmon-preview.webp')" aria-hidden="true">
     <span class="project-no">01 / 06</span><span class="project-seal jp">守護</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 14 94 28v28c0 23-34 43-34 43S26 79 26 56V28Z"/><path d="m43 56 12 12 24-28"/><circle cx="60" cy="58" r="48" opacity=".25"/></svg>
@@ -2477,7 +2463,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <p class="project-description">From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.</p>
     <div class="project-stack"><span>Next.js</span><span>FastAPI</span><span>SQLAlchemy</span><span>PostgreSQL</span></div><p class="project-status">Portfolio prototype · Synthetic telemetry · Simulated containment</p>
     <div class="project-actions"><button type="button" data-open-case="case-aegis" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/AEGIS-X" target="_blank" rel="noopener noreferrer">Source code</a></div>
-  </div></article><article class="project-card" id="project-trishield">
+  </div></article>
+<article class="project-card" id="project-trishield" data-rv="up">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-lantern-court.webp')" aria-hidden="true">
     <span class="project-no">02 / 06</span><span class="project-seal jp">三層</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="30" y="16" width="60" height="87" rx="2"/><path d="M43 38h34M43 49h24M43 61h34M43 72h16"/><circle cx="77" cy="84" r="15"/><path d="m70 84 5 5 10-11"/></svg>
@@ -2487,7 +2474,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <p class="project-description">Three complementary checks for document review: identifier validation, image-forensics signals, and a hash-chained audit record.</p>
     <div class="project-stack"><span>Python</span><span>FastAPI</span><span>OpenCV</span><span>SQLite</span></div><p class="project-status">Offline prototype · Fictional sample documents</p>
     <div class="project-actions"><button type="button" data-open-case="case-trishield" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/Tri-Shield" target="_blank" rel="noopener noreferrer">Source code</a></div>
-  </div></article><article class="project-card" id="project-inbox">
+  </div></article>
+<article class="project-card" id="project-inbox" data-rv="up">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-moonwater.webp')" aria-hidden="true">
     <span class="project-no">03 / 06</span><span class="project-seal jp">交信</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="15" y="30" width="90" height="64" rx="2"/><path d="m15 32 45 35 45-35M15 94l32-35M105 94 73 59"/><path d="M44 16h32M51 8h18" opacity=".5"/></svg>
@@ -2497,7 +2485,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <p class="project-description">Turn connected email conversations into a reviewable lead workflow, with opportunity detection, contextual drafts, and explicit approval before sending.</p>
     <div class="project-stack"><span>React</span><span>TypeScript</span><span>Express</span><span>Better Auth</span><span>Supabase</span></div><p class="project-status">Live application · AI-assisted drafts · Human-reviewed sending</p>
     <div class="project-actions"><button type="button" data-open-case="case-inbox" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/InboxIQ" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://inboxiq-psi.vercel.app" target="_blank" rel="noopener noreferrer">Live demo</a></div>
-  </div></article><article class="project-card" id="project-tcp">
+  </div></article>
+<article class="project-card" id="project-tcp" data-rv="up">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-sanmon-preview.webp')" aria-hidden="true">
     <span class="project-no">04 / 06</span><span class="project-seal jp">通信</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="15" y="18" width="90" height="19"/><rect x="25" y="47" width="70" height="19"/><rect x="35" y="76" width="50" height="19"/><path d="M60 37v10M60 66v10M60 95v16"/><circle cx="24" cy="27" r="2"/><circle cx="34" cy="56" r="2"/><circle cx="44" cy="85" r="2"/></svg>
@@ -2507,7 +2496,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <p class="project-description">Follow a configured message through the TCP/IP layers, inspect protocol headers, and explore packet encapsulation at your own pace.</p>
     <div class="project-stack"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>TCP/IP</span></div><p class="project-status">Live browser simulation · Educational model</p>
     <div class="project-actions"><button type="button" data-open-case="case-tcp" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/TCP-Networking-Project" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://debayan-cyberx.github.io/TCP-Networking-Project/" target="_blank" rel="noopener noreferrer">Live demo</a></div>
-  </div></article><article class="project-card" id="project-drain">
+  </div></article>
+<article class="project-card" id="project-drain" data-rv="up">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-moonwater.webp')" aria-hidden="true">
     <span class="project-no">05 / 06</span><span class="project-seal jp">水路</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 10S28 50 28 71a32 32 0 0 0 64 0C92 50 60 10 60 10Z"/><path d="M10 94c13-9 20 9 34 0s20 9 34 0 20 9 32 0M10 108c13-9 20 9 34 0s20 9 34 0 20 9 32 0"/></svg>
@@ -2517,7 +2507,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <p class="project-description">A map-based storm-drain inspection workflow combining risk prioritization, maintenance tasks, and a traceable path to resolution.</p>
     <div class="project-stack"><span>React</span><span>FastAPI</span><span>Leaflet</span><span>AWS adapters</span></div><p class="project-status">Hackathon prototype · Synthetic drain telemetry</p>
     <div class="project-actions"><button type="button" data-open-case="case-drain" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/DrainSentinel" target="_blank" rel="noopener noreferrer">Source code</a></div>
-  </div></article><article class="project-card" id="project-library">
+  </div></article>
+<article class="project-card" id="project-library" data-rv="up">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-lantern-court.webp')" aria-hidden="true">
     <span class="project-no">06 / 06</span><span class="project-seal jp">書庫</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 32C44 20 27 19 12 24v68c17-5 33-3 48 8 15-11 31-13 48-8V24c-15-5-32-4-48 8Zm0 0v68"/><path d="M25 41c9-1 17 1 24 5M25 55c9-1 17 1 24 5M25 69c9-1 17 1 24 5M71 46c7-4 15-6 24-5M71 60c7-4 15-6 24-5M71 74c7-4 15-6 24-5"/></svg>
@@ -2527,11 +2518,9 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <p class="project-description">A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.</p>
     <div class="project-stack"><span>React</span><span>TypeScript</span><span>Capacitor</span><span>Android</span></div><p class="project-status">Coursework prototype · Local reservation storage</p>
     <div class="project-actions"><button type="button" data-open-case="case-library" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/LibraryLens-Mobile-App" target="_blank" rel="noopener noreferrer">Source code</a></div>
-  </div></article></div>
-</div>
-<!-- END PROJECT_CARDS -->
-  <p class="project-note">Explore at your own pace. Each project includes its implementation, tradeoffs, and a walkthrough.</p>
-  <details class="project-repository-summary"><summary>Repository index ? All six projects</summary>
+  </div></article>
+<!-- END PROJECT_CARDS --></div>
+  <p class="project-note">The sanctuary artwork frames each project; application previews and walkthroughs are inside the case studies.</p>
   <div class="github-live-section">
     <div class="github-live-header"><h3 class="github-live-title">From the repository</h3><div class="github-live-stats"><span class="github-stat-pill">Public repos: <b id="ghReposCount">7</b></span><a class="github-stat-pill" href="https://github.com/Debayan-CyberX?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories ↗</a></div></div>
     <p class="project-note" id="githubActivityStatus" role="status">Selected public repositories. Live metadata is optional; these links always remain available.</p>
@@ -2544,7 +2533,6 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 <article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/LibraryLens-Mobile-App" target="_blank" rel="noopener noreferrer">LibraryLens</a><p class="github-repo-desc">A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.</p><div class="github-repo-meta"><span>React</span><span>Public repository</span></div></article>
 <!-- END PROJECT_REPOSITORIES --></div>
   </div>
-  </details>
   <aside class="project-archive"><span class="evidence-level">Additional team work</span>Supply-Chain-AI — I handled the implementation; teammates supported research and presentations. <a href="https://github.com/Hackathon-TeamX/Supply-Chain-AI" target="_blank" rel="noopener noreferrer">Explore the team repository ↗</a></aside>
 
 </section>
@@ -8482,6 +8470,5 @@ function stepHandshake() {
 </script>
 
 <script src="portfolio.js" defer></script>
-<script src="project-rack.js" defer></script>
 </body>
 </html>

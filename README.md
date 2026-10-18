@@ -6,7 +6,7 @@ A cybersecurity and software-engineering portfolio set in a procedural Japanese 
 
 ## Explore
 
-- A 3D rack of ema-inspired wooden plaques presents six selected projects: AEGIS-X, Tri-Shield, InboxIQ, TCP/IP Simulator, DrainSentinel, and LibraryLens.
+- Six selected projects: AEGIS-X, Tri-Shield, InboxIQ, TCP/IP Simulator, DrainSentinel, and LibraryLens.
 - Case studies explain the problem, Debayan's implementation, a technical tradeoff, limitations, and a reproducible walkthrough.
 - Skills link to project evidence and distinguish project work from coursework.
 - The Playground contains the smaller security, algorithm, calculator, protocol, terminal, and 3D experiments.
@@ -32,11 +32,7 @@ python scripts/build-projects.py
 
 The renderer updates the marked project-card, case-study, and repository-fallback blocks in `index.html`. Content remains available in the HTML without a GitHub API response. `portfolio.css` extends the existing design tokens, and `portfolio.js` handles case-study dialogs and overlay keyboard navigation.
 
-`project-rack.js` builds the original plaque geometry, wood-grain textures, cords, and timber rail using the existing Three.js runtime. `project-rack.css` styles the controls and selected-project panel. The rack supports dragging, touch swipes, previous/next buttons, and a keyboard-accessible project tab list. Project anchors select the corresponding plaque. The repository index can be expanded separately.
-
-The additional renderer pauses outside the viewport, while the page is hidden, and while a case study is open. Reduced-motion mode renders on demand. If the rack cannot start or loses its WebGL context, the six static project cards and their case-study links remain available. No additional framework, model download, or external texture service is required.
-
-Actual application previews are stored in `image/inbox-live-preview.png` and `image/tcp-live-preview.png`. The fallback cards use decorative sanctuary imagery rather than application screenshots. Plaque emblems and lettering identify projects; they do not represent application interfaces.
+Actual application previews are stored in `image/inbox-live-preview.png` and `image/tcp-live-preview.png`. Scenic card artwork is decorative sanctuary imagery, rather than a representation of an application's interface.
 
 ## Deployment
 
