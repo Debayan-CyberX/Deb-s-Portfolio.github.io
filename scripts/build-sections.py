@@ -29,6 +29,6 @@ for name in ('workshop', 'archive'):
         html = html.replace(anchor, block+'\n'+anchor, 1)
 
 footer = (ROOT / 'src/sections/footer.html').read_text(encoding='utf8')
-html = re.sub(r'<footer class="foot"[\s\S]*?</footer>', lambda _: footer, html, count=1)
+html = re.sub(r'<footer class="foot"[\s\S]*?</footer>\n*', lambda _: footer.rstrip()+'\n\n', html, count=1)
 page.write_text(html, encoding='utf8', newline='\n')
 print('Rendered journal, arsenal, workshop, archive, contact, and footer.')

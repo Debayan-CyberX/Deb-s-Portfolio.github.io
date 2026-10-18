@@ -65,6 +65,8 @@ npm run build
 
 The compiled files in `assets/interactions/` are committed so GitHub Pages and `node server.js` can serve the site without a runtime build. The identity pass is a separate lazy-loaded JavaScript chunk.
 
+The original scene is maintained in `src/sanctuary-scene.js`, compiled to `assets/scene/sanctuary.js`, and loaded with `defer` after its retained Three.js dependency. This keeps scene parsing out of the HTML parser's critical path and permits independent browser caching.
+
 Touch devices use `assets/sanctuary-materials/mobile.json`, a lossless PNG archive sampled from the original procedural canvas materials. This avoids regenerating per-pixel normal maps on a phone. Full desktop factories and a missing-archive fallback remain. Rebuild the archive after editing material factories with `PLAYWRIGHT_MODULE=... node scripts/bake-sanctuary-materials.cjs` against the local preview. Mobile content remains usable while the scene loads; the progress indicator reports actual initialization steps. The carousel initializes near its viewport.
 
 ## Deployment

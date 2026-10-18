@@ -8,6 +8,10 @@ const { execFileSync } = require('node:child_process');
 for (const script of ['build-sections.py', 'build-projects.py']) {
   execFileSync('python', [path.join(__dirname, script)], { stdio: 'inherit' });
 }
+// The original scene is deferred and cacheable instead of blocking HTML parsing.
+const sceneDir = path.resolve(__dirname, '../assets/scene');
+fs.mkdirSync(sceneDir, { recursive: true });
+esbuild.buildSync({entryPoints:['src/sanctuary-scene.js'],outfile:path.join(sceneDir,'sanctuary.js'),minify:true,target:['es2020'],legalComments:'inline'});
 const outdir = path.resolve(__dirname, '../assets/interactions');
 esbuild.build({
   entryPoints: ['src/sanctuary.jsx'],
@@ -39,7 +43,7 @@ esbuild.build({
     const hash = createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, '..', name))).digest('hex').slice(0, 12);
     page = page.replace(new RegExp(`assets/interactions/sanctuary\\.${extension}(?:\\?v=[^"\\s]+)?`), `${name}?v=${hash}`);
   }
-  for (const name of ['portfolio.js', 'portfolio.css']) {
+  for (const name of ['portfolio.js', 'portfolio.css', 'assets/scene/sanctuary.js']) {
     const hash = createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, '..', name))).digest('hex').slice(0, 12);
     page = page.replace(new RegExp(`${name.replace('.', '\\.')}\\b(?:\\?v=[^"\\s]+)?`), `${name}?v=${hash}`);
   }

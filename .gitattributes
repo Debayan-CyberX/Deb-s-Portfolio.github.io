@@ -5,3 +5,4 @@
 *.png binary
 *.woff2 binary
 assets/interactions/** -diff linguist-generated=true
+assets/scene/** -diff linguist-generated=true

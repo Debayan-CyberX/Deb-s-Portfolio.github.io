@@ -21,7 +21,8 @@ InboxIQ now links to its verified custom domain, `https://inboxiq.debx.co.in/`; 
 
 | Area | Source |
 | --- | --- |
-| Original page, scene, labs, loading, SEO | `index.html` |
+| Original page, labs, loading, SEO | `index.html` |
+| Deferred original scene, mobile material loading, render budgets | `src/sanctuary-scene.js`, `assets/scene/sanctuary.js` |
 | Editorial tokens, responsive layouts, gallery, dossiers | `src/editorial.css` |
 | Editable lower chapters | `src/sections/{journal,arsenal,workshop,archive,contact,footer}.html` |
 | Content and architecture/security notes | `data/projects.json` |
@@ -67,7 +68,7 @@ One Lighthouse mobile run against the **uncompressed local preview server**, usi
 | First contentful paint | 10.1 s | 10.0 s |
 | Largest contentful paint | 13.0 s | 12.4 s |
 
-The requested 90+ performance target is **not established by this local run**. Cold transfer and render-blocking work remain limitations. GitHub Pages serves the HTML with gzip, while the local server does not; these local timings should not be presented as hosted measurements or field Core Web Vitals. Further gains would require reducing/extracting the legacy inline page and optimizing the scene/media delivery beyond this redesign.
+The requested 90+ performance target is **not established by this local run**. Cold transfer and render-blocking work remain limitations. GitHub Pages serves the HTML with gzip, while the local server does not; these local timings should not be presented as hosted measurements or field Core Web Vitals. A subsequent refinement extracts and minifies the original scene into an independently cacheable, deferred script and keeps the mobile wordmark inside the frame. Its functional smoke checks passed at 320, 390, 768, and 1440 pixels. Further gains require reducing legacy inline styles and optimizing media/scene delivery; the high-performance target must not be claimed without measurement.
 
 ## Verification
 
