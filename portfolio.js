@@ -21,10 +21,47 @@ document.querySelectorAll('.case-dialog').forEach(dialog => {
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
   });
   dialog.addEventListener('close', () => {
-    document.body.classList.remove('modal-open');
-    dialog._caseTrigger?.focus({ preventScroll: true });
+    if (!document.querySelector('.case-dialog[open]')) {
+      document.body.classList.remove('modal-open');
+      dialog._caseTrigger?.focus({ preventScroll: true });
+    }
     document.dispatchEvent(new CustomEvent('portfolio:case', { detail: { id: dialog.id, open: false } }));
   });
+  dialog.querySelector('[data-next-case]').addEventListener('click', event => {
+    const trigger = dialog._caseTrigger;
+    dialog.close();
+    window.openPortfolioCase(event.currentTarget.dataset.nextCase, trigger);
+  });
+});
+
+// The authored world retains its six camera poses. Reading sections only
+// choose an atmosphere and a rendering budget; they never add camera anchors.
+const readingSections = [...document.querySelectorAll('#hero,#pathways,#gate,#lessons,#playground,#archive,#eternity')];
+let sceneUpdateQueued = false;
+function updateReadingScene() {
+    sceneUpdateQueued = false;
+    const line = Math.min(innerHeight * .38, 320);
+    let active = readingSections[0];
+    for (const section of readingSections) {
+        if (section.getBoundingClientRect().top <= line) active = section;
+    }
+    if (document.body.dataset.readingScene !== active.id) {
+        document.body.dataset.readingScene = active.id;
+        document.querySelectorAll('#nav .nav-link').forEach(link => {
+            if (link.getAttribute('href') === `#${active.id}`) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+        });
+        document.dispatchEvent(new CustomEvent('portfolio:scene', { detail: active.id }));
+    }
+}
+addEventListener('scroll', () => {
+    if (!sceneUpdateQueued) { sceneUpdateQueued = true; requestAnimationFrame(updateReadingScene); }
+}, { passive: true });
+addEventListener('resize', updateReadingScene);
+updateReadingScene();
+// Native details change document height without firing a window resize.
+document.querySelectorAll('.arsenal-row,.source-index,.training-details,.email-composer').forEach(details => {
+    details.addEventListener('toggle', () => window.dispatchEvent(new Event('resize')));
 });
 
 // The existing playground and CV overlays share focus, Escape, and scroll behavior.

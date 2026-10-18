@@ -2,6 +2,12 @@ const esbuild = require('esbuild');
 const fs = require('node:fs');
 const path = require('node:path');
 const { createHash } = require('node:crypto');
+const { execFileSync } = require('node:child_process');
+// HTML is committed for GitHub Pages; one local build keeps fragments and data
+// in sync before generating the progressive React islands.
+for (const script of ['build-sections.py', 'build-projects.py']) {
+  execFileSync('python', [path.join(__dirname, script)], { stdio: 'inherit' });
+}
 const outdir = path.resolve(__dirname, '../assets/interactions');
 esbuild.build({
   entryPoints: ['src/sanctuary.jsx'],
@@ -32,6 +38,10 @@ esbuild.build({
     const name = `assets/interactions/sanctuary.${extension}`;
     const hash = createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, '..', name))).digest('hex').slice(0, 12);
     page = page.replace(new RegExp(`assets/interactions/sanctuary\\.${extension}(?:\\?v=[^"\\s]+)?`), `${name}?v=${hash}`);
+  }
+  for (const name of ['portfolio.js', 'portfolio.css']) {
+    const hash = createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, '..', name))).digest('hex').slice(0, 12);
+    page = page.replace(new RegExp(`${name.replace('.', '\\.')}\\b(?:\\?v=[^"\\s]+)?`), `${name}?v=${hash}`);
   }
   fs.writeFileSync(pagePath, page);
 }).catch(error => { console.error(error); process.exit(1); });

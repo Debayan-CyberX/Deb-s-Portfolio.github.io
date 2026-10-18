@@ -1,0 +1,63 @@
+{
+  "profile": "mobile",
+  "generated": "2026-10-18",
+  "description": "Original authored procedural materials; lossless PNG samples. Full desktop factories retained.",
+  "materials": {
+    "wall:[]": {
+      "map": "ff71e6056d9f990d.png",
+      "normal": "f8c51a450409fbb3.png"
+    },
+    "sky:[]": "7f182b2749cc611b.png",
+    "ridge:[]": "03e6ff4d48044fbd.png",
+    "floor:[]": {
+      "map": "e41d4edd68e83aa9.png",
+      "normal": "61c791bd57097ae6.png",
+      "rough": "9d23b6dbacf5d9cb.png"
+    },
+    "wood:[3,{\"boards\":7}]": {
+      "map": "de4ce82f65a90192.png",
+      "normal": "45c158b6b394efe8.png",
+      "rough": "7a59272334af667a.png"
+    },
+    "wood:[29,{\"boards\":0}]": {
+      "map": "55a046cbd222a772.png",
+      "normal": "142ce6f2b6c7e339.png",
+      "rough": "afa412cf09f2c5c7.png"
+    },
+    "roof:[]": {
+      "map": "bb38c22bf11a8fec.png",
+      "normal": "25a7427a47698eea.png"
+    },
+    "shoji:[]": "e2ad91f18d336aaf.png",
+    "glow:[\"rgba(255,150,66,.80)\",\"rgba(240,96,26,.24)\"]": "18ee26ba71583185.png",
+    "glow:[\"rgba(150,178,190,.62)\",\"rgba(104,138,154,.20)\"]": "43f1e27549759287.png",
+    "moon:[]": "a8ef6b748e6e7b4b.png",
+    "glow:[\"rgba(255,124,112,.90)\",\"rgba(206,52,48,.26)\"]": "61fbe6173c7c892b.png",
+    "wood:[131,{\"base\":[34,22,17],\"boards\":0}]": {
+      "map": "6fe8b273bc1c2f71.png",
+      "normal": "a6d8704c7400efaa.png",
+      "rough": "afa412cf09f2c5c7.png"
+    },
+    "lacquer:[]": {
+      "map": "0d7ff1a784e3a8eb.png",
+      "normal": "8b00a7e4b9f935bf.png",
+      "rough": "12a1afcc0569b1fc.png"
+    },
+    "stone:[17]": {
+      "map": "42f81ad33fad7bbb.png",
+      "normal": "75754898b5e5a90e.png",
+      "rough": "c9f8765794062306.png"
+    },
+    "glow:[\"rgba(255,120,60,.9)\",\"rgba(255,60,24,.28)\"]": "7b009694aad7c207.png",
+    "leaf:[]": "f166c697a67372d8.png",
+    "grass:[101,{\"crest\":0.3,\"peak\":0.46,\"wide\":0.42,\"blades\":11000,\"len\":34,\"warm\":0.7,\"crest2\":0.46,\"crest3\":0.4}]": "c25c12e6ea6c4fb9.png",
+    "rock:[404,{\"blobs\":[[0.24,0.78,0.48,0.38],[0.58,0.94,0.46,0.3],[0.84,1.06,0.42,0.28]]}]": "b7e3056a2675f0ab.png",
+    "grass:[202,{\"crest\":0.6,\"peak\":0.55,\"wide\":0.4,\"blades\":13000,\"len\":40,\"warm\":0.95,\"crest2\":-0.44,\"crest3\":0.34}]": "c9137a73529d898c.png",
+    "grass:[303,{\"crest\":0.42,\"peak\":0.62,\"wide\":0.48,\"blades\":16000,\"len\":50,\"warm\":0.85,\"crest2\":0.42,\"crest3\":0.44}]": "99fd637ac70a4127.png",
+    "branch:[505]": "9ee2b3427a4df4c8.png",
+    "rock:[606,{\"blobs\":[[0.18,0.86,0.54,0.44],[0.54,1.02,0.5,0.36],[0.86,0.92,0.4,0.32]]}]": "3e399bc416c5aa54.png",
+    "glow:[\"rgba(160,205,210,.55)\",\"rgba(110,165,175,.18)\"]": "9494800c3dec5054.png",
+    "glow:[\"rgba(255,190,140,1)\",\"rgba(255,120,60,.35)\"]": "77b3694a8ef06459.png",
+    "wisp:[]": "6766a2bcde230910.png"
+  }
+}

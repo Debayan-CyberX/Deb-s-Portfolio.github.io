@@ -9,20 +9,19 @@ import BellToggle from './react-bits/BellToggle/BellToggle.jsx';
 import Magnet from './react-bits/Magnet/Magnet/Magnet.jsx';
 import DecryptedText from './react-bits/DecryptedText/DecryptedText/DecryptedText.jsx';
 import RubberSegment from './react-bits/RubberSegment/RubberSegment.jsx';
-import ScrollExpand from './react-bits/ScrollExpand/ScrollExpand.jsx';
 import projects from '../data/projects.json';
 import './sanctuary.css';
+import './editorial.css';
 
 const IdentityPass = lazy(() => import('./IdentityPass.jsx'));
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = window.matchMedia('(pointer: coarse)').matches;
 const items = projects.map(p => ({ src: p.preview, title: p.name, subtitle: p.category, alt: `${p.name}: actual application landing page` }));
-const cards = [...document.querySelectorAll('.project-card')];
-const grid = document.querySelector('.featured-grid');
 const themeItems = [{value:'sanctuary',label:'Sanctuary'},{value:'matrix',label:'Matrix'},{value:'violet',label:'Violet'},{value:'gold',label:'Ember'}];
 const menuItems = [
   { label: 'Projects', link: '#pathways' }, { label: 'About', link: '#gate' },
-  { label: 'Skills', link: '#lessons' }, { label: 'Playground', link: '#playground' },
+  { label: 'Arsenal', link: '#lessons' }, { label: 'Workshop', link: '#playground' },
+  { label: 'Archive', link: '#archive' },
   { label: 'CV', link: 'Debayan_Lahiry_Cybersecurity_CV.pdf' }, { label: 'Contact', link: '#eternity' }
 ];
 
@@ -34,10 +33,11 @@ class IslandBoundary extends Component {
 }
 
 function Collection() {
+  const host = useRef(null);
+  const [near, setNear] = useState(false);
   const [active, setActive] = useState(0);
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
-  const [all, setAll] = useState(false);
   const [autoplay, setAutoplay] = useState(!reduce);
   const [obscured, setObscured] = useState(false);
   const [command, setCommand] = useState({ index: 0, token: 0 });
@@ -49,6 +49,13 @@ function Collection() {
   }, []);
   const open = useCallback(index => window.openPortfolioCase(`case-${projects[index].id}`, document.querySelector('.flex-carousel')), []);
   useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setNear(true); observer.disconnect(); }
+    }, {rootMargin:'80px'});
+    observer.observe(host.current);
+    return () => observer.disconnect();
+  }, []);
+  useEffect(() => {
     const sync = () => setObscured(document.body.classList.contains('modal-open') || Boolean(document.querySelector('.shoji-navigation[data-open]')));
     const observer = new MutationObserver(sync);
     observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
@@ -57,15 +64,6 @@ function Collection() {
     sync();
     return () => observer.disconnect();
   }, []);
-  useEffect(() => {
-    grid.classList.toggle('collection-details', available && !all);
-    cards.forEach((card, index) => {
-      card.hidden = available && !all && index !== active;
-      if (available) { card.style.opacity = '1'; card.style.transform = 'none'; }
-    });
-    window.dispatchEvent(new Event('resize'));
-    return () => { grid.classList.remove('collection-details'); cards.forEach(card => { card.hidden = false; }); };
-  }, [active, available, all]);
   useEffect(() => {
     if (!available) return;
     const onAnchor = event => {
@@ -82,17 +80,17 @@ function Collection() {
     if (hash >= 0) select(hash);
     return () => document.removeEventListener('click', onAnchor, true);
   }, [available, select]);
-  return <div className={`project-collection ${available ? 'is-ready' : ''}`}>
+  return <div ref={host} className={`project-collection ${available ? 'is-ready' : ''} ${failed ? 'is-unavailable' : ''}`}>
     {!failed && <IslandBoundary onError={() => setFailed(true)}>
       <div className="collection-stage">
         <div className="collection-caption"><span>SELECTED WORK / APPLICATION PREVIEWS</span><span>DRAG TO EXPLORE</span></div>
-        <FlexCarousel items={items} preset="ribbon" intro="fade" fit="natural" cardHeight={0.76} gap={26} radius={0}
+        {near && <FlexCarousel items={items} preset="ribbon" intro="fade" fit="natural" cardHeight={0.76} gap={26} radius={0}
           bend={0.16} reach={0.28} dispersion={0.05} squeeze={0.03} lensWidth={0.89} lensHeight={1.08}
           captureWheel={false} focusOnClick={false} captions={false}
           autoplayMode="continuous" autoplaySpeed={48}
-          autoplay={autoplay && !obscured && !all}
+          autoplay={autoplay && !obscured}
           onChange={change} onSelect={open} selectedIndex={command.index} selectionToken={command.token}
-          onReady={() => setReady(true)} onUnavailable={() => setFailed(true)} />
+          onReady={() => setReady(true)} onUnavailable={() => setFailed(true)} />}
       </div>
     </IslandBoundary>}
     {available && <>
@@ -102,8 +100,12 @@ function Collection() {
         <button type="button" aria-label="Next project" onClick={() => select((active + 1) % projects.length)}>→</button>
         {!reduce && <button type="button" className="collection-play" aria-label={autoplay ? 'Pause automatic project rotation' : 'Start automatic project rotation'} aria-pressed={!autoplay} title={autoplay ? 'Pause automatic rotation' : 'Start automatic rotation'} onClick={() => setAutoplay(value => !value)}>{autoplay ? 'Ⅱ' : '▶'}</button>}
       </div><span className="collection-hint">{reduce ? 'Manual browsing · Reduced motion' : 'Continuous glide · Drag to explore'}</span>
-      <button className="collection-view" type="button" aria-expanded={all} onClick={() => setAll(value => !value)}>{all ? 'Show selected project' : 'Show all six projects'} <span>↗</span></button></div>
+      <a className="collection-view" href="#engineeringNotes">Engineering notes <span>↓</span></a></div>
       <div className="collection-index" role="group" aria-label="Choose a project">{projects.map((p,index) => <button key={p.id} type="button" aria-pressed={active === index} onClick={() => select(index)}><small>0{index+1}</small>{p.name}</button>)}</div>
+      <div className="collection-selected">
+        <div><span className="editorial-label">SELECTED / 0{active+1}</span><h3>{projects[active].name}</h3><p className="selected-status">{projects[active].status}</p></div>
+        <div><p>{projects[active].description}</p><div className="project-actions"><button type="button" onClick={event => window.openPortfolioCase(`case-${projects[active].id}`, event.currentTarget)}>Open dossier</button><a href={`https://github.com/Debayan-CyberX/${projects[active].repo}`} target="_blank" rel="noopener noreferrer">Source code</a>{projects[active].demo && <a href={projects[active].demo} target="_blank" rel="noopener noreferrer">Live project ↗</a>}</div></div>
+      </div>
     </>}
   </div>;
 }
@@ -120,6 +122,12 @@ function SoundBell() {
 
 function Navigation() {
   const [theme, setTheme] = useState(document.getElementById('themeSelect')?.value || 'sanctuary');
+  const [section, setSection] = useState(document.body.dataset.readingScene || 'hero');
+  useEffect(() => {
+    const sync = event => setSection(event.detail);
+    document.addEventListener('portfolio:scene', sync);
+    return () => document.removeEventListener('portfolio:scene', sync);
+  }, []);
   const navigate = useCallback((item, event) => {
     event.preventDefault();
     // Wait for the menu to release background inertness before opening a modal.
@@ -129,7 +137,7 @@ function Navigation() {
       if (section) window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - 95, behavior: reduce ? 'instant' : 'smooth' });
     });
   }, []);
-  return <StaggeredMenu isFixed logoUrl={null} className="shoji-navigation" colors={['#452c25','#1b2826','#10191a']} items={menuItems}
+  return <StaggeredMenu isFixed logoUrl={null} className="shoji-navigation" colors={['#452c25','#1b2826','#10191a']} items={menuItems.map(item => ({...item, active: item.link === `#${section}`}))}
     socialItems={[{label:'GitHub',link:'https://github.com/Debayan-CyberX'}]} menuButtonColor="#e4e4d6" openMenuButtonColor="#e4e4d6" accentColor="var(--vermilion)" onItemClick={navigate}
     footer={<div className="shoji-settings"><p>THE SANCTUARY / CHOOSE YOUR LIGHT</p><RubberSegment items={themeItems} value={theme} onChange={value => { setTheme(value); window.setPortfolioTheme(value); }} trackColor="#080f10" thumbColor="#bba578" textColor="#a7b1a8" activeTextColor="#10191a" size="lg" radius={2} stretch={45} aria-label="Sanctuary palette" /><div className="menu-sound"><span>Kyoto soundscape</span><SoundBell /></div></div>} />;
 }
@@ -157,10 +165,6 @@ function CaseWalkthrough({project}) {
       <a className="workflow-evidence" href={`https://github.com/Debayan-CyberX/${project.repo}/${project.validation_path}`} target="_blank" rel="noopener noreferrer">Explore implementation &amp; validation ↗</a>
     </Step>)}
   </Stepper>}{opened && <div className="workflow-buttons"><button type="button" disabled={step===1} onClick={() => setStep(s=>s-1)}>← Previous</button><span>STEP {step} OF 4</span><button type="button" onClick={() => setStep(s=>s===4?1:s+1)}>{step===4?'Restart ↺':'Next →'}</button></div>}</div>;
-}
-
-function Preview({pid}) {
-  return <ScrollExpand src={`image/${pid}-live-preview.png`} alt={`Actual ${pid==='inbox'?'InboxIQ':'TCP/IP Simulator'} application interface`} className="case-scroll-preview" startWidth={coarse?94:82} startHeight={94} startRadius={2} endRadius={0} mediaZoom={1} scrollDistance={reduce?0:0.32} holdDistance={0} overlayScrim={0} enabled={!reduce} />;
 }
 
 function OriginalNode({node}) {
@@ -192,11 +196,7 @@ document.querySelectorAll('[data-case-stepper]').forEach(host => {
   const project=projects.find(p=>p.id===host.dataset.caseStepper);
   portals.push(createPortal(<IslandBoundary><CaseWalkthrough project={project} /></IslandBoundary>,host,project.id));
 });
-document.querySelectorAll('[data-expand-preview]').forEach(host => {
-  host.replaceChildren();
-  portals.push(createPortal(<IslandBoundary fallback={<img src={`image/${host.dataset.expandPreview}-live-preview.png`} alt="Actual application interface" />}><Preview pid={host.dataset.expandPreview} /></IslandBoundary>,host,`preview-${host.dataset.expandPreview}`));
-});
-document.querySelectorAll('.les, .playground-item').forEach((card,index) => {
+document.querySelectorAll('.arsenal-row, .playground-item').forEach((card,index) => {
   const host=document.createElement('div'); host.className='lantern-host'; card.appendChild(host);
   portals.push(createPortal(<SpotlightCard className="lantern-card" spotlightColor="#d4a66b" intensity={0.10} borderGlow={0.35} spotlightSize={260} proximity={55} flare={false} smoothing={0.15} />,host,`lantern-${index}`));
 });

@@ -1,0 +1,138 @@
+{
+  "browserSuite": [
+    {
+      "width": 320,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "width": 375,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "width": 390,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "width": 768,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "width": 1024,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "width": 1440,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "width": 1920,
+      "layout": true,
+      "dossiers": 6,
+      "arsenal": 4,
+      "menu": true,
+      "errors": 0
+    },
+    {
+      "functional": true,
+      "continuousCarousel": true,
+      "labs": 6,
+      "cv": true,
+      "contactDraft": true,
+      "themeAudio": true,
+      "fallback": true
+    }
+  ],
+  "renderSample": [
+    {
+      "mode": "before",
+      "sampleMs": 3005,
+      "mainSceneRenders": 496,
+      "idleEmberClears": 496,
+      "geometries": 234,
+      "textures": 68
+    },
+    {
+      "mode": "after",
+      "sampleMs": 3005,
+      "mainSceneRenders": 83,
+      "idleEmberClears": 0,
+      "geometries": 235,
+      "textures": 68
+    }
+  ],
+  "lighthouseInitial": {
+    "version": "13.5.0",
+    "url": "http://localhost:3000/",
+    "fetchTime": "2026-10-18T10:29:41.280Z",
+    "scores": {
+      "performance": 22,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 10133.94625,
+      "largest-contentful-paint": 12955.701000000001,
+      "total-blocking-time": 14023.51075,
+      "cumulative-layout-shift": 0.10669256759313611,
+      "speed-index": 14841.618482338345
+    }
+  },
+  "lighthouseProgressive": {
+    "version": "13.5.0",
+    "url": "http://localhost:3000/",
+    "fetchTime": "2026-10-18T10:37:10.978Z",
+    "scores": {
+      "performance": 52,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "metrics": {
+      "first-contentful-paint": 10018.047998333523,
+      "largest-contentful-paint": 12442.309997916902,
+      "total-blocking-time": 220.5,
+      "cumulative-layout-shift": 0.05971437993943859,
+      "speed-index": 10018.047998333523
+    }
+  },
+  "axe": {
+    "testedStates": [
+      "page",
+      "dossier",
+      "shoji menu",
+      "cryptography overlay"
+    ],
+    "tags": [
+      "wcag2a",
+      "wcag2aa",
+      "wcag21aa"
+    ],
+    "violations": 0
+  },
+  "originalSourceHashes": 22
+}

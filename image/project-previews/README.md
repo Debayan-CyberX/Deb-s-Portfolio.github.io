@@ -6,7 +6,7 @@ Captured on 2026-10-18 at a 1440 × 960 browser viewport. These are browser scre
 | --- | --- |
 | `aegis-redesign.jpg` | Current AEGIS-X titanium-ribbon landing page, “Clarity. In every dimension.” Captured from the user's `AEGIS-X-design-aegis-x-reinvention` source checkout, rather than the older `main` landing page. The related redesign branch is [design/aegis-x-reinvention](https://github.com/Debayan-CyberX/AEGIS-X/tree/design/aegis-x-reinvention); the local checkout contains the later titanium-ribbon update. No backend credentials are needed for the public page. |
 | `trishield.jpg` | Tri-Shield initial verification screen, running locally from [the Streamlit source](https://github.com/Debayan-CyberX/Tri-Shield/blob/main/frontend/app.py). No document was submitted. |
-| `inbox.jpg` | [InboxIQ live landing page](https://inboxiq-psi.vercel.app/). |
+| `inbox.jpg` | [InboxIQ live landing page](https://inboxiq.debx.co.in/), recaptured from the custom domain during the editorial redesign. |
 | `tcp.jpg` | [TCP/IP Simulator live home](https://debayan-cyberx.github.io/TCP-Networking-Project/). |
 | `drain.jpg` | [DrainSentinel live landing page](https://sw5pykycb7.execute-api.ap-south-1.amazonaws.com/). |
 | `library.jpg` | LibraryLens catalog home, running locally from [the web application source](https://github.com/Debayan-CyberX/LibraryLens-Mobile-App). |

@@ -24,16 +24,6 @@
 .collection-index small { display: block; font: 9px monospace; color: var(--muted); margin-bottom: 8px; }
 .collection-index button[aria-pressed="true"] { color: var(--bone); background: #1a2423; }
 .collection-index button[aria-pressed="true"]::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--vermilion); }
-.collection-details { display: block; }
-.collection-details .project-card { margin: 0 !important; border-color: var(--line); transform: none !important; }
-.collection-details .project-art { display: none; }
-.collection-details .project-content { display: grid; grid-template-columns: 1fr 1.45fr; grid-template-areas: 'category description' 'title description' 'stack actions' 'status status'; gap: 14px 48px; padding: 30px; }
-.collection-details .project-category { grid-area: category; margin: 0; }
-.collection-details h3 { grid-area: title; font-size: clamp(32px,4vw,48px); font-weight: 300; margin: 0; }
-.collection-details .project-description { grid-area: description; margin: 0; max-width: 62ch; }
-.collection-details .project-stack { grid-area: stack; margin: 0; align-content: center; padding: 0; }
-.collection-details .project-actions { grid-area: actions; }
-.collection-details .project-status { grid-area: status; margin: 0; padding-top: 14px; font-size: 10px; }
 
 /* Layered screens retain the existing header and scene. */
 body.interactions-ready .nav-burger, body.interactions-ready .theme-selector-pill, body.interactions-ready .ambient-audio-btn, body.interactions-ready #weatherSoundBtn { display: none !important; }
@@ -93,17 +83,9 @@ body.modal-open .shoji-navigation { visibility: hidden; }
 .workflow-buttons button { min-height: 44px; color: var(--bone); font: inherit; font-size: 11px; cursor: pointer; }
 .workflow-buttons button:disabled { opacity: .25; cursor: default; }
 .workflow-buttons > span { color: var(--muted); font: 9px monospace; }
-.case-scroll-preview { height: min(480px,50dvh); border: 1px solid var(--line); }
-.case-scroll-preview .scroll-expand__media { object-fit: contain; border: none; background: #060b0d; }
 .case-figure figcaption a { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 
 /* A typeset identity pass, with ordinary links alongside its 3D interaction. */
-.identity-block { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0,1fr) minmax(280px,1fr); gap: 36px; align-items: center; margin-top: 48px; border: 1px solid var(--line); background: rgba(7,14,16,.86); }
-.identity-copy { padding: 34px; }
-.identity-copy > span { display: block; font: 9px monospace; letter-spacing: .18em; color: var(--gold); }
-.identity-copy h3 { font-size: clamp(28px,3vw,42px); font-weight: 300; line-height: 1.15; margin: 18px 0; }
-.identity-copy p { max-width: 40ch; font-size: 13px; color: var(--bone-dim); line-height: 1.8; }
-.identity-copy .project-actions { margin-top: 22px; }
 .identity-pass-slot { position: relative; height: 460px; overflow: hidden; border-left: 1px solid var(--line); background: radial-gradient(ellipse at 50% 40%,rgba(196,170,117,.07),transparent 65%); }
 .identity-fallback { display: block; width: 210px; max-width: 60%; height: auto; margin: 60px auto 0; transform: rotate(-5deg); }
 .pass-hint { position: absolute; bottom: 18px; left: 0; right: 0; text-align: center; pointer-events: none; font: 9px monospace; letter-spacing: .13em; color: var(--muted); }
@@ -115,8 +97,6 @@ body.modal-open .shoji-navigation { visibility: hidden; }
   .collection-index { grid-template-columns: repeat(3,minmax(0,1fr)); }
   .collection-index button { border-bottom: 1px solid var(--line); }
   .collection-hint { display: none; }
-  .collection-details .project-content { grid-template-columns: 1fr; grid-template-areas: 'category' 'title' 'description' 'stack' 'status' 'actions'; gap: 18px; padding: 24px; }
-  .identity-block { grid-template-columns: 1fr; gap: 0; }
   .identity-pass-slot { height: 400px; border-left: 0; border-top: 1px solid var(--line); }
 }
 @media(max-width:480px) {
@@ -131,7 +111,6 @@ body.modal-open .shoji-navigation { visibility: hidden; }
   .collection-index button { font-size: 10px; padding: 13px 8px; }
   .shoji-navigation .staggered-menu-panel { padding: 88px 24px 24px; }
   .shoji-settings .rubber-segment { --rs-fs: 11px; }
-  .identity-copy { padding: 25px; }
   .workflow-progress { gap: 5px; }
   .workflow-progress > span { font-size: 16px; }
   .workflow-progress small { font-size: 8px; }
