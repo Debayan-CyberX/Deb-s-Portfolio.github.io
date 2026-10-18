@@ -2853,6 +2853,7 @@ function buildRig() {
   camera.layers.enable(1); camera.layers.enable(2);
 }
 const _p = new THREE.Vector3(), _t = new THREE.Vector3(), _d = new THREE.Vector3();
+const _openingP = new THREE.Vector3(...CAM[0].p), _openingT = new THREE.Vector3(...CAM[0].t);
 /* Every waypoint is composed for a wide frame. On a tall one the same
    numbers crop the gate in half, so the rig steps back along its own view
    axis and opens up a little instead of letting the sides fall away. */
@@ -2872,6 +2873,14 @@ function applyCamera() {
   const i = clamp(Math.floor(RIG.smooth), 0, N - 1), f = clamp(RIG.smooth - i, 0, 1);
   let fov = lerp(CAM[i].fov, CAM[i + 1].fov, f);
 
+  // Keep the opening composition throughout the hero-to-Projects scroll.
+  // Resume the authored route gently between Projects and About, without
+  // changing chapter progress, the wordmark fade, or the remaining waypoints.
+  const travel = smooth(1, 2, RIG.smooth);
+  _p.lerpVectors(_openingP, _p, travel);
+  _t.lerpVectors(_openingT, _t, travel);
+  fov = lerp(CAM[0].fov, fov, travel);
+
   fov = fitAspect(_p, _t, fov);
 
   /* the opening dolly: a long lens easing in from further back */
@@ -2879,7 +2888,7 @@ function applyCamera() {
   _p.z += io * 5.6; _p.y += io * 0.65; fov += io * 8;
 
   /* parallax — a hand-held drift, never enough to break the frame */
-  const par = 1 - smooth(0, 1.6, RIG.smooth) * .55;
+  const par = 1 - smooth(1, 2.6, RIG.smooth) * .55;
   _p.x += RIG.mx * 0.62 * par; _p.y += RIG.my * 0.34 * par;
   _t.x -= RIG.mx * 0.20 * par; _t.y -= RIG.my * 0.12 * par;
 

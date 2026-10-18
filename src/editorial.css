@@ -41,9 +41,8 @@ button, a, summary { -webkit-tap-highlight-color: transparent; }
 .section-intro { gap: 60px; margin-bottom: 48px; }
 .section-intro h2 { font-size: var(--editorial-display); line-height: 1.03; letter-spacing: -.045em; font-weight: 400; max-width: 18ch; }
 .section-intro p { font-size: var(--editorial-body); line-height: 1.8; max-width: 38ch; color: var(--bone-dim); }
-/* Localized scrims preserve the shrine, moon, and DEBX beyond the copy. */
+/* The introduction sits directly on the sanctuary, without a bounded backdrop. */
 body[data-layout-hero="b"] .hero-top { width: min(68vw,1020px); max-width: 100%; padding-top: calc(var(--nav-h) + clamp(30px,5vh,64px)); }
-.hero-top::before { content: ''; position: absolute; inset: -30px -50px -45px calc(-1 * var(--pad)); background: radial-gradient(ellipse at 10% 60%,rgba(5,8,10,.94),rgba(5,8,10,.65) 52%,transparent 80%); mask-image: linear-gradient(180deg,transparent,#000 8%,#000 76%,transparent); z-index: -1; pointer-events: none; }
 .hero-top .eyebrow { margin-bottom: clamp(28px,4vh,48px); font-size: 10px; letter-spacing: .18em; }
 .hero h1.h-hero { font-size: clamp(78px,min(8.2vw,12.5svh),154px); line-height: .94; letter-spacing: -.065em; text-transform: none; font-weight: 400; margin-bottom: 0; }
 .hero h1 .mask-line { padding: .05em .12em .1em 0; margin: -.05em 0 -.1em; }
