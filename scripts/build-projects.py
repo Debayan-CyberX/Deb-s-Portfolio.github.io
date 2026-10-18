@@ -31,10 +31,8 @@ def render(projects):
         actions += link(source, 'Source code')
         demo = link(project['demo'], 'Live demo') if project.get('demo') else ''
         cards.append(f'''<article class="project-card" id="project-{pid}" data-rv="up">
-  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/{project['scene']}')" aria-hidden="true">
-    <span class="project-no">0{number} / 06</span><span class="project-seal jp">{project['jp']}</span>
-    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">{SYMBOLS[project['symbol']]}</svg>
-    <span class="project-art-label">{' · '.join(project['path'])}</span>
+  <div class="project-art">
+    <img src="image/project-plates/{pid}.svg" width="1020" height="760" loading="lazy" alt="{name}: original workflow diagram">
   </div>
   <div class="project-content"><span class="project-category">{escape(project['category'])}</span><h3>{name}</h3>
     <p class="project-description">{escape(project['description'])}</p>
@@ -46,13 +44,13 @@ def render(projects):
             ('Decision & tradeoff', 'decision'), ('Current boundaries', 'limitations')])
         figure = ''
         if pid in ('tcp', 'inbox'):
-            figure = f'<figure class="case-figure"><img src="image/{pid}-live-preview.png" width="1280" height="800" loading="lazy" alt="Actual {name} interface"><figcaption>Actual application interface. Open the live demo to explore it.</figcaption></figure>'
+            figure = f'<figure class="case-figure"><div data-expand-preview="{pid}"><img src="image/{pid}-live-preview.png" width="1280" height="800" loading="lazy" alt="Actual {name} interface"></div><figcaption>Actual application interface. Scroll over the preview to expand it. <a href="image/{pid}-live-preview.png" target="_blank" rel="noopener">Open full screenshot</a></figcaption></figure>'
         steps = ''.join(f'<li>{escape(step)}</li>' for step in project['walkthrough'])
         dialogs.append(f'''<dialog class="case-dialog" id="case-{pid}" aria-labelledby="case-title-{pid}">
   <div class="case-header"><span>Project dossier · 0{number} / 06</span><button type="button" class="case-close" data-close-case aria-label="Close {name} case study">&times;</button></div>
   <div class="case-body"><span class="project-category">{escape(project['category'])}</span><h2 id="case-title-{pid}">{name}</h2><p>{escape(project['description'])}</p>
     <div class="case-meta">{tags}</div><div class="case-grid">{sections}</div>{figure}
-    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol>{steps}</ol></section>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><div data-case-stepper="{pid}"></div><ol class="walkthrough-fallback">{steps}</ol></section>
     <p class="case-validation">{escape(project['validation'])}</p><div class="project-actions">{link(source, 'Source code')}{link(source+'/'+project['validation_path'], 'Implementation & validation')}{demo}</div>
   </div></dialog>''')
         repositories.append(f'<article class="github-repo-card"><a class="github-repo-name" href="{source}" target="_blank" rel="noopener noreferrer">{name}</a><p class="github-repo-desc">{escape(project["description"])}</p><div class="github-repo-meta"><span>{escape(project["stack"][0])}</span><span>Public repository</span></div></article>')

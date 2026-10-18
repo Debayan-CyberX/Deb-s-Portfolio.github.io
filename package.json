@@ -4,10 +4,24 @@
   "description": "",
   "main": "analyze_selectors.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node scripts/build-interactions.cjs",
+    "preview": "node server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "@hugeicons/core-free-icons": "^4.3.5",
+    "@hugeicons/react": "^1.1.10",
+    "gsap": "^3.15.0",
+    "motion": "^14.3.0",
+    "ogl": "^1.0.11",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.186.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
 }

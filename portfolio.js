@@ -1,14 +1,17 @@
 'use strict';
 
 // Native dialogs keep the new case studies keyboard-accessible without dependencies.
-document.querySelectorAll('[data-open-case]').forEach(button => {
-  button.addEventListener('click', () => {
-    const dialog = document.getElementById(button.dataset.openCase);
+window.openPortfolioCase = (id, trigger = document.activeElement) => {
+    const dialog = document.getElementById(id);
     if (!dialog) return;
+    dialog._caseTrigger = trigger;
     dialog.showModal();
     document.body.classList.add('modal-open');
     dialog.scrollTop = 0;
-  });
+    document.dispatchEvent(new CustomEvent('portfolio:case', { detail: { id, open: true } }));
+};
+document.querySelectorAll('[data-open-case]').forEach(button => {
+  button.addEventListener('click', () => window.openPortfolioCase(button.dataset.openCase, button));
 });
 document.querySelectorAll('.case-dialog').forEach(dialog => {
   dialog.querySelector('[data-close-case]').addEventListener('click', () => dialog.close());
@@ -17,7 +20,11 @@ document.querySelectorAll('.case-dialog').forEach(dialog => {
     const rect = dialog.getBoundingClientRect();
     if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
   });
-  dialog.addEventListener('close', () => document.body.classList.remove('modal-open'));
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('modal-open');
+    dialog._caseTrigger?.focus({ preventScroll: true });
+    document.dispatchEvent(new CustomEvent('portfolio:case', { detail: { id: dialog.id, open: false } }));
+  });
 });
 
 // The existing playground and CV overlays share focus, Escape, and scroll behavior.

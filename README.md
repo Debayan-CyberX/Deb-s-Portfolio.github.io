@@ -6,7 +6,7 @@ A cybersecurity and software-engineering portfolio set in a procedural Japanese 
 
 ## Explore
 
-- Six selected projects: AEGIS-X, Tri-Shield, InboxIQ, TCP/IP Simulator, DrainSentinel, and LibraryLens.
+- React Bits Flex Carousel presents six selected projects: AEGIS-X, Tri-Shield, InboxIQ, TCP/IP Simulator, DrainSentinel, and LibraryLens. Each uses an original, hand-coded vector diagram of its workflow.
 - Case studies explain the problem, Debayan's implementation, a technical tradeoff, limitations, and a reproducible walkthrough.
 - Skills link to project evidence and distinguish project work from coursework.
 - The Playground contains the smaller security, algorithm, calculator, protocol, terminal, and 3D experiments.
@@ -32,7 +32,35 @@ python scripts/build-projects.py
 
 The renderer updates the marked project-card, case-study, and repository-fallback blocks in `index.html`. Content remains available in the HTML without a GitHub API response. `portfolio.css` extends the existing design tokens, and `portfolio.js` handles case-study dialogs and overlay keyboard navigation.
 
-Actual application previews are stored in `image/inbox-live-preview.png` and `image/tcp-live-preview.png`. Scenic card artwork is decorative sanctuary imagery, rather than a representation of an application's interface.
+Actual application previews are stored in `image/inbox-live-preview.png` and `image/tcp-live-preview.png`.
+
+## Interactive sanctuary
+
+The existing HTML and Three.js scene remain the page foundation. `src/sanctuary.jsx` adds small React islands using source obtained through the official React Bits MCP registry:
+
+- Flex Carousel with drag, arrow keys, explicit project buttons, previous/next controls, and a show-all view. A static six-card layout remains available when WebGL is unavailable or its context is lost.
+- Staggered Menu styled as layered shoji screens, with focus containment, Escape, CV access, and palette controls.
+- Spotlight Card adds a restrained lantern glow to Skills and Playground; keyboard focus receives a corresponding highlight.
+- Stepper turns each project's documented walkthrough into four selectable steps with implementation evidence.
+- Bell Toggle operates the existing procedural soundscape. Its menu and HUD instances stay synchronized. Audio starts only through a user action.
+- Magnet gives key actions at most three pixels of pointer movement; it is disabled for touch and reduced motion.
+- Decrypted Text briefly reveals small project category labels.
+- Rubber Segment controls the existing Sanctuary, Matrix, Violet, and Ember palettes.
+- Scroll Expand frames actual InboxIQ and TCP/IP Simulator screenshots. Full-image links remain available.
+- Lanyard provides a draggable, turnable identity pass in About. It loads near the viewport and uses locally authored vector faces, a procedural strap, and brass hardware. Ordinary CV and GitHub links remain beside it.
+
+The project plates and identity faces are code-native SVGs, not generated illustrations, stock photos, project logos, or application screenshots. Their source is `scripts/build-artwork.py`. The diagrams summarize workflows and do not claim to depict captured production data.
+
+To update interactions or vector artwork:
+
+```sh
+npm ci
+python scripts/build-artwork.py
+python scripts/build-projects.py
+npm run build
+```
+
+The compiled files in `assets/interactions/` are committed so GitHub Pages and `node server.js` can serve the site without a runtime build. The identity pass is a separate lazy-loaded JavaScript chunk.
 
 ## Deployment
 
@@ -44,4 +72,4 @@ The contact form is a visual placeholder and has no delivery integration. It was
 
 ## Credits
 
-Portfolio content and implementation: Debayan Lahiry. The existing sanctuary scene, fonts, and retained assets remain in their original locations; this update adds no new rendering framework or asset-generation dependency.
+Portfolio content and implementation: Debayan Lahiry. The existing sanctuary scene, fonts, and retained assets remain in their original locations. Interactive components are adapted from [React Bits by David Haz](https://reactbits.dev/) under its [MIT + Commons Clause license](src/react-bits/LICENSE.md). Source locations and local adaptations are documented in `src/react-bits/README.md`.

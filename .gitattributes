@@ -4,3 +4,4 @@
 *.jpg binary
 *.png binary
 *.woff2 binary
+assets/interactions/** -diff linguist-generated=true

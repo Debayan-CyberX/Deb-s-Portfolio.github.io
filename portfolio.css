@@ -7,7 +7,7 @@
 :where(a, button, summary, select, input, textarea):focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
 .hero-actions a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 15px; border: 1px solid var(--line); background: rgba(5,7,10,.64); color: var(--bone); font-size: 10px; letter-spacing: .13em; text-transform: uppercase; transition: border-color .25s, background .25s; }
-.hero-actions a:first-child { background: var(--vermilion); border-color: var(--vermilion); color: #fff; }
+.hero-actions > a:first-child, .hero-actions > .magnet-host:first-child a { background: var(--vermilion); border-color: var(--vermilion); color: #fff; }
 .hero-actions a:hover { border-color: var(--gold); }
 .hero-availability { display: flex; align-items: center; gap: 8px; margin-top: 15px; color: var(--bone-dim); font-size: 10px; letter-spacing: .08em; }
 .hero-availability::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }

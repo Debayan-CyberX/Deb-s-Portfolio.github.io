@@ -1,0 +1,144 @@
+[
+  {
+    "component": "BellToggle",
+    "registry": "https://reactbits.dev/r/BellToggle-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "BellToggle/BellToggle.css",
+        "sha256": "376be7cd67a1c9f3c7d5837ba250367bbce6d8ab99e25cd9305845d5533c42ca"
+      },
+      {
+        "path": "BellToggle/BellToggle.jsx",
+        "sha256": "33619b15a6bfdd09162188d74dd5afa5945675a68bb40b42a33482f74fb0a97f"
+      }
+    ]
+  },
+  {
+    "component": "DecryptedText",
+    "registry": "https://reactbits.dev/r/DecryptedText-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "DecryptedText/DecryptedText/DecryptedText.jsx",
+        "sha256": "6ea64cddaff8c725ad0939a14e0d1b57a759355f88af1bdffc05a56385a79d5c"
+      }
+    ]
+  },
+  {
+    "component": "FlexCarousel",
+    "registry": "https://reactbits.dev/r/FlexCarousel-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "FlexCarousel/FlexCarousel.css",
+        "sha256": "12ae281e18501340c3c9230491f0990abb899f6841af02db07a6a6495bc27adb"
+      },
+      {
+        "path": "FlexCarousel/FlexCarousel.jsx",
+        "sha256": "8204b5c20a4ed73e36fff3f3e9b7d11b72bc3a7046ca91d90885669ff6dd1390"
+      }
+    ]
+  },
+  {
+    "component": "Lanyard",
+    "registry": "https://reactbits.dev/r/Lanyard-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "Lanyard/Lanyard.css",
+        "sha256": "25678081ba329fe4f4c8730351e68b023e028a673eda5a4638199f79eec5b463"
+      },
+      {
+        "path": "Lanyard/Lanyard.jsx",
+        "sha256": "ed1997c45ceaf9bd615d1545a39f80f66ab07ffa68a208b0f233c13e3dca5922"
+      }
+    ]
+  },
+  {
+    "component": "Magnet",
+    "registry": "https://reactbits.dev/r/Magnet-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "Magnet/Magnet/Magnet.jsx",
+        "sha256": "f1651ba9a8470ba8f7ba9a90edd0fe3ad44d15016279203558a1e6e2672e5425"
+      }
+    ]
+  },
+  {
+    "component": "RubberSegment",
+    "registry": "https://reactbits.dev/r/RubberSegment-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "RubberSegment/RubberSegment.css",
+        "sha256": "8e27a0daf7c64dc09939020db11d0461b03368763bceaaa60b88accad1b06cb4"
+      },
+      {
+        "path": "RubberSegment/RubberSegment.jsx",
+        "sha256": "35489f6c3c59dae1cd98d82c11e69f3ecee3cfb831bec70278365d07caac0bcf"
+      }
+    ]
+  },
+  {
+    "component": "ScrollExpand",
+    "registry": "https://reactbits.dev/r/ScrollExpand-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "ScrollExpand/ScrollExpand.css",
+        "sha256": "1904e6e0c498a45b11b16521e64dafb02f9e7e2bd33305bb7134fb0081d39c1e"
+      },
+      {
+        "path": "ScrollExpand/ScrollExpand.jsx",
+        "sha256": "d8c546f1cde67cdaf9a228fc58d98aa1020e3faf594db36769cd9d17d991a0d4"
+      }
+    ]
+  },
+  {
+    "component": "SpotlightCard",
+    "registry": "https://reactbits.dev/r/SpotlightCard-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "SpotlightCard/SpotlightCard.css",
+        "sha256": "b646b7da4bb46f0a4d819d0af275804c49a845a5c2dc848700aaf9282db13a92"
+      },
+      {
+        "path": "SpotlightCard/SpotlightCard.jsx",
+        "sha256": "e0b91ba07c173c98b87b44ec451d0243fe0a3edc67864e2779ad8507d455af67"
+      }
+    ]
+  },
+  {
+    "component": "StaggeredMenu",
+    "registry": "https://reactbits.dev/r/StaggeredMenu-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "StaggeredMenu/StaggeredMenu.css",
+        "sha256": "de0ce6b5424aa9dca06b9d8f70f0916a23df4cdbd716104a5bc14a49eb63da0f"
+      },
+      {
+        "path": "StaggeredMenu/StaggeredMenu.jsx",
+        "sha256": "977c37514d6e65129c09dcfe30b846d4baf553d81e645706e2ab14255044c6ee"
+      }
+    ]
+  },
+  {
+    "component": "Stepper",
+    "registry": "https://reactbits.dev/r/Stepper-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "Stepper/Stepper.css",
+        "sha256": "417223c9c56157b27bae7d7214e3fb3a3c8da65e69c6935c6a199fc22b151436"
+      },
+      {
+        "path": "Stepper/Stepper.jsx",
+        "sha256": "9df93b5e34b767652dccd0cd56341a66792db742278310958d38bd4700fb4225"
+      }
+    ]
+  }
+]

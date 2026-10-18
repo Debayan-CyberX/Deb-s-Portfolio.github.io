@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1020" height="760" viewBox="0 0 1020 760">
+<rect width="1020" height="760" fill="#10191a"/>
+<g font-family="monospace" font-weight="400">
+<rect x="26" y="26" width="968" height="708" stroke="#81928d" opacity=".4" fill="none"/>
+<path d="M58 105H962M58 580H962" stroke="#81928d" stroke-width="1" fill="none" />
+<text x="58" y="76" fill="#e4e4d6" font-size="14" >DEBAYAN LAHIRY / SELECTED WORK</text>
+<text x="962" y="76" fill="#c4aa75" font-size="14" text-anchor="end">PLATE 03 / 06</text>
+<path d="M140 220h200" stroke="#81928d" stroke-width="1" fill="none" /><circle cx="145" cy="220" r="3" fill="#cf4c3a" /><text x="170" y="208" fill="#81928d" font-size="12" >NEW THREAD</text><path d="M140 268h200" stroke="#81928d" stroke-width="1" fill="none" /><circle cx="145" cy="268" r="3" fill="#cf4c3a" /><text x="170" y="256" fill="#81928d" font-size="12" >CONTEXT</text><path d="M140 316h200" stroke="#81928d" stroke-width="1" fill="none" /><circle cx="145" cy="316" r="3" fill="#cf4c3a" /><text x="170" y="304" fill="#81928d" font-size="12" >OPPORTUNITY</text><path d="M140 364h200" stroke="#81928d" stroke-width="1" fill="none" /><circle cx="145" cy="364" r="3" fill="#cf4c3a" /><text x="170" y="352" fill="#81928d" font-size="12" >NEXT ACTION</text><path d="M340 292H435V385H505" stroke="#cf4c3a" stroke-width="2" fill="none" /><rect x="505" y="350" width="155" height="70" stroke="#c4aa75" fill="#10191a"/><text x="582.5" y="390.0" fill="#e4e4d6" font-size="15" text-anchor="middle">REVIEW DRAFT</text><path d="M660 385H745V290H860" stroke="#e4e4d6" stroke-width="2" fill="none" /><circle cx="745" cy="385" r="7" fill="#c4aa75" /><text x="725" y="435" fill="#c4aa75" font-size="13" >HUMAN APPROVAL</text><text x="860" y="270" fill="#e4e4d6" font-size="15" text-anchor="middle">SEND</text><text x="140" y="160" fill="#c4aa75" font-size="13" >CONVERSATION → OPPORTUNITY</text>
+<text x="60" y="620" fill="#c4aa75" font-size="13" >FULL-STACK PRODUCT</text>
+<text x="60" y="684" fill="#e4e4d6" font-size="49" font-family="Georgia,serif">InboxIQ</text>
+<text x="962" y="698" fill="#81928d" font-size="12" text-anchor="end">WORKFLOW STUDY</text>
+</g></svg>
