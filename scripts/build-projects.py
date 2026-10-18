@@ -40,7 +40,7 @@ def render(projects):
         next_pid = projects[number % len(projects)]['id']
         next_name = escape(projects[number % len(projects)]['name'])
         dialogs.append(f'''<dialog class="case-dialog" id="case-{pid}" aria-labelledby="case-title-{pid}">
-  <div class="case-header"><span>DIGITAL KYOTO / DOSSIER {number:02d}</span><button type="button" class="case-close" data-close-case aria-label="Close {name} case study">×</button></div>
+  <div class="case-header"><span>DEBX / PROJECT DOSSIER {number:02d}</span><button type="button" class="case-close" data-close-case aria-label="Close {name} case study">×</button></div>
   <div class="case-body"><header class="dossier-opening"><span class="project-category">{escape(project['category'])}</span><h2 id="case-title-{pid}">{name}</h2><p>{escape(project['description'])}</p><div class="case-meta">{tags}</div><div class="project-actions">{link(source, 'Source code')}{demo}</div></header>
     <div class="case-grid">{sections}</div>
     <section class="dossier-section"><h3><span>03</span>Architecture</h3><ol class="architecture-flow" aria-label="Application architecture">{flow}</ol><p class="architecture-caption">{escape(project['architecture_note'])}</p></section>
