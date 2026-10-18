@@ -1889,8 +1889,9 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   box-shadow: 0 24px 72px rgba(0,0,0,0.85);
   border-radius: 8px;
   width: 100%;
-  max-width: 760px;
-  max-height: 90vh;
+  max-width: 1000px;
+  height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1905,48 +1906,31 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   background: rgba(14, 18, 24, 0.95);
 }
 .resume-body-content {
+  flex: 1;
+  min-height: 0;
+}
+.resume-pdf {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+.resume-pdf-fallback {
   padding: 32px;
-  overflow-y: auto;
-  color: var(--bone);
-  font-family: inherit;
+  color: #222;
   line-height: 1.6;
 }
-.resume-section-title {
-  color: var(--vermilion);
-  font-size: 14px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  font-weight: 700;
-  border-bottom: 1px solid var(--line-soft);
-  padding-bottom: 6px;
-  margin: 20px 0 12px;
+.resume-pdf-fallback a {
+  color: #9b211b;
+  text-decoration: underline;
 }
-.resume-item-title {
-  font-weight: 600;
-  font-size: 15px;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-}
-.resume-item-sub {
-  color: var(--muted);
-  font-size: 13px;
-  margin-bottom: 6px;
-}
-.resume-bullet-list {
-  padding-left: 18px;
-  font-size: 13px;
-  color: var(--bone-dim);
-  margin-bottom: 14px;
-}
-.resume-bullet-list li {
-  margin-bottom: 4px;
-}
-@media print {
-  body * { visibility: hidden; }
-  .resume-sheet, .resume-sheet * { visibility: visible; }
-  .resume-sheet { position: absolute; left: 0; top: 0; width: 100%; max-width: none; border: none; box-shadow: none; }
-  .resume-header-bar { display: none; }
+@media (max-width: 600px) {
+  .resume-header-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 12px;
+  }
 }
 
 
@@ -7560,80 +7544,30 @@ function animate3DViewer() {
 
 <!-- Feature 7: Resume / CV Modal -->
 <div class="resume-modal" id="resumeModal" onclick="if(event.target===this)closeResumeModal()">
-  <div class="resume-sheet">
+  <div class="resume-sheet" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
     <div class="resume-header-bar">
-      <div style="display:flex; align-items:center; gap:10px;">
+      <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
         <span class="viewer-badge">CURRICULUM VITAE</span>
-        <b style="color:var(--bone); font-size:16px;">Debayan Lahiry &middot; Resume</b>
+        <b id="resumeTitle" style="color:var(--bone); font-size:16px;">Debayan Lahiry &middot; Resume</b>
       </div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <button class="cta-secondary" onclick="window.print()" data-cursor style="padding:6px 14px; font-size:12px;">
-          <span>Print / PDF</span>
-        </button>
-        <button class="project-modal-close" onclick="closeResumeModal()" aria-label="Close" style="position:static;">&times;</button>
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <a class="cta-secondary" href="Debayan_Lahiry_Cybersecurity_CV.pdf" target="_blank" rel="noopener" data-cursor style="padding:6px 14px; font-size:12px;">
+          <span>Open PDF</span>
+        </a>
+        <a class="cta-secondary" href="Debayan_Lahiry_Cybersecurity_CV.pdf" download="Debayan_Lahiry_Cybersecurity_CV.pdf" data-cursor style="padding:6px 14px; font-size:12px;">
+          <span>Download CV</span>
+        </a>
+        <button class="project-modal-close" onclick="closeResumeModal()" aria-label="Close resume" style="position:static;">&times;</button>
       </div>
     </div>
     <div class="resume-body-content">
-      <div style="text-align:center; margin-bottom:24px;">
-        <h2 style="font-size:26px; color:#fff; margin-bottom:4px;">DEBAYAN LAHIRY</h2>
-        <p style="font-size:14px; color:var(--gold); margin-bottom:8px;">B.Tech in Cybersecurity (Third Year) &middot; MPSTME, Mumbai</p>
-        <p style="font-size:12px; color:var(--muted);">
-          GitHub: <a href="https://github.com/Debayan-CyberX" target="_blank" style="color:var(--bone);">Debayan-CyberX</a> &middot;
-          LinkedIn: <a href="https://www.linkedin.com/in/debayan-lahiry-a12393355/" target="_blank" style="color:var(--bone);">debayan-lahiry</a> &middot;
-          Mumbai, India
+      <object class="resume-pdf" data="Debayan_Lahiry_Cybersecurity_CV.pdf" type="application/pdf" aria-label="Debayan Lahiry Cybersecurity CV">
+        <p class="resume-pdf-fallback">
+          Your browser cannot preview this PDF.
+          <a href="Debayan_Lahiry_Cybersecurity_CV.pdf" target="_blank" rel="noopener">Open the CV</a>
+          or <a href="Debayan_Lahiry_Cybersecurity_CV.pdf" download="Debayan_Lahiry_Cybersecurity_CV.pdf">download it</a> to read it.
         </p>
-      </div>
-
-      <div class="resume-section-title">01 &middot; Education</div>
-      <div class="resume-item-title">
-        <span>Mukesh Patel School of Technology Management &amp; Engineering (MPSTME)</span>
-        <span style="font-size:13px; color:var(--gold);">2024 &ndash; 2028</span>
-      </div>
-      <div class="resume-item-sub">NMIMS University &middot; B.Tech in Cybersecurity &middot; Third Year</div>
-      <ul class="resume-bullet-list">
-        <li>Relevant Subjects: Computer Networks, Data Structures &amp; Algorithms (C++), Operating Systems, Cryptography, Database Management Systems.</li>
-      </ul>
-
-      <div class="resume-section-title">02 &middot; Technical Skills Matrix</div>
-      <ul class="resume-bullet-list">
-        <li><b>Cybersecurity &amp; Networking:</b> Ethical Hacking, Network Security, Wireshark, Nmap, TCP/IP, TLS Fundamentals.</li>
-        <li><b>Programming &amp; Development:</b> Python, C++, JavaScript, HTML, CSS.</li>
-        <li><b>Operating Systems &amp; Tools:</b> Linux, Kali Linux, Git, GitHub.</li>
-        <li><b>Additional Interests:</b> Web Development, Interactive Experiences, Blender, Three.js.</li>
-      </ul>
-
-      <div class="resume-section-title">03 &middot; Featured Projects &amp; Labs</div>
-      <div class="resume-item-title">
-        <span>Cryptography and Password Security Lab</span>
-        <span style="font-size:13px; color:var(--muted);">Security &amp; Cryptography</span>
-      </div>
-      <ul class="resume-bullet-list">
-        <li>An interactive lab exploring password security and cryptographic concepts. Demonstrates password strength evaluation, password entropy, and fundamental security principles.</li>
-      </ul>
-
-      <div class="resume-item-title">
-        <span>TCP/TLS Handshake Simulator</span>
-        <span style="font-size:13px; color:var(--muted);">Networking</span>
-      </div>
-      <ul class="resume-bullet-list">
-        <li>An interactive educational project illustrating TCP connection establishment and the TLS handshake, helping visualise how clients and servers establish secure communication.</li>
-      </ul>
-
-      <div class="resume-item-title">
-        <span>Ethical Hacking and Network Analysis</span>
-        <span style="font-size:13px; color:var(--muted);">Security</span>
-      </div>
-      <ul class="resume-bullet-list">
-        <li>A practical exploration of network analysis and security testing in authorised lab environments using Kali Linux, Nmap, and Wireshark, focusing on reconnaissance and packet analysis.</li>
-      </ul>
-
-      <div class="resume-item-title">
-        <span>Python Programming &amp; Interactive Web Projects</span>
-        <span style="font-size:13px; color:var(--muted);">Development</span>
-      </div>
-      <ul class="resume-bullet-list">
-        <li>Engineered Python decision heuristics (Minimax logic) and practical scripts alongside responsive, clean web utilities in vanilla JavaScript.</li>
-      </ul>
+      </object>
     </div>
   </div>
 </div>
