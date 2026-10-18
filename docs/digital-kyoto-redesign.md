@@ -70,6 +70,8 @@ One Lighthouse mobile run against the **uncompressed local preview server**, usi
 
 The requested 90+ performance target is **not established by this local run**. Cold transfer and render-blocking work remain limitations. GitHub Pages serves the HTML with gzip, while the local server does not; these local timings should not be presented as hosted measurements or field Core Web Vitals. A subsequent refinement extracts and minifies the original scene into an independently cacheable, deferred script and keeps the mobile wordmark inside the frame. Its functional smoke checks passed at 320, 390, 768, and 1440 pixels. Further gains require reducing legacy inline styles and optimizing media/scene delivery; the high-performance target must not be claimed without measurement.
 
+The **final hosted mobile Lighthouse run** against release `7eb25f2` scored **33 performance / 100 accessibility / 100 best practices / 100 SEO**, with **3.8 s FCP, 6.6 s LCP, 3,490 ms total blocking time, and zero CLS**. Before extracting the scene, the first hosted release scored 44 performance with 5.8 s FCP, 7.8 s LCP, and 610 ms blocking time. Deferral makes content paint sooner and caches the scene independently, but more initialization work now occurs after that first paint and remains visible in the blocking-time metric. These runs vary with network and browser/GPU initialization; they do not establish the requested 90+ target or field performance. The local 220 ms result above must not be substituted for this hosted result.
+
 ## Verification
 
 - Production bundle build and repeatable HTML generation.
@@ -80,6 +82,7 @@ The requested 90+ performance target is **not established by this local run**. C
 - CV viewer and downloaded PDF bytes match the supplied CV. Email validation and draft preparation were tested without sending a message. Palette changes and synchronized sound controls were exercised.
 - Axe checks of the page, dossier, menu, and cryptography overlay found **no WCAG A/AA violations in those tested states**. This does not certify every state or device.
 - Original 22-file hash verification passed. Browser checks found no uncaught page errors or missing local assets.
+- After deployment, the functional suite also passed against the live GitHub Pages URL: continuous carousel/pause, dossier keyboard selection, all six labs, email draft, exact CV, palette/audio, and WebGL-loss fallback. Release `7eb25f2` was verified live; the following documentation/whitespace commit does not change its runtime bundle.
 
 ## Screenshots
 

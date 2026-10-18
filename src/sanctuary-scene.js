@@ -3479,7 +3479,7 @@ function updateWeatherHUD(idx) {
   const hudBadge = document.getElementById('weatherBadge');
   if (kanjiEl) kanjiEl.textContent = stage.kanji;
   if (nameEl) nameEl.textContent = stage.name;
-  
+
   const colors = [
     { primary: '#e0231c', border: 'rgba(224, 35, 28, 0.45)', bg: 'rgba(224, 35, 28, 0.14)' }, // Blood Moon
     { primary: '#4ecdc4', border: 'rgba(78, 205, 196, 0.50)', bg: 'rgba(78, 205, 196, 0.15)' }, // Rainstorm
@@ -3517,7 +3517,7 @@ function handleWeatherHudClick() {
 
 function updateWeather(dt) {
   const p = clamp(RIG.smooth, 0, 4.0);
-  
+
   // Calculate continuous atmospheric weights
   const wHero    = Math.max(0, 1 - Math.abs(p - 0.0) / 0.82);
   const wRain    = Math.max(0, 1 - Math.abs(p - 1.0) / 0.80);
