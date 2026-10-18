@@ -3892,17 +3892,21 @@ function start() {
 
   const shot = Q.get('shot');
   if (shot !== null) {                       /* deterministic states for review */
+    document.body.classList.remove('is-locked');
+    measure();
     RIG.intro = 1; WORD.reveal = 1.2; fadeIn = 1; INTRO.t0 = 0;
     const n = clamp(parseInt(shot, 10) || 0, 0, SECS.length - 1);
     scrollTo(0, anchors[n]);
     RIG.smooth = RIG.prog = progressFor(anchors[n]);
     $$('[data-rv], .mask-line').forEach(e => e.classList.add('rv-in'));
-    document.body.classList.remove('is-locked');
     preEl.classList.add('done');
   } else {
     preEl.classList.add('done');
     setTimeout(() => {
       document.body.classList.remove('is-locked');
+      // The loader's height lock clips document.scrollHeight to one viewport.
+      // Re-measure after unlocking so the first pixels cannot skip chapters.
+      measure();
       $('#hero').querySelectorAll('[data-rv], .mask-line').forEach((e, i) =>
         setTimeout(() => e.classList.add('rv-in'), REDUCE ? 0 : 120 + i * 95));
     }, REDUCE ? 0 : 340);
