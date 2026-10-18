@@ -2321,6 +2321,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 }
 
 </style>
+<link rel="stylesheet" href="portfolio.css">
+<noscript><style>#pre,.rail,#gl,#cursor{display:none!important}[data-rv],.word{opacity:1!important;transform:none!important}.mask-line>span{transform:none!important}body{overflow:auto!important}.case-dialog{display:none}</style></noscript>
 </head>
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="a" data-layout-footer="b">
@@ -2359,8 +2361,8 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <span class="brand-tx"><b>DEBAYAN LAHIRY</b><i>CYBERSECURITY STUDENT &amp; DEVELOPER</i></span>
   </a>
   <nav class="nav-links" id="navlinks">
-    <a class="nav-link" href="#gate" data-cursor><span>About</span><span class="alt">経歴</span></a>
     <a class="nav-link" href="#pathways" data-cursor><span>Projects</span><span class="alt">作品</span></a>
+    <a class="nav-link" href="#gate" data-cursor><span>About</span><span class="alt">経歴</span></a>
     <a class="nav-link" href="#lessons" data-cursor><span>Skills</span><span class="alt">技術</span></a>
     <a class="nav-link" href="#eternity" data-cursor><span>Contact</span><span class="alt">交信</span></a>
   
@@ -2383,6 +2385,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
 </header>
 
+<a class="skip-link" href="#pathways">Skip to featured projects</a>
 <div class="page" id="top">
 
 <!-- ============================================================ hero -->
@@ -2391,9 +2394,12 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <div class="eyebrow" data-rv="fade"><span class="dot"></span> B.Tech in Cybersecurity · MPSTME, Mumbai</div>
     <h1 class="display h-hero">
       <span class="mask-line"><span>CYBERSECURITY STUDENT</span></span>
-      <span class="mask-line" id="hero-tw-line"><span><span id="hero-tw-text"></span><span class="hero-tw-cursor" aria-hidden="true"></span></span></span>
+      <span class="mask-line"><span>BUILDING SECURITY TOOLS</span></span>
+      <span class="mask-line"><span>&amp; FULL-STACK APPLICATIONS.</span></span>
     </h1>
-    <p class="hero-sub body" data-rv="up">Building at the intersection of cybersecurity, programming, and creative technology. I enjoy exploring how systems work, understanding security vulnerabilities, and developing practical projects that turn technical concepts into real implementations.</p>
+    <p class="hero-sub body" data-rv="up">Third-year B.Tech student at MPSTME, Mumbai, focused on network security, application security, and practical software engineering.</p>
+    <div class="hero-actions" data-rv="up"><a href="#pathways">View Projects ↗</a><a href="Debayan_Lahiry_Cybersecurity_CV.pdf" download>Download CV ↓</a><a href="#eternity">Contact</a></div>
+    <p class="hero-availability" data-rv="fade">Seeking cybersecurity internship opportunities</p>
   </div>
 
   <div class="hero-spacer"></div>
@@ -2427,8 +2433,112 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
   </div>
 </section>
 
+<!-- ============================================================ chapter II -->
+<section class="sec" id="pathways" data-cam="1">
+  <!-- foreground: the garden frames the mosaic from the sides and the two lower corners -->
+  <div class="fg" data-fg="pathways" aria-hidden="true">
+    <span class="fg-el fg-sakura fg-el--sway" data-fg-in="left">
+      <img src="secret-pathways-assets/foreground/png/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+    </span>
+    <span class="fg-el fg-leaves fg-el--sway" data-fg-in="right">
+      <img src="secret-pathways-assets/foreground/png/maple-leaves.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
+    </span>
+    <span class="fg-el fg-lantern" data-fg-in="up">
+      <img src="secret-pathways-assets/foreground/png/stone-lantern.webp" alt="" width="1024" height="1499" loading="lazy" decoding="async">
+    </span>
+    <span class="fg-el fg-bush" data-fg-in="up">
+      <img src="secret-pathways-assets/foreground/png/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async">
+    </span>
+  </div>
+  <div class="sec-head" data-rv="fade"><span class="k"><b>01</b> — Selected Work</span><span class="rule"></span><span class="k jp">作品</span></div>
+  <div class="section-intro" data-rv="up"><h2>Built with curiosity.<br>Explained with evidence.</h2><p>Six projects across security, networking, and software engineering. Open a case study for the problem, my implementation, the tradeoffs, and a walkthrough.</p></div>
+  <div class="featured-grid"><!-- BEGIN PROJECT_CARDS -->
+<article class="project-card" id="project-aegis" data-rv="up">
+  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-sanmon-preview.webp')" aria-hidden="true">
+    <span class="project-no">01 / 06</span><span class="project-seal jp">守護</span>
+    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 14 94 28v28c0 23-34 43-34 43S26 79 26 56V28Z"/><path d="m43 56 12 12 24-28"/><circle cx="60" cy="58" r="48" opacity=".25"/></svg>
+    <span class="project-art-label">Events · Correlation · Investigation · Audit</span>
+  </div>
+  <div class="project-content"><span class="project-category">Security operations</span><h3>AEGIS-X</h3>
+    <p class="project-description">From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.</p>
+    <div class="project-stack"><span>Next.js</span><span>FastAPI</span><span>SQLAlchemy</span><span>PostgreSQL</span></div><p class="project-status">Portfolio prototype · Synthetic telemetry · Simulated containment</p>
+    <div class="project-actions"><button type="button" data-open-case="case-aegis" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/AEGIS-X" target="_blank" rel="noopener noreferrer">Source code</a></div>
+  </div></article>
+<article class="project-card" id="project-trishield" data-rv="up">
+  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-lantern-court.webp')" aria-hidden="true">
+    <span class="project-no">02 / 06</span><span class="project-seal jp">三層</span>
+    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="30" y="16" width="60" height="87" rx="2"/><path d="M43 38h34M43 49h24M43 61h34M43 72h16"/><circle cx="77" cy="84" r="15"/><path d="m70 84 5 5 10-11"/></svg>
+    <span class="project-art-label">Extract · Validate · Inspect · Audit</span>
+  </div>
+  <div class="project-content"><span class="project-category">Document security · Hackathon</span><h3>Tri-Shield</h3>
+    <p class="project-description">Three complementary checks for document review: identifier validation, image-forensics signals, and a hash-chained audit record.</p>
+    <div class="project-stack"><span>Python</span><span>FastAPI</span><span>OpenCV</span><span>SQLite</span></div><p class="project-status">Offline prototype · Fictional sample documents</p>
+    <div class="project-actions"><button type="button" data-open-case="case-trishield" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/Tri-Shield" target="_blank" rel="noopener noreferrer">Source code</a></div>
+  </div></article>
+<article class="project-card" id="project-inbox" data-rv="up">
+  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-moonwater.webp')" aria-hidden="true">
+    <span class="project-no">03 / 06</span><span class="project-seal jp">交信</span>
+    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="15" y="30" width="90" height="64" rx="2"/><path d="m15 32 45 35 45-35M15 94l32-35M105 94 73 59"/><path d="M44 16h32M51 8h18" opacity=".5"/></svg>
+    <span class="project-art-label">Connect · Identify · Draft · Review</span>
+  </div>
+  <div class="project-content"><span class="project-category">Full-stack product · Email intelligence</span><h3>InboxIQ</h3>
+    <p class="project-description">Turn connected email conversations into a reviewable lead workflow, with opportunity detection, contextual drafts, and explicit approval before sending.</p>
+    <div class="project-stack"><span>React</span><span>TypeScript</span><span>Express</span><span>Better Auth</span><span>Supabase</span></div><p class="project-status">Live application · AI-assisted drafts · Human-reviewed sending</p>
+    <div class="project-actions"><button type="button" data-open-case="case-inbox" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/InboxIQ" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://inboxiq-psi.vercel.app" target="_blank" rel="noopener noreferrer">Live demo</a></div>
+  </div></article>
+<article class="project-card" id="project-tcp" data-rv="up">
+  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-sanmon-preview.webp')" aria-hidden="true">
+    <span class="project-no">04 / 06</span><span class="project-seal jp">通信</span>
+    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="15" y="18" width="90" height="19"/><rect x="25" y="47" width="70" height="19"/><rect x="35" y="76" width="50" height="19"/><path d="M60 37v10M60 66v10M60 95v16"/><circle cx="24" cy="27" r="2"/><circle cx="34" cy="56" r="2"/><circle cx="44" cy="85" r="2"/></svg>
+    <span class="project-art-label">Message · Transport · Internet · Network</span>
+  </div>
+  <div class="project-content"><span class="project-category">Networking · Interactive learning</span><h3>TCP/IP Simulator</h3>
+    <p class="project-description">Follow a configured message through the TCP/IP layers, inspect protocol headers, and explore packet encapsulation at your own pace.</p>
+    <div class="project-stack"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>TCP/IP</span></div><p class="project-status">Live browser simulation · Educational model</p>
+    <div class="project-actions"><button type="button" data-open-case="case-tcp" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/TCP-Networking-Project" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://debayan-cyberx.github.io/TCP-Networking-Project/" target="_blank" rel="noopener noreferrer">Live demo</a></div>
+  </div></article>
+<article class="project-card" id="project-drain" data-rv="up">
+  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-moonwater.webp')" aria-hidden="true">
+    <span class="project-no">05 / 06</span><span class="project-seal jp">水路</span>
+    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 10S28 50 28 71a32 32 0 0 0 64 0C92 50 60 10 60 10Z"/><path d="M10 94c13-9 20 9 34 0s20 9 34 0 20 9 32 0M10 108c13-9 20 9 34 0s20 9 34 0 20 9 32 0"/></svg>
+    <span class="project-art-label">Map · Prioritize · Inspect · Resolve</span>
+  </div>
+  <div class="project-content"><span class="project-category">Civic technology · Hackathon</span><h3>DrainSentinel</h3>
+    <p class="project-description">A map-based storm-drain inspection workflow combining risk prioritization, maintenance tasks, and a traceable path to resolution.</p>
+    <div class="project-stack"><span>React</span><span>FastAPI</span><span>Leaflet</span><span>AWS adapters</span></div><p class="project-status">Hackathon prototype · Synthetic drain telemetry</p>
+    <div class="project-actions"><button type="button" data-open-case="case-drain" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/DrainSentinel" target="_blank" rel="noopener noreferrer">Source code</a></div>
+  </div></article>
+<article class="project-card" id="project-library" data-rv="up">
+  <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/kage-lantern-court.webp')" aria-hidden="true">
+    <span class="project-no">06 / 06</span><span class="project-seal jp">書庫</span>
+    <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M60 32C44 20 27 19 12 24v68c17-5 33-3 48 8 15-11 31-13 48-8V24c-15-5-32-4-48 8Zm0 0v68"/><path d="M25 41c9-1 17 1 24 5M25 55c9-1 17 1 24 5M25 69c9-1 17 1 24 5M71 46c7-4 15-6 24-5M71 60c7-4 15-6 24-5M71 74c7-4 15-6 24-5"/></svg>
+    <span class="project-art-label">Discover · Inspect · Reserve · Manage</span>
+  </div>
+  <div class="project-content"><span class="project-category">Mobile development · Coursework</span><h3>LibraryLens</h3>
+    <p class="project-description">A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.</p>
+    <div class="project-stack"><span>React</span><span>TypeScript</span><span>Capacitor</span><span>Android</span></div><p class="project-status">Coursework prototype · Local reservation storage</p>
+    <div class="project-actions"><button type="button" data-open-case="case-library" aria-haspopup="dialog">Case study</button><a href="https://github.com/Debayan-CyberX/LibraryLens-Mobile-App" target="_blank" rel="noopener noreferrer">Source code</a></div>
+  </div></article>
+<!-- END PROJECT_CARDS --></div>
+  <p class="project-note">The sanctuary artwork frames each project; application previews and walkthroughs are inside the case studies.</p>
+  <div class="github-live-section">
+    <div class="github-live-header"><h3 class="github-live-title">From the repository</h3><div class="github-live-stats"><span class="github-stat-pill">Public repos: <b id="ghReposCount">7</b></span><a class="github-stat-pill" href="https://github.com/Debayan-CyberX?tab=repositories" target="_blank" rel="noopener noreferrer">All repositories ↗</a></div></div>
+    <p class="project-note" id="githubActivityStatus" role="status">Selected public repositories. Live metadata is optional; these links always remain available.</p>
+    <div class="github-repos-grid" id="githubReposGrid"><!-- BEGIN PROJECT_REPOSITORIES -->
+<article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/AEGIS-X" target="_blank" rel="noopener noreferrer">AEGIS-X</a><p class="github-repo-desc">From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.</p><div class="github-repo-meta"><span>Next.js</span><span>Public repository</span></div></article>
+<article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/Tri-Shield" target="_blank" rel="noopener noreferrer">Tri-Shield</a><p class="github-repo-desc">Three complementary checks for document review: identifier validation, image-forensics signals, and a hash-chained audit record.</p><div class="github-repo-meta"><span>Python</span><span>Public repository</span></div></article>
+<article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/InboxIQ" target="_blank" rel="noopener noreferrer">InboxIQ</a><p class="github-repo-desc">Turn connected email conversations into a reviewable lead workflow, with opportunity detection, contextual drafts, and explicit approval before sending.</p><div class="github-repo-meta"><span>React</span><span>Public repository</span></div></article>
+<article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/TCP-Networking-Project" target="_blank" rel="noopener noreferrer">TCP/IP Simulator</a><p class="github-repo-desc">Follow a configured message through the TCP/IP layers, inspect protocol headers, and explore packet encapsulation at your own pace.</p><div class="github-repo-meta"><span>JavaScript</span><span>Public repository</span></div></article>
+<article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/DrainSentinel" target="_blank" rel="noopener noreferrer">DrainSentinel</a><p class="github-repo-desc">A map-based storm-drain inspection workflow combining risk prioritization, maintenance tasks, and a traceable path to resolution.</p><div class="github-repo-meta"><span>React</span><span>Public repository</span></div></article>
+<article class="github-repo-card"><a class="github-repo-name" href="https://github.com/Debayan-CyberX/LibraryLens-Mobile-App" target="_blank" rel="noopener noreferrer">LibraryLens</a><p class="github-repo-desc">A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.</p><div class="github-repo-meta"><span>React</span><span>Public repository</span></div></article>
+<!-- END PROJECT_REPOSITORIES --></div>
+  </div>
+  <aside class="project-archive"><span class="evidence-level">Additional team work</span>Supply-Chain-AI — I handled the implementation; teammates supported research and presentations. <a href="https://github.com/Hackathon-TeamX/Supply-Chain-AI" target="_blank" rel="noopener noreferrer">Explore the team repository ↗</a></aside>
+
+</section>
+
 <!-- ============================================================ chapter I -->
-<section class="sec" id="gate" data-cam="1">
+<section class="sec" id="gate" data-cam="2">
   <!-- foreground: the wall arrives first, the pine at the edge, the grass last -->
   <div class="fg" data-fg="gate" aria-hidden="true">
     <span class="fg-el fg-wall" data-fg-in="left">
@@ -2442,22 +2552,20 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     </span>
   </div>
   <div class="sec-head" data-rv="fade">
-    <span class="k"><b>01</b> — About Me</span><span class="rule"></span><span class="k jp">人物</span>
+    <span class="k"><b>02</b> — About Me</span><span class="rule"></span><span class="k jp">人物</span>
   </div>
   <div class="gate-grid">
-    <h2 class="display h-sec" data-rv="up">Hands-on security exploration, practical projects, and continuous learning.</h2>
+    <h2 class="display h-sec" data-rv="up">Security curiosity.<br>Practical engineering.</h2>
     <div class="gate-copy">
-      <p class="lead" data-rv="up">I'm a third-year B.Tech Cybersecurity student at MPSTME, Mumbai, interested in network security, ethical hacking, application security, and secure software development.</p>
-      <p class="body" data-rv="up">My approach to learning is hands-on. I enjoy experimenting with security tools, developing applications, understanding network protocols, and exploring how vulnerabilities can be identified and mitigated.</p>
-      <p class="body" data-rv="up">Alongside cybersecurity, I work on programming and interactive web projects that strengthen my problem-solving and development skills.</p>
-      <p class="body" data-rv="up">I'm continuously expanding my knowledge of Linux, Python, networking, and security fundamentals through practical projects and independent learning.</p>
-      <p class="body" data-rv="up">My goal is to apply these skills in real-world environments, learn from experienced security professionals, and grow into a well-rounded cybersecurity practitioner.</p>
+      <p class="lead" data-rv="up">I'm Debayan, a third-year B.Tech Cybersecurity student at MPSTME, Mumbai. I build security tools and full-stack applications to understand how systems behave, where they fail, and how to make them more reliable.</p>
+      <p class="body" data-rv="up">My work spans event correlation and incident investigation in AEGIS-X, document-forensics experiments in Tri-Shield, and email workflows in InboxIQ. I handle implementation end to end; on team projects, teammates contribute research and presentations.</p>
+      <p class="body" data-rv="up">I'm seeking a cybersecurity internship where I can contribute practical engineering skills and learn from experienced security professionals.</p>
       <div class="btn-group">
         <a class="arrowlink" href="#pathways" data-rv="fade" data-cursor>
           <span>Explore Projects</span>
           <span class="ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
         </a>
-        <a class="cta-secondary" href="javascript:void(0)" onclick="openResumeModal()" data-cursor>
+        <a class="cta-secondary" href="Debayan_Lahiry_Cybersecurity_CV.pdf" onclick="event.preventDefault();openResumeModal()" data-cursor>
           <span>View Resume / CV</span>
           <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         </a>
@@ -2471,6 +2579,31 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <div><b>Internship</b><span>Seeking Opportunities</span></div>
   </div>
 
+
+</section>
+
+<!-- ============================================================ chapter III -->
+<section class="sec" id="lessons" data-cam="3">
+  <!-- foreground: a low periphery for the atlas — wall fragment, basalt, one stand of grass -->
+  <div class="fg" data-fg="lessons" aria-hidden="true">
+    <span class="fg-el fg-wall fg-el--flip" data-fg-in="right">
+      <img src="secret-pathways-assets/foreground/png/temple-wall.webp" alt="" width="1536" height="884" loading="lazy" decoding="async">
+    </span>
+    <span class="fg-el fg-stones" data-fg-in="up">
+      <img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
+    </span>
+    <span class="fg-el fg-grass" data-fg-in="up">
+      <img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
+    </span>
+  </div>
+  <div class="sec-head" data-rv="fade">
+    <span class="k"><b>03</b> — Skills &amp; Toolkit</span><span class="rule"></span><span class="k jp">技術</span>
+  </div>
+  <div class="cur-head">
+    <h2 class="display h-sec" data-rv="up">Skills &amp; Technical Capabilities</h2>
+    <p class="body-lg" data-rv="up">Honed through coursework at MPSTME, Mumbai, independent lab work, and hands-on project implementations.</p>
+  </div>
+  <div class="cur" id="cur"><article class="les" data-les="0"><span class="k">01</span><h3>Security engineering</h3><div><span class="evidence-level">Project experience</span><p>Event correlation, evidence-linked incidents, authorization, and auditable response simulations.</p></div><div class="badge-stack"><span class="skill-tag">Python</span><span class="skill-tag">FastAPI</span><span class="skill-tag">Detection rules</span><span class="skill-tag">Access control</span></div><div class="skill-evidence"><a href="#project-aegis">AEGIS-X ↗</a><a href="#project-trishield">Tri-Shield ↗</a></div><i class="bar"></i></article><article class="les" data-les="1"><span class="k">02</span><h3>Full-stack applications</h3><div><span class="evidence-level">Project experience</span><p>Authentication, API boundaries, database-backed workflows, and interactive application interfaces.</p></div><div class="badge-stack"><span class="skill-tag">React</span><span class="skill-tag">TypeScript</span><span class="skill-tag">Express</span><span class="skill-tag">Better Auth</span><span class="skill-tag">SQLAlchemy</span></div><div class="skill-evidence"><a href="#project-inbox">InboxIQ ↗</a><a href="#project-aegis">AEGIS-X ↗</a></div><i class="bar"></i></article><article class="les" data-les="2"><span class="k">03</span><h3>Networking &amp; protocols</h3><div><span class="evidence-level">Project + lab experience</span><p>TCP/IP models, encapsulation, and protocol visualization; Wireshark and Nmap through independent labs.</p></div><div class="badge-stack"><span class="skill-tag">TCP/IP</span><span class="skill-tag">JavaScript</span><span class="skill-tag">Wireshark</span><span class="skill-tag">Nmap</span></div><div class="skill-evidence"><a href="#project-tcp">TCP/IP Simulator ↗</a></div><i class="bar"></i></article><article class="les" data-les="3"><span class="k">04</span><h3>Image processing &amp; integrity</h3><div><span class="evidence-level">Project experience</span><p>Document structure checks, image-forensics heuristics, and hash-chained audit records.</p></div><div class="badge-stack"><span class="skill-tag">OpenCV</span><span class="skill-tag">OCR</span><span class="skill-tag">SHA-256</span><span class="skill-tag">SQLite</span></div><div class="skill-evidence"><a href="#project-trishield">Tri-Shield ↗</a></div><i class="bar"></i></article><article class="les" data-les="4"><span class="k">05</span><h3>Mobile &amp; operational interfaces</h3><div><span class="evidence-level">Project experience</span><p>Shared web/mobile interfaces, local reservation state, geospatial maps, and inspection workflows.</p></div><div class="badge-stack"><span class="skill-tag">Capacitor</span><span class="skill-tag">Android</span><span class="skill-tag">Leaflet</span><span class="skill-tag">React</span></div><div class="skill-evidence"><a href="#project-library">LibraryLens ↗</a><a href="#project-drain">DrainSentinel ↗</a></div><i class="bar"></i></article><article class="les" data-les="5"><span class="k">06</span><h3>Systems foundations</h3><div><span class="evidence-level">Coursework + continued learning</span><p>Data structures, algorithms, operating systems, and cryptography through MPSTME coursework; deepening application-security and deployment skills through projects.</p></div><div class="badge-stack"><span class="skill-tag">C++</span><span class="skill-tag">Data Structures</span><span class="skill-tag">Linux</span><span class="skill-tag">Cryptography</span></div><div class="skill-evidence"><span class="project-note">Academic foundations, developed through practical work.</span></div><i class="bar"></i></article></div>
   <!-- Academic Rigor & MPSTME Coursework -->
   <div class="academic-section academic-coursework-section" data-rv="up">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
@@ -2512,170 +2645,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     </div>
   </div>
 
-</section>
-
-<!-- ============================================================ chapter II -->
-<section class="sec" id="pathways" data-cam="2">
-  <!-- foreground: the garden frames the mosaic from the sides and the two lower corners -->
-  <div class="fg" data-fg="pathways" aria-hidden="true">
-    <span class="fg-el fg-sakura fg-el--sway" data-fg-in="left">
-      <img src="secret-pathways-assets/foreground/png/sakura-branch.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-leaves fg-el--sway" data-fg-in="right">
-      <img src="secret-pathways-assets/foreground/png/maple-leaves.webp" alt="" width="1536" height="1024" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-lantern" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/stone-lantern.webp" alt="" width="1024" height="1499" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-bush" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/garden-bush.webp" alt="" width="1717" height="876" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="sec-head" data-rv="fade">
-    <span class="k"><b>02</b> — Featured Projects <span class="sec-cue" title="Click any project below to launch the interactive lab or simulation"><span class="sec-cue-bracket">「</span>Interactive Project Labs<span class="sec-cue-bracket">」</span></span></span>
-    <span class="rule"></span><span class="k jp">作品</span>
-  </div>
-  <div class="cards" id="cards">
-    <article class="card" data-rv="up" data-view="0" data-cursor onclick="openCryptoModal()">
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <i class="glow glow--flame" style="--gx:71.2%; --gy:42.5%; --gr:18%; --gt:4.2s; --gt2:7.5s; --gc1:rgba(255,120,80,.60); --gc2:rgba(224,35,28,.28)"></i>
-        <div class="card-lab"><b>Cryptography &amp; Security Lab</b><span class="jp">暗号</span></div>
-      </div>
-      <div class="card-meta"><span>Password Security &amp; Entropy Analysis</span><span>01 / 03</span></div>
-    </article>
-    <article class="card" data-rv="up" data-view="1" data-cursor onclick="openTicTacToe()">
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <i class="glow glow--flame" style="--gx:50.0%; --gy:46.0%; --gr:22%; --gt:3.8s; --gt2:6.4s; --gc1:rgba(255,170,80,.65); --gc2:rgba(224,35,28,.32)"></i>
-        <div class="card-lab"><b>Tic Tac Toe Logic Engine</b><span class="jp">遊戯</span></div>
-      </div>
-      <div class="card-meta"><span>Python Automation &amp; Minimax Heuristics</span><span>02 / 03</span></div>
-    </article>
-    <article class="card" data-rv="up" data-view="2" data-cursor onclick="openCalcModal()">
-      <div class="card-fr" data-frame>
-        <span class="card-ar"><svg viewBox="0 0 14 14" fill="none"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg></span>
-        <i class="glow" style="--gx:32.0%; --gy:52.0%; --gr:24%; --gt:6.0s; --gt2:9.5s; --gc1:rgba(255,150,70,.58); --gc2:rgba(224,35,28,.26)"></i>
-        <div class="card-lab"><b>Interactive Web Applications</b><span class="jp">演算</span></div>
-      </div>
-      <div class="card-meta"><span>Modern Calculator &amp; Web Utilities</span><span>03 / 03</span></div>
-    </article>
-  </div>
-
-  <!-- Live GitHub Repositories Container -->
-  <div class="github-live-section" data-rv="up">
-    <div class="github-live-header">
-      <h3 class="github-live-title">
-        <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-        <span>Live GitHub Activity</span>
-      </h3>
-      <div class="github-live-stats" id="githubStats">
-        <span class="github-stat-pill">Public Repos: <b id="ghReposCount">6+</b></span>
-        <span class="github-stat-pill">Handle: <b>@Debayan-CyberX</b></span>
-      </div>
-    </div>
-    <div class="github-repos-grid" id="githubReposGrid">
-      <!-- Loaded dynamically via fetch -->
-      <div class="github-repo-card">
-        <a class="github-repo-name" href="https://github.com/Debayan-CyberX/Deb-s-Portfolio.github.io" target="_blank">
-          Deb-s-Portfolio.github.io
-        </a>
-        <p class="github-repo-desc">Interactive portfolio featuring procedural Three.js WebGL Kyoto environment and hands-on cybersecurity labs.</p>
-        <div class="github-repo-meta">
-          <span><span class="github-lang-dot" style="background:#f1e05a;"></span> JavaScript</span>
-          <span>★ Public</span>
-        </div>
-      </div>
-      <div class="github-repo-card">
-        <a class="github-repo-name" href="https://github.com/Debayan-CyberX" target="_blank">
-          Python-Automation-Toolkit
-        </a>
-        <p class="github-repo-desc">Practical Python scripts for workflow automation, algorithmic problem-solving, and system utilities.</p>
-        <div class="github-repo-meta">
-          <span><span class="github-lang-dot" style="background:#3572A5;"></span> Python</span>
-          <span>★ Public</span>
-        </div>
-      </div>
-      <div class="github-repo-card">
-        <a class="github-repo-name" href="https://github.com/Debayan-CyberX" target="_blank">
-          Ethical-Hacking-Kali-Labs
-        </a>
-        <p class="github-repo-desc">A practical exploration of network analysis and security testing in authorised lab environments using Kali Linux, Nmap, and Wireshark.</p>
-        <div class="github-repo-meta">
-          <span><span class="github-lang-dot" style="background:#555555;"></span> Shell / Kali</span>
-          <span>★ Public</span>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</section>
-
-<!-- ============================================================ chapter III -->
-<section class="sec" id="lessons" data-cam="3">
-  <!-- foreground: a low periphery for the atlas — wall fragment, basalt, one stand of grass -->
-  <div class="fg" data-fg="lessons" aria-hidden="true">
-    <span class="fg-el fg-wall fg-el--flip" data-fg-in="right">
-      <img src="secret-pathways-assets/foreground/png/temple-wall.webp" alt="" width="1536" height="884" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-stones" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/basalt-stones.webp" alt="" width="1536" height="996" loading="lazy" decoding="async">
-    </span>
-    <span class="fg-el fg-grass" data-fg-in="up">
-      <img src="secret-pathways-assets/foreground/png/tall-grass.webp" alt="" width="1717" height="916" loading="lazy" decoding="async">
-    </span>
-  </div>
-  <div class="sec-head" data-rv="fade">
-    <span class="k"><b>03</b> — Skills &amp; Toolkit</span><span class="rule"></span><span class="k jp">技術</span>
-  </div>
-  <div class="cur-head">
-    <h2 class="display h-sec" data-rv="up">Skills &amp; Technical Capabilities</h2>
-    <p class="body-lg" data-rv="up">Honed through coursework at MPSTME, Mumbai, independent lab work, and hands-on project implementations.</p>
-  </div>
-  <div class="cur" id="cur">
-    <div class="les" data-les="0" data-cursor>
-      <span class="k">01</span>
-      <h3>Cybersecurity &amp; Networking<em class="jp">防壁</em></h3>
-      <p>Security testing, network analysis, packet inspection, and protocol exploration in authorised environments.</p>
-      <div class="badge-stack"><span class="skill-tag">Ethical Hacking</span><span class="skill-tag">Network Security</span><span class="skill-tag">Wireshark</span><span class="skill-tag">Nmap</span><span class="skill-tag">TCP/IP</span><span class="skill-tag">TLS Fundamentals</span></div>
-      <span class="t">Security</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="1" data-cursor>
-      <span class="k">02</span>
-      <h3>Programming &amp; Development<em class="jp">開発</em></h3>
-      <p>Writing clean, maintainable software and building practical tools across systems and web technologies.</p>
-      <div class="badge-stack"><span class="skill-tag">Python</span><span class="skill-tag">C++</span><span class="skill-tag">JavaScript</span><span class="skill-tag">HTML</span><span class="skill-tag">CSS</span></div>
-      <span class="t">Development</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="2" data-cursor>
-      <span class="k">03</span>
-      <h3>Operating Systems &amp; Tools<em class="jp">基盤</em></h3>
-      <p>Working comfortably across Linux and security distributions, terminal utilities, and Git collaboration workflows.</p>
-      <div class="badge-stack"><span class="skill-tag">Linux</span><span class="skill-tag">Kali Linux</span><span class="skill-tag">Git</span><span class="skill-tag">GitHub</span></div>
-      <span class="t">Tools</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="3" data-cursor>
-      <span class="k">04</span>
-      <h3>Data Structures &amp; Systems in C++<em class="jp">計算</em></h3>
-      <p>Algorithms, data structures, object-oriented concepts, and memory principles developed through academic coursework.</p>
-      <div class="badge-stack"><span class="skill-tag">C++</span><span class="skill-tag">OOP</span><span class="skill-tag">Data Structures</span><span class="skill-tag">Algorithms</span></div>
-      <span class="t">Systems</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="4" data-cursor>
-      <span class="k">05</span>
-      <h3>Web &amp; Interactive Experiences<em class="jp">空間</em> <button class="viewer-btn" onclick="open3DViewer()" style="margin-left:10px; font-size:11px; padding:3px 10px;">Launch 3D Inspector</button></h3>
-      <p>Creating responsive web interfaces, interactive simulations, and real-time visual experiences.</p>
-      <div class="badge-stack"><span class="skill-tag">Web Development</span><span class="skill-tag">Interactive Experiences</span><span class="skill-tag">Three.js</span><span class="skill-tag">Blender</span></div>
-      <span class="t">Interests</span><i class="bar"></i>
-    </div>
-    <div class="les" data-les="5" data-cursor>
-      <span class="k">06</span>
-      <h3>Creative Technology &amp; Visuals<em class="jp">造形</em></h3>
-      <p>Designing digital assets, spatial models, and multimedia content to complement technical software projects.</p>
-      <div class="badge-stack"><span class="skill-tag">Blender</span><span class="skill-tag">3D Design</span><span class="skill-tag">Photoshop</span><span class="skill-tag">Premiere Pro</span></div>
-      <span class="t">Creative</span><i class="bar"></i>
-    </div>
-  </div>
+<div id="playground"><div class="playground-heading"><span class="k jp">遊び · EXPERIMENTS</span><h3>The Playground</h3><p>Small experiments in security concepts, algorithms, and creative technology. Optional detours through the sanctuary.</p></div><div class="playground-grid"><button type="button" class="playground-item" onclick="openCryptoModal()"><span>01 · Security</span><b>Password &amp; cryptography lab</b><p>Explore password entropy and hashing concepts.</p></button><button type="button" class="playground-item" onclick="openTicTacToe()"><span>02 · Algorithms</span><b>Tic Tac Toe</b><p>Play against a browser-based Minimax opponent.</p></button><button type="button" class="playground-item" onclick="openCalcModal()"><span>03 · Web utilities</span><b>Sanctuary calculator</b><p>A small JavaScript interface experiment.</p></button><button type="button" class="playground-item" onclick="openNetworkModal()"><span>04 · Protocols</span><b>TCP / TLS handshake</b><p>Step through the educational connection animation.</p></button><button type="button" class="playground-item" onclick="open3DViewer()"><span>05 · Creative technology</span><b>3D sanctuary inspector</b><p>Rotate the procedural torii-inspired model and inspect its wireframe.</p></button><button type="button" class="playground-item" onclick="toggleCyberTerminal()"><span>06 · Exploration</span><b>Cyber terminal</b><p>Explore portfolio commands and simulated terminal effects.</p></button></div></div>
 </section>
 
 <!-- ============================================================ chapter IV -->
@@ -5729,7 +5699,7 @@ function measure() {
   anchors = SECS.map((el, i) => {
     if (i === 0) return 0;
     if (i === SECS.length - 1) return maxScroll;
-    return clamp(el.offsetTop + el.offsetHeight * .5 - vpH() * .5, 0, maxScroll);
+    return clamp(el.offsetTop - 100, 0, maxScroll);
   });
   for (let i = 1; i < anchors.length; i++) anchors[i] = Math.max(anchors[i], anchors[i - 1] + 1);
 }
@@ -5966,7 +5936,7 @@ function wireHeroExit() {
 function wireNav() {
   let last = 0;
   const rail = $('#rail');
-  const names = ['The Hidden Gate', 'The Sanmon', 'Still Gardens', 'Sacred Craft', 'Afterlight', 'Colophon'];
+  const names = ['Sanctuary', 'Selected Work', 'About Debayan', 'Skills & Playground', 'Contact', 'Colophon'];
   SECS.forEach((s, i) => {
     const b = document.createElement('button');
     b.innerHTML = '<i></i>'; b.title = names[i] || '';
@@ -6026,7 +5996,7 @@ function wireNav() {
     const t = document.querySelector(a.getAttribute('href'));
     if (!t) return;
     e.preventDefault();
-    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.offsetTop - 40, behavior: REDUCE ? 'auto' : 'smooth' });
+    scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.getBoundingClientRect().top + scrollY - 100, behavior: REDUCE ? 'auto' : 'smooth' });
   }));
 }
 
@@ -6044,7 +6014,7 @@ function wireFocus() {
 
 function wireCursor() {
   const dot = $('#cursor');
-  if (COARSE) { dot.style.display = 'none'; return; }
+  if (COARSE || REDUCE) { dot.style.display = 'none'; return; }
   let x = vpW() / 2, y = vpH() / 2, tx2 = x, ty = y;
   addEventListener('pointermove', e => {
     tx2 = e.clientX; ty = e.clientY;
@@ -6682,67 +6652,51 @@ else addEventListener('DOMContentLoaded', boot);
 })();
 </script>
 
-<!-- Project Details Modal -->
-<div class="project-modal" id="projectModal" onclick="if(event.target===this)closeProject()">
-  <div class="project-modal-card">
-    <button class="project-modal-close" onclick="closeProject()" aria-label="Close">&times;</button>
-    <img id="modalImg" class="project-modal-img" src="image/project-hacking.jpg" alt="Project preview">
-    <h3 id="modalTitle" style="color:var(--bone); font-size:22px; margin-bottom:8px;">Project Title</h3>
-    <div id="modalBadges" class="badge-stack" style="margin-bottom:16px;"></div>
-    <p id="modalDesc" style="color:var(--bone-dim); font-size:15px; line-height:1.6; margin-bottom:24px;">Project description</p>
-    <div style="display:flex; gap:16px;">
-      <a id="modalGithub" href="https://github.com/Debayan-CyberX" target="_blank" rel="noreferrer" class="cta-secondary" data-cursor>
-        <span>View on GitHub</span>
-        <svg viewBox="0 0 16 16" fill="currentColor" width="14" height="14"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-      </a>
-      <button class="cta" onclick="closeProject()" data-cursor style="border:none; cursor:pointer;">
-        <i></i><span>Close</span>
-      </button>
-    </div>
-  </div>
-</div>
-
+<!-- BEGIN PROJECT_CASES -->
+<dialog class="case-dialog" id="case-aegis" aria-labelledby="case-title-aegis">
+  <div class="case-header"><span>Project dossier · 01 / 06</span><button type="button" class="case-close" data-close-case aria-label="Close AEGIS-X case study">&times;</button></div>
+  <div class="case-body"><span class="project-category">Security operations</span><h2 id="case-title-aegis">AEGIS-X</h2><p>From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.</p>
+    <div class="case-meta"><span>Next.js</span><span>FastAPI</span><span>SQLAlchemy</span><span>PostgreSQL</span></div><div class="case-grid"><section><h3>Problem & intended user</h3><p>Help an analyst follow the evidence behind an alert, investigate related events, and record a controlled response in one workspace.</p></section><section><h3>My implementation</h3><p>I implemented the frontend, FastAPI backend, correlation logic, authentication, investigation workflow, and tests.</p></section><section><h3>Decision & tradeoff</h3><p>Deterministic correlation creates incidents before optional AI explanations. Detection stays usable without a model key; broader coverage requires additional rules and real integrations.</p></section><section><h3>Current boundaries</h3><p>Synthetic enterprise telemetry and simulated response actions. This is a single-workspace portfolio system without live collectors, rather than a production SIEM.</p></section></div>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol><li>Run the fictional AgriShield scenario locally: five failed sign-ins followed by a success.</li><li>Follow normalized events through correlation rules to evidence-linked incidents and MITRE ATT&amp;CK references.</li><li>Inspect the timeline and relationship graph; request an evidence-grounded investigation with an offline fallback.</li><li>Approve simulated isolation, review the audit trail, and export the incident report. No actual host is isolated.</li></ol></section>
+    <p class="case-validation">Repository tests cover detection windows, authentication and roles, event idempotence, incident workflows, reports, and WebSocket delivery. The checkpoint distinguishes completed checks from pending work.</p><div class="project-actions"><a href="https://github.com/Debayan-CyberX/AEGIS-X" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/Debayan-CyberX/AEGIS-X/blob/main/CHECKPOINT.md" target="_blank" rel="noopener noreferrer">Implementation &amp; validation</a></div>
+  </div></dialog>
+<dialog class="case-dialog" id="case-trishield" aria-labelledby="case-title-trishield">
+  <div class="case-header"><span>Project dossier · 02 / 06</span><button type="button" class="case-close" data-close-case aria-label="Close Tri-Shield case study">&times;</button></div>
+  <div class="case-body"><span class="project-category">Document security · Hackathon</span><h2 id="case-title-trishield">Tri-Shield</h2><p>Three complementary checks for document review: identifier validation, image-forensics signals, and a hash-chained audit record.</p>
+    <div class="case-meta"><span>Python</span><span>FastAPI</span><span>OpenCV</span><span>SQLite</span></div><div class="case-grid"><section><h3>Problem & intended user</h3><p>Give a document reviewer a visible chain of checks instead of relying on a single identifier or image signal.</p></section><section><h3>My implementation</h3><p>I built the complete application: processing pipeline, validation and forensics, audit chain, API, Streamlit interface, and tests. Teammates supported research and presentations.</p></section><section><h3>Decision & tradeoff</h3><p>Combine structural rules and image-forensics heuristics with a local hash chain. The approach runs offline, but compression artifacts and local storage limit what it can prove.</p></section><section><h3>Current boundaries</h3><p>Checksums validate structure, not identity. Error Level Analysis is a heuristic that can misclassify images. The local ledger is tamper-evident, not a distributed blockchain or government identity verification.</p></section></div>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol><li>Choose a fictional clean or edited sample document in the Streamlit interface.</li><li>Inspect extracted fields, Aadhaar checksum or PAN structure checks, and the image anomaly heatmap.</li><li>Compare explanations and heuristic scores across clean and tampered samples.</li><li>Record metadata and hashes, then simulate an audit-record edit to see chain verification fail.</li></ol></section>
+    <p class="case-validation">The repository includes validator, image-forensics/scoring, and audit-chain tests. Sample verdicts demonstrate configured rules; they are not measured real-world accuracy.</p><div class="project-actions"><a href="https://github.com/Debayan-CyberX/Tri-Shield" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/Debayan-CyberX/Tri-Shield/tree/main/tests" target="_blank" rel="noopener noreferrer">Implementation &amp; validation</a></div>
+  </div></dialog>
+<dialog class="case-dialog" id="case-inbox" aria-labelledby="case-title-inbox">
+  <div class="case-header"><span>Project dossier · 03 / 06</span><button type="button" class="case-close" data-close-case aria-label="Close InboxIQ case study">&times;</button></div>
+  <div class="case-body"><span class="project-category">Full-stack product · Email intelligence</span><h2 id="case-title-inbox">InboxIQ</h2><p>Turn connected email conversations into a reviewable lead workflow, with opportunity detection, contextual drafts, and explicit approval before sending.</p>
+    <div class="case-meta"><span>React</span><span>TypeScript</span><span>Express</span><span>Better Auth</span><span>Supabase</span></div><div class="case-grid"><section><h3>Problem & intended user</h3><p>Help a small business identify promising email conversations and prepare relevant next steps without losing control of outgoing messages.</p></section><section><h3>My implementation</h3><p>I designed and implemented the application across the React workspace, authentication, database-backed workflows, Gmail integration, and draft-review experience.</p></section><section><h3>Decision & tradeoff</h3><p>Persist drafts and require an explicit send action. When AI is unavailable, labeled rules and template drafts keep the workflow understandable, at the cost of less tailored suggestions.</p></section><section><h3>Current boundaries</h3><p>Gmail requires account authorization. Analysis resumes while the workspace is open, rather than running continuously in the background. Sending supports one recipient and plain text, without attachments or delivery/open tracking.</p></section></div><figure class="case-figure"><img src="image/inbox-live-preview.png" width="1280" height="800" loading="lazy" alt="Actual InboxIQ interface"><figcaption>Actual application interface. Open the live demo to explore it.</figcaption></figure>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol><li>Connect an authorized Gmail account and sync recent conversations into the workspace.</li><li>Review detected opportunities and their context; adjust lead stages and next steps.</li><li>Generate or edit a contextual reply, then save and review the authoritative draft.</li><li>Choose Send explicitly. The backend uses the connected account and updates delivery state after provider acceptance.</li></ol></section>
+    <p class="case-validation">Repository tests include provider simulations for ownership isolation, repeated analysis, drafts, and send-state handling. Simulated transport tests do not establish real inbox delivery.</p><div class="project-actions"><a href="https://github.com/Debayan-CyberX/InboxIQ" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/Debayan-CyberX/InboxIQ/blob/main/CORE_WORKFLOW.md" target="_blank" rel="noopener noreferrer">Implementation &amp; validation</a><a href="https://inboxiq-psi.vercel.app" target="_blank" rel="noopener noreferrer">Live demo</a></div>
+  </div></dialog>
+<dialog class="case-dialog" id="case-tcp" aria-labelledby="case-title-tcp">
+  <div class="case-header"><span>Project dossier · 04 / 06</span><button type="button" class="case-close" data-close-case aria-label="Close TCP/IP Simulator case study">&times;</button></div>
+  <div class="case-body"><span class="project-category">Networking · Interactive learning</span><h2 id="case-title-tcp">TCP/IP Simulator</h2><p>Follow a configured message through the TCP/IP layers, inspect protocol headers, and explore packet encapsulation at your own pace.</p>
+    <div class="case-meta"><span>JavaScript</span><span>HTML</span><span>CSS</span><span>TCP/IP</span></div><div class="case-grid"><section><h3>Problem & intended user</h3><p>Make the relationship between application messages, transport headers, IP addressing, and network-layer framing easier to explore.</p></section><section><h3>My implementation</h3><p>I implemented the browser interface, protocol examples, simulation controls, validation, and packet visualization.</p></section><section><h3>Decision & tradeoff</h3><p>Keep the simulator entirely in the browser, with step and automatic playback. It is easy to try without setup, but modeled headers are not real captured traffic.</p></section><section><h3>Current boundaries</h3><p>A conceptual simulation, not a packet capture tool or implementation of a production network stack.</p></section></div><figure class="case-figure"><img src="image/tcp-live-preview.png" width="1280" height="800" loading="lazy" alt="Actual TCP/IP Simulator interface"><figcaption>Actual application interface. Open the live demo to explore it.</figcaption></figure>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol><li>Choose a protocol and configure a message, IP addresses, and ports.</li><li>Configure the packet, then select step mode to follow each TCP/IP layer.</li><li>Inspect the added headers and packet statistics; compare another protocol example.</li><li>Pause, reset, or export the simulation results.</li></ol></section>
+    <p class="case-validation">Try the hosted simulator and compare step mode, reset, example loading, and export behavior. The original repository contains no automated test suite.</p><div class="project-actions"><a href="https://github.com/Debayan-CyberX/TCP-Networking-Project" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/Debayan-CyberX/TCP-Networking-Project/blob/main/app.js" target="_blank" rel="noopener noreferrer">Implementation &amp; validation</a><a href="https://debayan-cyberx.github.io/TCP-Networking-Project/" target="_blank" rel="noopener noreferrer">Live demo</a></div>
+  </div></dialog>
+<dialog class="case-dialog" id="case-drain" aria-labelledby="case-title-drain">
+  <div class="case-header"><span>Project dossier · 05 / 06</span><button type="button" class="case-close" data-close-case aria-label="Close DrainSentinel case study">&times;</button></div>
+  <div class="case-body"><span class="project-category">Civic technology · Hackathon</span><h2 id="case-title-drain">DrainSentinel</h2><p>A map-based storm-drain inspection workflow combining risk prioritization, maintenance tasks, and a traceable path to resolution.</p>
+    <div class="case-meta"><span>React</span><span>FastAPI</span><span>Leaflet</span><span>AWS adapters</span></div><div class="case-grid"><section><h3>Problem & intended user</h3><p>Help municipal inspection teams prioritize at-risk drains and track maintenance work through a visible operational workflow.</p></section><section><h3>My implementation</h3><p>I implemented the frontend, mapping, backend services, risk and inspection workflows, and deployment code. Teammates contributed research and presentations.</p></section><section><h3>Decision & tradeoff</h3><p>Use explainable risk heuristics with an optional AI layer and local/cloud storage adapters. This supports a reproducible demo; real flood-risk use requires calibrated data and operational validation.</p></section><section><h3>Current boundaries</h3><p>The demonstration uses synthetic telemetry. Scores are not validated flood forecasts. Cloud services require configuration; infrastructure code does not imply every deployment is active.</p></section></div>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol><li>Inspect the drain map, risk levels, and the factors behind a prioritized asset.</li><li>Open a drain detail and review supporting reports and inspection context.</li><li>Create and progress a maintenance task through the inspection workflow.</li><li>Review resolution evidence and audit history rather than treating a risk score as a final operational decision.</li></ol></section>
+    <p class="case-validation">The repository includes risk-engine, API, weather/prediction, inspection-workflow, and AWS-adapter tests. Synthetic inputs demonstrate behavior rather than field accuracy.</p><div class="project-actions"><a href="https://github.com/Debayan-CyberX/DrainSentinel" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/Debayan-CyberX/DrainSentinel/tree/main/backend/tests" target="_blank" rel="noopener noreferrer">Implementation &amp; validation</a></div>
+  </div></dialog>
+<dialog class="case-dialog" id="case-library" aria-labelledby="case-title-library">
+  <div class="case-header"><span>Project dossier · 06 / 06</span><button type="button" class="case-close" data-close-case aria-label="Close LibraryLens case study">&times;</button></div>
+  <div class="case-body"><span class="project-category">Mobile development · Coursework</span><h2 id="case-title-library">LibraryLens</h2><p>A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.</p>
+    <div class="case-meta"><span>React</span><span>TypeScript</span><span>Capacitor</span><span>Android</span></div><div class="case-grid"><section><h3>Problem & intended user</h3><p>Give students a compact interface for browsing books, exploring library information, and managing a sample reservation flow.</p></section><section><h3>My implementation</h3><p>I implemented the complete application and Android integration. Teammates handled supporting research and presentations; the original Figma design is credited in the repository.</p></section><section><h3>Decision & tradeoff</h3><p>Share a React interface across web and an Android Capacitor wrapper. Local storage makes reservations easy to demonstrate, but does not synchronize stock or bookings across devices.</p></section><section><h3>Current boundaries</h3><p>Reservations are stored locally in the browser. There is no demonstrated connection to a real library inventory or shared reservation backend.</p></section></div>
+    <section class="case-walkthrough"><h3>Follow the workflow</h3><ol><li>Search the catalog by title or author and narrow results by genre.</li><li>Open a book detail page and start a reservation with sample student information.</li><li>Review active reservations and their expiry in the profile view.</li><li>Explore the library map or open the Capacitor Android project for the mobile experience.</li></ol></section>
+    <p class="case-validation">The repository has a Vite build command and Android scaffold tests. It does not include a dedicated automated test suite for the reservation workflow.</p><div class="project-actions"><a href="https://github.com/Debayan-CyberX/LibraryLens-Mobile-App" target="_blank" rel="noopener noreferrer">Source code</a><a href="https://github.com/Debayan-CyberX/LibraryLens-Mobile-App/blob/main/src/app/components/ReservationDialog.tsx" target="_blank" rel="noopener noreferrer">Implementation &amp; validation</a></div>
+  </div></dialog>
+<!-- END PROJECT_CASES -->
 <script>
-const projectData = [
-  {
-    title: "Ethical Hacking and Network Analysis",
-    img: "image/project-hacking.jpg",
-    badges: ["Kali Linux", "Wireshark", "Nmap", "Network Security"],
-    desc: "A practical exploration of network analysis and security testing in authorised lab environments using tools such as Kali Linux, Nmap, and Wireshark. Focuses on understanding network behaviour, reconnaissance, packet analysis, and documenting security observations.",
-    github: "https://github.com/Debayan-CyberX"
-  },
-  {
-    title: "Tic Tac Toe Game & Python Automation",
-    img: "image/project-tictactoe.jpg",
-    badges: ["Python 3", "Algorithms", "Minimax", "Game Logic"],
-    desc: "Interactive game developed in Python implementing algorithmic decision-making (Minimax) and game state logic, alongside scripts for automated task execution and problem-solving.",
-    github: "https://github.com/Debayan-CyberX"
-  },
-  {
-    title: "Interactive Web Applications & Modern Calculator",
-    img: "image/project-calc.jpg",
-    badges: ["HTML5", "CSS3", "JavaScript", "Responsive Design"],
-    desc: "A clean, responsive web calculator and interactive interface utilities crafted with semantic HTML, modern CSS, and vanilla JavaScript, emphasizing fluid UI and state management.",
-    github: "https://github.com/Debayan-CyberX"
-  }
-];
-
-function openProject(idx) {
-  const p = projectData[idx];
-  if (!p) return;
-  document.getElementById('modalTitle').textContent = p.title;
-  document.getElementById('modalImg').src = p.img;
-  document.getElementById('modalDesc').textContent = p.desc;
-  document.getElementById('modalGithub').href = p.github;
-  const badgesContainer = document.getElementById('modalBadges');
-  badgesContainer.innerHTML = p.badges.map(b => '<span class="skill-tag">' + b + '</span>').join('');
-  document.getElementById('projectModal').classList.add('active');
-}
-
-function closeProject() {
-  document.getElementById('projectModal').classList.remove('active');
-}
-
 function setContactTopic(btn, topic) {
   document.querySelectorAll('.topic-chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -6816,7 +6770,7 @@ function handleContactSubmit(e) {
       <div class="cyber-term-output" id="cyberTermOutput"></div>
       <div class="cyber-term-prompt-line">
         <span class="cyber-term-prompt">debayan@cyberx:~$</span>
-        <input type="text" id="cyberTermInput" class="cyber-term-input" autocomplete="off" spellcheck="false" autofocus>
+        <input type="text" id="cyberTermInput" class="cyber-term-input" autocomplete="off" spellcheck="false" aria-label="Terminal command">
       </div>
     </div>
   </div>
@@ -6932,14 +6886,18 @@ Goal:        Seeking Cybersecurity Internship Opportunities
 Focus:       "Hands-on exploration of network protocols, security tools, and practical implementations."`,
 
   skills: () => `[+] CYBERSECURITY & NETWORKING: Ethical Hacking, Network Security, Wireshark, Nmap, TCP/IP, TLS Fundamentals
-[+] PROGRAMMING & DEVELOPMENT: Python, C++, JavaScript, HTML, CSS
+[+] PROGRAMMING & DEVELOPMENT: Python, TypeScript, JavaScript, C++, React, FastAPI, SQLAlchemy
 [+] OPERATING SYSTEMS & TOOLS: Linux, Kali Linux, Git, GitHub
 [+] ADDITIONAL INTERESTS:      Web Development, Interactive Experiences, Blender, Three.js`,
 
-  projects: () => `1. <span class="term-highlight">Cryptography and Password Security Lab</span> - Password entropy, strength analysis & cryptographic hashing
-2. <span class="term-highlight">TCP/TLS Handshake Simulator</span>          - Step-by-step TCP 3-way handshake & TLS 1.3 negotiation
-3. <span class="term-highlight">Ethical Hacking and Network Analysis</span>     - Network reconnaissance & Wireshark packet analysis in lab environments
-4. <span class="term-highlight">Python Automation & Web Projects</span>        - Algorithmic Minimax engine & responsive web tools`,
+  projects: () => `1. AEGIS-X — Security operations, correlation, investigations, simulated response
+2. Tri-Shield — Document validation, image forensics, hash-chained audit
+3. InboxIQ — Connected email, lead workflow, human-reviewed AI drafts
+4. TCP/IP Simulator — Interactive packet encapsulation and protocol models
+5. DrainSentinel — Map-based drain risk and inspection workflows
+6. LibraryLens — React / Capacitor library discovery and local reservations
+
+Visit Selected Work for source links, limitations, and case studies.`,
 
   education: () => `Institution: Mukesh Patel School of Technology Management & Engineering (MPSTME), Mumbai
 Degree:      B.Tech in Cybersecurity
@@ -7086,8 +7044,8 @@ Redirecting to contact section...\n`;
       <button class="cta" onclick="resetTicTacToe(false)" data-cursor style="border:none; cursor:pointer;">
         <i></i><span>Restart Game</span>
       </button>
-      <a class="cta-secondary" href="https://github.com/Debayan-CyberX" target="_blank" rel="noreferrer" data-cursor>
-        <span>Python Code</span>
+      <a class="cta-secondary" href="https://github.com/Debayan-CyberX/Deb-s-Portfolio.github.io/blob/main/index.html" target="_blank" rel="noreferrer" data-cursor>
+        <span>JavaScript Source</span>
         <svg viewBox="0 0 14 14" fill="none" width="12" height="12"><path d="M3 11 11 3M5 3h6v6" stroke="#dfe7e0" stroke-width="1.3"/></svg>
       </a>
     </div>
@@ -7313,47 +7271,18 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 // ============================================================= Live GitHub Repos Fetcher
 async function loadGitHubActivity() {
+  const status = document.getElementById('githubActivityStatus');
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 6000);
   try {
-    const userRes = await fetch('https://api.github.com/users/Debayan-CyberX');
-    if (userRes.ok) {
-      const userData = await userRes.json();
-      const countEl = document.getElementById('ghReposCount');
-      if (countEl) countEl.textContent = userData.public_repos || '6+';
-    }
-
-    const reposRes = await fetch('https://api.github.com/users/Debayan-CyberX/repos?sort=updated&per_page=6');
-    if (reposRes.ok) {
-      const repos = await reposRes.json();
-      if (Array.isArray(repos) && repos.length > 0) {
-        const grid = document.getElementById('githubReposGrid');
-        if (grid) {
-          const colors = {
-            'JavaScript': '#f1e05a',
-            'Python': '#3572A5',
-            'HTML': '#e34c26',
-            'CSS': '#563d7c',
-            'C++': '#f34b7d',
-            'Shell': '#89e051'
-          };
-          grid.innerHTML = repos.slice(0, 6).map(r => `
-            <div class="github-repo-card">
-              <a class="github-repo-name" href="${r.html_url}" target="_blank" rel="noreferrer">
-                ${r.name}
-              </a>
-              <p class="github-repo-desc">${r.description || 'Personal engineering and cybersecurity repository.'}</p>
-              <div class="github-repo-meta">
-                <span><span class="github-lang-dot" style="background:${colors[r.language] || '#dfe7e0'};"></span> ${r.language || 'Code'}</span>
-                <span>★ ${r.stargazers_count}</span>
-                <span>⑂ ${r.forks_count}</span>
-              </div>
-            </div>
-          `).join('');
-        }
-      }
-    }
-  } catch (err) {
-    console.log('GitHub fetch using pre-rendered fallback:', err.message);
-  }
+    const response = await fetch('https://api.github.com/users/Debayan-CyberX', { signal: controller.signal });
+    if (!response.ok) throw new Error('GitHub metadata unavailable');
+    const user = await response.json();
+    if (Number.isInteger(user.public_repos)) document.getElementById('ghReposCount').textContent = user.public_repos;
+    status.textContent = 'Repository count updated from GitHub. Project summaries are curated from their implementation and documentation.';
+  } catch (_) {
+    status.textContent = 'Live GitHub metadata is unavailable. All selected repository links remain available below.';
+  } finally { clearTimeout(timer); }
 }
 document.addEventListener('DOMContentLoaded', loadGitHubActivity);
 </script>
@@ -7364,7 +7293,7 @@ document.addEventListener('DOMContentLoaded', loadGitHubActivity);
   <div class="viewer-3d-card">
     <div class="viewer-3d-header">
       <div style="display:flex; align-items:center; gap:10px;">
-        <span class="viewer-badge">BLENDER 3D &middot; THREE.JS</span>
+        <span class="viewer-badge">PROCEDURAL 3D &middot; THREE.JS</span>
         <b style="color:var(--bone); font-size:16px;">Cyber Torii Obelisk &middot; Spatial Inspector</b>
       </div>
       <button class="project-modal-close" onclick="close3DViewer()" aria-label="Close" style="position:static;">&times;</button>
@@ -7544,7 +7473,7 @@ function animate3DViewer() {
 
 <!-- Feature 7: Resume / CV Modal -->
 <div class="resume-modal" id="resumeModal" onclick="if(event.target===this)closeResumeModal()">
-  <div class="resume-sheet" role="dialog" aria-modal="true" aria-labelledby="resumeTitle">
+  <div class="resume-sheet">
     <div class="resume-header-bar">
       <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
         <span class="viewer-badge">CURRICULUM VITAE</span>
@@ -8540,5 +8469,6 @@ function stepHandshake() {
 })();
 </script>
 
+<script src="portfolio.js" defer></script>
 </body>
 </html>

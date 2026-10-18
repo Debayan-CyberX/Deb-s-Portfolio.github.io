@@ -1,0 +1,80 @@
+[
+  {
+    "id": "aegis", "name": "AEGIS-X", "jp": "守護", "category": "Security operations", "scene": "kage-sanmon-preview.webp", "repo": "AEGIS-X",
+    "stack": ["Next.js", "FastAPI", "SQLAlchemy", "PostgreSQL"],
+    "description": "From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.",
+    "status": "Portfolio prototype · Synthetic telemetry · Simulated containment",
+    "problem": "Help an analyst follow the evidence behind an alert, investigate related events, and record a controlled response in one workspace.",
+    "role": "I implemented the frontend, FastAPI backend, correlation logic, authentication, investigation workflow, and tests.",
+    "decision": "Deterministic correlation creates incidents before optional AI explanations. Detection stays usable without a model key; broader coverage requires additional rules and real integrations.",
+    "limitations": "Synthetic enterprise telemetry and simulated response actions. This is a single-workspace portfolio system without live collectors, rather than a production SIEM.",
+    "walkthrough": ["Run the fictional AgriShield scenario locally: five failed sign-ins followed by a success.", "Follow normalized events through correlation rules to evidence-linked incidents and MITRE ATT&CK references.", "Inspect the timeline and relationship graph; request an evidence-grounded investigation with an offline fallback.", "Approve simulated isolation, review the audit trail, and export the incident report. No actual host is isolated."],
+    "validation": "Repository tests cover detection windows, authentication and roles, event idempotence, incident workflows, reports, and WebSocket delivery. The checkpoint distinguishes completed checks from pending work.",
+    "validation_path": "blob/main/CHECKPOINT.md", "path": ["Events", "Correlation", "Investigation", "Audit"], "symbol": "shield"
+  },
+  {
+    "id": "trishield", "name": "Tri-Shield", "jp": "三層", "category": "Document security · Hackathon", "scene": "kage-lantern-court.webp", "repo": "Tri-Shield",
+    "stack": ["Python", "FastAPI", "OpenCV", "SQLite"],
+    "description": "Three complementary checks for document review: identifier validation, image-forensics signals, and a hash-chained audit record.",
+    "status": "Offline prototype · Fictional sample documents",
+    "problem": "Give a document reviewer a visible chain of checks instead of relying on a single identifier or image signal.",
+    "role": "I built the complete application: processing pipeline, validation and forensics, audit chain, API, Streamlit interface, and tests. Teammates supported research and presentations.",
+    "decision": "Combine structural rules and image-forensics heuristics with a local hash chain. The approach runs offline, but compression artifacts and local storage limit what it can prove.",
+    "limitations": "Checksums validate structure, not identity. Error Level Analysis is a heuristic that can misclassify images. The local ledger is tamper-evident, not a distributed blockchain or government identity verification.",
+    "walkthrough": ["Choose a fictional clean or edited sample document in the Streamlit interface.", "Inspect extracted fields, Aadhaar checksum or PAN structure checks, and the image anomaly heatmap.", "Compare explanations and heuristic scores across clean and tampered samples.", "Record metadata and hashes, then simulate an audit-record edit to see chain verification fail."],
+    "validation": "The repository includes validator, image-forensics/scoring, and audit-chain tests. Sample verdicts demonstrate configured rules; they are not measured real-world accuracy.",
+    "validation_path": "tree/main/tests", "path": ["Extract", "Validate", "Inspect", "Audit"], "symbol": "document"
+  },
+  {
+    "id": "inbox", "name": "InboxIQ", "jp": "交信", "category": "Full-stack product · Email intelligence", "scene": "kage-moonwater.webp", "repo": "InboxIQ",
+    "stack": ["React", "TypeScript", "Express", "Better Auth", "Supabase"],
+    "description": "Turn connected email conversations into a reviewable lead workflow, with opportunity detection, contextual drafts, and explicit approval before sending.",
+    "status": "Live application · AI-assisted drafts · Human-reviewed sending",
+    "problem": "Help a small business identify promising email conversations and prepare relevant next steps without losing control of outgoing messages.",
+    "role": "I designed and implemented the application across the React workspace, authentication, database-backed workflows, Gmail integration, and draft-review experience.",
+    "decision": "Persist drafts and require an explicit send action. When AI is unavailable, labeled rules and template drafts keep the workflow understandable, at the cost of less tailored suggestions.",
+    "limitations": "Gmail requires account authorization. Analysis resumes while the workspace is open, rather than running continuously in the background. Sending supports one recipient and plain text, without attachments or delivery/open tracking.",
+    "walkthrough": ["Connect an authorized Gmail account and sync recent conversations into the workspace.", "Review detected opportunities and their context; adjust lead stages and next steps.", "Generate or edit a contextual reply, then save and review the authoritative draft.", "Choose Send explicitly. The backend uses the connected account and updates delivery state after provider acceptance."],
+    "validation": "Repository tests include provider simulations for ownership isolation, repeated analysis, drafts, and send-state handling. Simulated transport tests do not establish real inbox delivery.",
+    "validation_path": "blob/main/CORE_WORKFLOW.md", "demo": "https://inboxiq-psi.vercel.app", "path": ["Connect", "Identify", "Draft", "Review"], "symbol": "mail"
+  },
+  {
+    "id": "tcp", "name": "TCP/IP Simulator", "jp": "通信", "category": "Networking · Interactive learning", "scene": "kage-sanmon-preview.webp", "repo": "TCP-Networking-Project",
+    "stack": ["JavaScript", "HTML", "CSS", "TCP/IP"],
+    "description": "Follow a configured message through the TCP/IP layers, inspect protocol headers, and explore packet encapsulation at your own pace.",
+    "status": "Live browser simulation · Educational model",
+    "problem": "Make the relationship between application messages, transport headers, IP addressing, and network-layer framing easier to explore.",
+    "role": "I implemented the browser interface, protocol examples, simulation controls, validation, and packet visualization.",
+    "decision": "Keep the simulator entirely in the browser, with step and automatic playback. It is easy to try without setup, but modeled headers are not real captured traffic.",
+    "limitations": "A conceptual simulation, not a packet capture tool or implementation of a production network stack.",
+    "walkthrough": ["Choose a protocol and configure a message, IP addresses, and ports.", "Configure the packet, then select step mode to follow each TCP/IP layer.", "Inspect the added headers and packet statistics; compare another protocol example.", "Pause, reset, or export the simulation results."],
+    "validation": "Try the hosted simulator and compare step mode, reset, example loading, and export behavior. The original repository contains no automated test suite.",
+    "validation_path": "blob/main/app.js", "demo": "https://debayan-cyberx.github.io/TCP-Networking-Project/", "path": ["Message", "Transport", "Internet", "Network"], "symbol": "network"
+  },
+  {
+    "id": "drain", "name": "DrainSentinel", "jp": "水路", "category": "Civic technology · Hackathon", "scene": "kage-moonwater.webp", "repo": "DrainSentinel",
+    "stack": ["React", "FastAPI", "Leaflet", "AWS adapters"],
+    "description": "A map-based storm-drain inspection workflow combining risk prioritization, maintenance tasks, and a traceable path to resolution.",
+    "status": "Hackathon prototype · Synthetic drain telemetry",
+    "problem": "Help municipal inspection teams prioritize at-risk drains and track maintenance work through a visible operational workflow.",
+    "role": "I implemented the frontend, mapping, backend services, risk and inspection workflows, and deployment code. Teammates contributed research and presentations.",
+    "decision": "Use explainable risk heuristics with an optional AI layer and local/cloud storage adapters. This supports a reproducible demo; real flood-risk use requires calibrated data and operational validation.",
+    "limitations": "The demonstration uses synthetic telemetry. Scores are not validated flood forecasts. Cloud services require configuration; infrastructure code does not imply every deployment is active.",
+    "walkthrough": ["Inspect the drain map, risk levels, and the factors behind a prioritized asset.", "Open a drain detail and review supporting reports and inspection context.", "Create and progress a maintenance task through the inspection workflow.", "Review resolution evidence and audit history rather than treating a risk score as a final operational decision."],
+    "validation": "The repository includes risk-engine, API, weather/prediction, inspection-workflow, and AWS-adapter tests. Synthetic inputs demonstrate behavior rather than field accuracy.",
+    "validation_path": "tree/main/backend/tests", "path": ["Map", "Prioritize", "Inspect", "Resolve"], "symbol": "water"
+  },
+  {
+    "id": "library", "name": "LibraryLens", "jp": "書庫", "category": "Mobile development · Coursework", "scene": "kage-lantern-court.webp", "repo": "LibraryLens-Mobile-App",
+    "stack": ["React", "TypeScript", "Capacitor", "Android"],
+    "description": "A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.",
+    "status": "Coursework prototype · Local reservation storage",
+    "problem": "Give students a compact interface for browsing books, exploring library information, and managing a sample reservation flow.",
+    "role": "I implemented the complete application and Android integration. Teammates handled supporting research and presentations; the original Figma design is credited in the repository.",
+    "decision": "Share a React interface across web and an Android Capacitor wrapper. Local storage makes reservations easy to demonstrate, but does not synchronize stock or bookings across devices.",
+    "limitations": "Reservations are stored locally in the browser. There is no demonstrated connection to a real library inventory or shared reservation backend.",
+    "walkthrough": ["Search the catalog by title or author and narrow results by genre.", "Open a book detail page and start a reservation with sample student information.", "Review active reservations and their expiry in the profile view.", "Explore the library map or open the Capacitor Android project for the mobile experience."],
+    "validation": "The repository has a Vite build command and Android scaffold tests. It does not include a dedicated automated test suite for the reservation workflow.",
+    "validation_path": "blob/main/src/app/components/ReservationDialog.tsx", "path": ["Discover", "Inspect", "Reserve", "Manage"], "symbol": "book"
+  }
+]
