@@ -30,7 +30,7 @@ def render(projects):
         actions = f'<button type="button" data-open-case="case-{pid}" aria-haspopup="dialog">Case study</button>'
         actions += link(source, 'Source code')
         demo = link(project['demo'], 'Live demo') if project.get('demo') else ''
-        cards.append(f'''<article class="project-card" id="project-{pid}" data-rv="up">
+        cards.append(f'''<article class="project-card" id="project-{pid}">
   <div class="project-art" style="--project-scene:url('secret-pathways-assets/generated/{project['scene']}')" aria-hidden="true">
     <span class="project-no">0{number} / 06</span><span class="project-seal jp">{project['jp']}</span>
     <svg class="project-emblem" viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.2">{SYMBOLS[project['symbol']]}</svg>
@@ -56,7 +56,23 @@ def render(projects):
     <p class="case-validation">{escape(project['validation'])}</p><div class="project-actions">{link(source, 'Source code')}{link(source+'/'+project['validation_path'], 'Implementation & validation')}{demo}</div>
   </div></dialog>''')
         repositories.append(f'<article class="github-repo-card"><a class="github-repo-name" href="{source}" target="_blank" rel="noopener noreferrer">{name}</a><p class="github-repo-desc">{escape(project["description"])}</p><div class="github-repo-meta"><span>{escape(project["stack"][0])}</span><span>Public repository</span></div></article>')
-    return '\n'.join(cards), '\n'.join(dialogs), '\n'.join(repositories)
+    tabs = ''.join(f'<button type="button" role="tab" id="rack-tab-{project["id"]}" aria-controls="project-{project["id"]}" aria-selected="{str(number == 0).lower()}" tabindex="{0 if number == 0 else -1}" data-rack-index="{number}"><span>0{number + 1}</span>{escape(project["name"])}</button>' for number, project in enumerate(projects))
+    rack = f'''<div class="project-rack" id="projectRack">
+  <div class="rack-experience" hidden>
+    <div class="rack-heading"><span><i></i> THE PROJECT COLLECTION</span><span class="rack-caption">Cedar · Vermilion · Moonlight</span></div>
+    <div class="rack-stage" id="rackStage" role="group" aria-label="Interactive wooden project plaques">
+      <div class="rack-mist" aria-hidden="true"></div>
+      <span class="rack-inscription jp" aria-hidden="true">探求と創造</span>
+      <button class="rack-arrow rack-previous" type="button" aria-label="Previous project">←</button>
+      <button class="rack-arrow rack-next" type="button" aria-label="Next project">→</button>
+      <div class="rack-stage-footer"><span id="rackCounter" aria-hidden="true">01 / 06</span><span>Drag to explore <i>·</i> Select a plaque</span></div>
+    </div>
+    <div class="rack-tabs" role="tablist" aria-label="Choose a project">{tabs}</div>
+    <p class="rack-screen-reader" id="rackAnnouncement" role="status" aria-live="polite" aria-atomic="true"></p>
+  </div>
+  <div class="featured-grid rack-details">{''.join(cards)}</div>
+</div>'''
+    return rack, '\n'.join(dialogs), '\n'.join(repositories)
 
 
 def replace_block(html, name, content):
