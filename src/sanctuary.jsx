@@ -14,6 +14,7 @@ import './sanctuary.css';
 import './editorial.css';
 
 const IdentityPass = lazy(() => import('./IdentityPass.jsx'));
+const SectionUpgrades = lazy(() => import('./SectionUpgrades.jsx'));
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = window.matchMedia('(pointer: coarse)').matches;
 const items = projects.map(p => ({ src: p.preview, title: p.name, subtitle: p.category, alt: `${p.name}: actual application landing page` }));
@@ -131,10 +132,13 @@ function Navigation() {
   const navigate = useCallback((item, event) => {
     event.preventDefault();
     // Wait for the menu to release background inertness before opening a modal.
-    requestAnimationFrame(() => {
+    requestAnimationFrame(async () => {
       if (item.label === 'CV') { window.openResumeModal(); return; }
       const section = document.querySelector(item.link);
-      if (section) window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - 95, behavior: reduce ? 'instant' : 'smooth' });
+      if (section) {
+        await prepareSectionsFor(section);
+        window.scrollTo({ top: section.getBoundingClientRect().top + window.scrollY - 95, behavior: reduce ? 'instant' : 'smooth' });
+      }
     });
   }, []);
   return <StaggeredMenu isFixed logoUrl={null} className="shoji-navigation" colors={['#452c25','#1b2826','#10191a']} items={menuItems.map(item => ({...item, active: item.link === `#${section}`}))}
@@ -192,11 +196,66 @@ portal('projectCollection',<Collection />);
 portal('shojiMenu',<Navigation />);
 portal('sanctuaryBell',<SoundBell />);
 portal('identityPass',<DeferredPass />);
+
+// Retain the readable HTML until each nearby section has mounted successfully.
+function DeferredSection({ kind, records, fallback, settled }) {
+  const [near, setNear] = useState(false);
+  const ready = useCallback(() => {
+    fallback.hidden = true;
+    window.dispatchEvent(new Event('portfolio:layout'));
+    settled();
+  }, [fallback, settled]);
+  const restore = useCallback(() => { fallback.hidden = false; settled(); }, [fallback, settled]);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setNear(true); observer.disconnect(); }
+    }, { rootMargin: '250px' });
+    observer.observe(fallback);
+    const prepare = event => { if (event.detail.includes(kind)) { setNear(true); observer.disconnect(); } };
+    window.addEventListener('portfolio:prepare-sections', prepare);
+    return () => { observer.disconnect(); window.removeEventListener('portfolio:prepare-sections', prepare); };
+  }, [fallback, kind]);
+  return <div><IslandBoundary onError={restore}>{near && <Suspense fallback={null}><SectionUpgrades kind={kind} records={records} onReady={ready} reduced={reduce} /></Suspense>}</IslandBoundary></div>;
+}
+
+const sectionEnhancements = [];
+async function prepareSectionsFor(target) {
+  const preceding = sectionEnhancements.filter(entry => target.contains(entry.fallback) || Boolean(entry.fallback.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING));
+  if (!preceding.length) return;
+  window.dispatchEvent(new CustomEvent('portfolio:prepare-sections', { detail: preceding.map(entry => entry.kind) }));
+  await Promise.all(preceding.map(entry => entry.ready));
+  // Let the grid and stack ResizeObservers settle before resolving an anchor.
+  await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+}
+window.preparePortfolioSections = prepareSectionsFor;
+
+for (const [kind, selector] of [['arsenal','.arsenal-index'],['workshop','.workshop-tools'],['archive','.archive-timeline']]) {
+  const fallback = document.querySelector(selector);
+  if (!fallback) continue;
+  // Record content comes exclusively from this repository's authored HTML.
+  const records = kind === 'arsenal' ? [...fallback.querySelectorAll('.arsenal-row')].map(row => ({
+    number: row.querySelector('.arsenal-number').textContent.trim(),
+    title: row.querySelector('h3').textContent.trim(),
+    subtitle: row.querySelector('summary p').textContent.trim(),
+    level: row.querySelector('.evidence-level').textContent.trim(),
+    description: row.querySelector('.arsenal-body p').textContent.trim(),
+    tools: row.querySelector('.arsenal-tools').textContent.split('·').map(tool => tool.trim()),
+    links: [...row.querySelectorAll('.skill-evidence a')].map(link => ({ href: link.getAttribute('href'), label: link.textContent.trim() }))
+  })) : kind === 'archive' ? [...fallback.children].map(row => ({ date: row.querySelector('.archive-date').textContent.trim(), html: row.querySelector('div').innerHTML })) : [];
+  fallback.dataset.upgradeFallback = kind;
+  const host = document.createElement('div');
+  host.className = `section-upgrade-slot ${kind}-upgrade-slot`;
+  fallback.before(host);
+  let settled;
+  const ready = new Promise(resolve => { settled = resolve; });
+  sectionEnhancements.push({ kind, fallback, ready });
+  portals.push(createPortal(<DeferredSection kind={kind} records={records} fallback={fallback} settled={settled} />,host,kind));
+}
 document.querySelectorAll('[data-case-stepper]').forEach(host => {
   const project=projects.find(p=>p.id===host.dataset.caseStepper);
   portals.push(createPortal(<IslandBoundary><CaseWalkthrough project={project} /></IslandBoundary>,host,project.id));
 });
-document.querySelectorAll('.arsenal-row, .playground-item').forEach((card,index) => {
+document.querySelectorAll('.experiment-index .playground-item').forEach((card,index) => {
   const host=document.createElement('div'); host.className='lantern-host'; card.appendChild(host);
   portals.push(createPortal(<SpotlightCard className="lantern-card" spotlightColor="#d4a66b" intensity={0.10} borderGlow={0.35} spotlightSize={260} proximity={55} flare={false} smoothing={0.15} />,host,`lantern-${index}`));
 });

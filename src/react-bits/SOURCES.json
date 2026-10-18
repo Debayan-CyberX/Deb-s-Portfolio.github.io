@@ -140,5 +140,50 @@
         "sha256": "9df93b5e34b767652dccd0cd56341a66792db742278310958d38bd4700fb4225"
       }
     ]
+  },
+  {
+    "component": "MagicBento",
+    "registry": "https://reactbits.dev/r/MagicBento-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "MagicBento/MagicBento.css",
+        "sha256": "5ccc3d3d1a9eb9899635eef390a524428622a66e190e573e1d212e71fb1d1cb6"
+      },
+      {
+        "path": "MagicBento/MagicBento.jsx",
+        "sha256": "e859218916383eedccc6a049b4aadd6efb1e588c5a73c55c2fc50e6f6490e492"
+      }
+    ]
+  },
+  {
+    "component": "PixelCard",
+    "registry": "https://reactbits.dev/r/PixelCard-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "PixelCard/PixelCard.css",
+        "sha256": "aa76b07b6bf13f74443b28afb18242261e6ad07559f8a7e3110fb2fe794bf5a5"
+      },
+      {
+        "path": "PixelCard/PixelCard.jsx",
+        "sha256": "e442796748a563c792eff90a8bf2b816ea99726877e7c31ba6a086ab7547ee00"
+      }
+    ]
+  },
+  {
+    "component": "ScrollStack",
+    "registry": "https://reactbits.dev/r/ScrollStack-JS-CSS.json",
+    "retrieved": "2026-10-18",
+    "local_files": [
+      {
+        "path": "ScrollStack/ScrollStack.css",
+        "sha256": "64b2bf8c66a1958e0405ed6b885086562e635c22f0f1f79950806661d5470013"
+      },
+      {
+        "path": "ScrollStack/ScrollStack.jsx",
+        "sha256": "e73d47bae2967bf5f4051a8600387ff460dc381a2c8c571c76d28f42aa970292"
+      }
+    ]
   }
 ]

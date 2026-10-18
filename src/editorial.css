@@ -12,7 +12,7 @@
   --chapter-space: clamp(78px,10vw,156px);
 }
 html { overflow-x: clip; }
-body { text-rendering: optimizeLegibility; }
+body { text-rendering: optimizeLegibility; overflow-x: clip; }
 /* Fixed scene layers use the CSS viewport, not the scrollable document width.
    This prevents a transient foreground/loader overflow enlarging mobile menus. */
 .shoji-navigation.fixed-wrapper { width: 100vw; max-width: 100vw; }

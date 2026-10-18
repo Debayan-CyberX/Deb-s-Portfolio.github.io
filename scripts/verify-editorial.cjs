@@ -26,6 +26,23 @@ async function openPage(browser, width, reduced = false) {
 (async () => {
   const browser = await chromium.launch({ executablePath: process.env.CHROME_PATH || 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
   try {
+    for (const width of [1440,390]) {
+      const { page, errors, missing } = await openPage(browser,width);
+      await page.locator('.sm-toggle').click();await page.waitForTimeout(800);
+      await page.locator('.sm-panel-item').filter({hasText:/^Archive$/}).click();
+      await page.waitForFunction(()=>{const top=document.getElementById('archive').getBoundingClientRect().top;return top>-30&&top<250;});
+      await page.locator('.archive-folios').waitFor();
+      await page.waitForTimeout(500);
+      const top=await page.locator('#archive').evaluate(el=>el.getBoundingClientRect().top);
+      assert(top>-30&&top<250,'First Archive visit survives progressive section layout changes');
+      if (width === 1440) {
+        await page.locator('.archive-folio').nth(2).scrollIntoViewIfNeeded();await page.waitForTimeout(250);
+        const pin=await page.locator('.scroll-stack__slot').first().evaluate(el=>el.getBoundingClientRect().top);
+        assert(Math.abs(pin-110)<2,'Archive records actually pin to the window while stacking');
+      }
+      assert.deepEqual(errors,[]);assert.deepEqual(missing,[]);await page.close();
+    }
+    console.log('First-visit Archive menu navigation passed on desktop and mobile.');
     for (const width of (process.env.PORTFOLIO_SKIP_LAYOUT ? [] : [320,375,390,768,1024,1440,1920])) {
       const { page, errors, missing } = await openPage(browser, width, width === 768);
       assert.equal(await page.locator('.project-card').count(), 6);
@@ -35,6 +52,8 @@ async function openPage(browser, width, reduced = false) {
       assert.equal(await page.locator('[data-cam]').count(), 6, 'Authored camera poses preserved');
       for (const id of ['hero','pathways','engineeringNotes','gate','lessons','playground','archive','eternity']) {
         await page.locator('#'+id).scrollIntoViewIfNeeded();
+        const upgrade = { lessons: '.arsenal-bento', playground: '.workshop-console', archive: '.archive-folios' }[id];
+        if (upgrade) await page.locator(upgrade).waitFor({ state: 'visible' });
         await page.waitForTimeout(100);
         await overflow(page, `${width}px overflow at ${id}`);
         if ([390,1440].includes(width)) {
@@ -42,9 +61,12 @@ async function openPage(browser, width, reduced = false) {
           await page.screenshot({ path: path.join(output, `${width}-${id}.png`) });
         }
       }
-      for (const details of await page.locator('.arsenal-row').all()) {
+      assert.equal(await page.locator('.arsenal-panel').count(),4);
+      assert.equal(await page.locator('.archive-folio').count(),5);
+      assert.equal(await page.locator('.archive-folios-plain').count(),width <= 768 ? 1 : 0);
+      for (const details of await page.locator('.discipline-context').all()) {
         if (!(await details.evaluate(el => el.open))) await details.locator('summary').click();
-        assert(await details.locator('.arsenal-body').isVisible());
+        assert(await details.locator('p').isVisible());
         await overflow(page, `${width}px expanded arsenal`);
       }
       await page.locator('.source-index > summary').click();
@@ -109,7 +131,18 @@ async function openPage(browser, width, reduced = false) {
       report.push({width,layout:true,dossiers:6,arsenal:4,menu:true,errors:0});
       console.log(`${width}px: responsive sections, six dossiers, stepper, focus, next project, Arsenal, source fallback, and menu passed.`);
     }
+    if (process.env.PORTFOLIO_LAYOUT_ONLY) {
+      fs.writeFileSync(path.join(output,'report.json'),JSON.stringify(report,null,2));
+      return;
+    }
     const { page, errors, missing } = await openPage(browser,1440);
+    await page.waitForFunction(()=>window.__kage?.RIG?.intro >= 1 && !document.body.classList.contains('is-locked'));
+    const opening = await page.evaluate(()=>({p:window.__kage.camera.position.toArray(),q:window.__kage.camera.quaternion.toArray(),anchors:window.__kage.anchors()}));
+    assert(opening.anchors[1]>500,'Loader release must restore real chapter positions');
+    await page.evaluate(y=>scrollTo(0,y),opening.anchors[1]*.5);await page.waitForTimeout(1600);
+    const middle = await page.evaluate(()=>({p:window.__kage.camera.position.toArray(),q:window.__kage.camera.quaternion.toArray()}));
+    assert(Math.hypot(...middle.q.map((v,i)=>v-opening.q[i]))>.01,'Original opening camera turn is restored');
+    assert(Math.hypot(...middle.p.map((v,i)=>v-opening.p[i]))>1,'Original opening camera travel is restored');
     const hide = await page.addStyleTag({content:'#gl,#fg-sky,#grain,#cursor,#vignette,#emberCanvas{visibility:hidden!important}'});
     await page.locator('#projectCollection').scrollIntoViewIfNeeded();
     await page.locator('.flex-carousel').scrollIntoViewIfNeeded();
@@ -136,8 +169,24 @@ async function openPage(browser, width, reduced = false) {
     assert.equal(await page.locator('.collection-index button[aria-pressed="true"]').innerText(),'02\nTri-Shield');
     await page.keyboard.press('Enter'); await page.locator('#case-trishield').waitFor({state:'visible'}); await page.keyboard.press('Escape');
     await hide.evaluate(el=>el.remove());
+    await page.locator('#playground').scrollIntoViewIfNeeded();await page.locator('.workshop-console').waitFor();
+    await page.locator('#workshop-sample').fill('abc');
+    await page.waitForFunction(()=>[...document.querySelectorAll('.digest-grid > span')].map(el=>el.textContent).join('')==='ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad');
+    await page.getByRole('tab',{name:'01 Cryptography'}).focus();await page.keyboard.press('ArrowRight');
+    assert.equal(await page.locator('#tab-network').getAttribute('aria-selected'),'true');
+    for(let i=0;i<3;i++)await page.getByRole('button',{name:'Send next packet'}).click();
+    assert.equal(await page.locator('.packet-sequence [data-arrived="true"]').count(),3);
+    await page.getByRole('button',{name:'Reset sequence'}).click();assert.equal(await page.locator('.packet-sequence [data-arrived="true"]').count(),0);
+    await page.locator('#tab-terminal').click();await page.getByRole('button',{name:'whoami',exact:true}).click();
+    assert((await page.locator('.terminal-screen output').innerText()).includes('Debayan Lahiry'));
+    await page.locator('#archive').scrollIntoViewIfNeeded();await page.locator('.archive-folios').waitFor();
+    const training=page.locator('.archive-folio .training-details');await training.locator('summary').click();
+    assert(await training.locator('li').last().isVisible());assert.equal(await page.locator('.archive-reading').count(),1);
+    await overflow(page,'Expanded archive training');await training.locator('summary').click();
     for(const [onclick,id] of [['openCryptoModal()','cryptoModal'],['openNetworkModal()','networkModal'],['toggleCyberTerminal()','cyberTermModal'],['openTicTacToe()','tttModal'],['openCalcModal()','calcModal'],['open3DViewer()','viewer3dModal']]) {
-      const opener=page.locator(`.playground-item[onclick="${onclick}"]`);await opener.click();const dialog=page.locator('#'+id);await dialog.waitFor({state:'visible'});
+      const instrument=['cryptoModal','networkModal','cyberTermModal'].indexOf(id);
+      if(instrument>=0) await page.locator('.lab-tabs [role="tab"]').nth(instrument).click();
+      const opener=instrument>=0?page.locator('.instrument-launch:visible'):page.locator(`.experiment-index .playground-item[onclick="${onclick}"]`);await opener.click();const dialog=page.locator('#'+id);await dialog.waitFor({state:'visible'});
       assert(await dialog.evaluate(el=>el.contains(document.activeElement)));
       if(id==='cryptoModal'){
         await page.locator('#entropyInput').fill('fictional-Test-123!');assert.notEqual(await page.locator('#entropyBits').innerText(),'0.00 bits');

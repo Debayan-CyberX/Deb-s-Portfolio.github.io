@@ -2853,7 +2853,6 @@ function buildRig() {
   camera.layers.enable(1); camera.layers.enable(2);
 }
 const _p = new THREE.Vector3(), _t = new THREE.Vector3(), _d = new THREE.Vector3();
-const _openingP = new THREE.Vector3(...CAM[0].p), _openingT = new THREE.Vector3(...CAM[0].t);
 /* Every waypoint is composed for a wide frame. On a tall one the same
    numbers crop the gate in half, so the rig steps back along its own view
    axis and opens up a little instead of letting the sides fall away. */
@@ -2873,14 +2872,6 @@ function applyCamera() {
   const i = clamp(Math.floor(RIG.smooth), 0, N - 1), f = clamp(RIG.smooth - i, 0, 1);
   let fov = lerp(CAM[i].fov, CAM[i + 1].fov, f);
 
-  // Keep the opening composition throughout the hero-to-Projects scroll.
-  // Resume the authored route gently between Projects and About, without
-  // changing chapter progress, the wordmark fade, or the remaining waypoints.
-  const travel = smooth(1, 2, RIG.smooth);
-  _p.lerpVectors(_openingP, _p, travel);
-  _t.lerpVectors(_openingT, _t, travel);
-  fov = lerp(CAM[0].fov, fov, travel);
-
   fov = fitAspect(_p, _t, fov);
 
   /* the opening dolly: a long lens easing in from further back */
@@ -2888,7 +2879,7 @@ function applyCamera() {
   _p.z += io * 5.6; _p.y += io * 0.65; fov += io * 8;
 
   /* parallax — a hand-held drift, never enough to break the frame */
-  const par = 1 - smooth(1, 2.6, RIG.smooth) * .55;
+  const par = 1 - smooth(0, 1.6, RIG.smooth) * .55;
   _p.x += RIG.mx * 0.62 * par; _p.y += RIG.my * 0.34 * par;
   _t.x -= RIG.mx * 0.20 * par; _t.y -= RIG.my * 0.12 * par;
 
@@ -3148,7 +3139,10 @@ function wireNav() {
     const b = document.createElement('button');
     b.innerHTML = '<i></i>'; b.title = names[i] || '';
     b.setAttribute('aria-label', names[i] || 'section');
-    b.addEventListener('click', () => scrollTo({ top: anchors[i], behavior: REDUCE ? 'auto' : 'smooth' }));
+    b.addEventListener('click', async () => {
+      await window.preparePortfolioSections?.(s);
+      scrollTo({ top: anchors[i], behavior: REDUCE ? 'auto' : 'smooth' });
+    });
     rail.appendChild(b);
   });
   const dots = $$('#rail button');
@@ -3199,10 +3193,11 @@ function wireNav() {
       links.forEach((l, i) => l.classList.toggle('on', linkSec[i] === a));
     }
   }, { passive: true });
-  $$('a[href^="#"]').forEach(a => a.addEventListener('click', e => {
+  $$('a[href^="#"]').forEach(a => a.addEventListener('click', async e => {
     const t = document.querySelector(a.getAttribute('href'));
     if (!t) return;
     e.preventDefault();
+    await window.preparePortfolioSections?.(t);
     scrollTo({ top: a.getAttribute('href') === '#top' ? 0 : t.getBoundingClientRect().top + scrollY - 100, behavior: REDUCE ? 'auto' : 'smooth' });
   }));
 }
@@ -3883,6 +3878,11 @@ function fallback(err) {
 function start() {
   document.body.classList.remove('scene-loading');
   addEventListener('resize', () => { resize(); }, { passive: true });
+  addEventListener('portfolio:layout', measure);
+  // Progressive section upgrades and disclosure controls change chapter height.
+  // Read their final geometry without rebuilding the scene on every change.
+  const pageLayout = new ResizeObserver(measure);
+  pageLayout.observe(document.getElementById('top'));
   addEventListener('orientationchange', () => setTimeout(resize, 250));
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { running = false; }
