@@ -6,7 +6,7 @@ A cybersecurity and software-engineering portfolio set in a procedural Japanese 
 
 ## Explore
 
-- React Bits Flex Carousel presents six selected projects: AEGIS-X, Tri-Shield, InboxIQ, TCP/IP Simulator, DrainSentinel, and LibraryLens. Each uses an original, hand-coded vector diagram of its workflow.
+- React Bits Flex Carousel presents six selected projects: AEGIS-X, Tri-Shield, InboxIQ, TCP/IP Simulator, DrainSentinel, and LibraryLens. Each uses a screenshot of its actual landing page or application home.
 - Case studies explain the problem, Debayan's implementation, a technical tradeoff, limitations, and a reproducible walkthrough.
 - Skills link to project evidence and distinguish project work from coursework.
 - The Playground contains the smaller security, algorithm, calculator, protocol, terminal, and 3D experiments.
@@ -38,7 +38,7 @@ Actual application previews are stored in `image/inbox-live-preview.png` and `im
 
 The existing HTML and Three.js scene remain the page foundation. `src/sanctuary.jsx` adds small React islands using source obtained through the official React Bits MCP registry:
 
-- Flex Carousel with drag, arrow keys, explicit project buttons, previous/next controls, and a show-all view. A static six-card layout remains available when WebGL is unavailable or its context is lost.
+- Flex Carousel automatically advances every five seconds, with pause/play, drag, arrow keys, explicit project buttons, previous/next controls, and a show-all view. It pauses on hover, keyboard interaction, open overlays, and while offscreen or the document is hidden. Reduced-motion mode uses manual navigation. A static six-card layout remains available when WebGL is unavailable or its context is lost.
 - Staggered Menu styled as layered shoji screens, with focus containment, Escape, CV access, and palette controls.
 - Spotlight Card adds a restrained lantern glow to Skills and Playground; keyboard focus receives a corresponding highlight.
 - Stepper turns each project's documented walkthrough into four selectable steps with implementation evidence.
@@ -49,7 +49,7 @@ The existing HTML and Three.js scene remain the page foundation. `src/sanctuary.
 - Scroll Expand frames actual InboxIQ and TCP/IP Simulator screenshots. Full-image links remain available.
 - Lanyard provides a draggable, turnable identity pass in About. It loads near the viewport and uses locally authored vector faces, a procedural strap, and brass hardware. Ordinary CV and GitHub links remain beside it.
 
-The project plates and identity faces are code-native SVGs, not generated illustrations, stock photos, project logos, or application screenshots. Their source is `scripts/build-artwork.py`. The diagrams summarize workflows and do not claim to depict captured production data.
+Carousel images are unaltered browser captures in `image/project-previews/`; their live/local sources are documented in that directory's README. The identity-pass faces remain code-native SVGs from `scripts/build-artwork.py`. Earlier vector workflow studies are retained as source assets, but are no longer used for project cards or carousel textures.
 
 To update interactions or vector artwork:
 

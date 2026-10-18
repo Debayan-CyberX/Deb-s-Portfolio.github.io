@@ -1,6 +1,7 @@
 [
   {
     "id": "aegis", "name": "AEGIS-X", "jp": "守護", "category": "Security operations", "scene": "kage-sanmon-preview.webp", "repo": "AEGIS-X",
+    "preview": "image/project-previews/aegis.jpg",
     "stack": ["Next.js", "FastAPI", "SQLAlchemy", "PostgreSQL"],
     "description": "From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.",
     "status": "Portfolio prototype · Synthetic telemetry · Simulated containment",
@@ -14,6 +15,7 @@
   },
   {
     "id": "trishield", "name": "Tri-Shield", "jp": "三層", "category": "Document security · Hackathon", "scene": "kage-lantern-court.webp", "repo": "Tri-Shield",
+    "preview": "image/project-previews/trishield.jpg",
     "stack": ["Python", "FastAPI", "OpenCV", "SQLite"],
     "description": "Three complementary checks for document review: identifier validation, image-forensics signals, and a hash-chained audit record.",
     "status": "Offline prototype · Fictional sample documents",
@@ -27,6 +29,7 @@
   },
   {
     "id": "inbox", "name": "InboxIQ", "jp": "交信", "category": "Full-stack product · Email intelligence", "scene": "kage-moonwater.webp", "repo": "InboxIQ",
+    "preview": "image/project-previews/inbox.jpg",
     "stack": ["React", "TypeScript", "Express", "Better Auth", "Supabase"],
     "description": "Turn connected email conversations into a reviewable lead workflow, with opportunity detection, contextual drafts, and explicit approval before sending.",
     "status": "Live application · AI-assisted drafts · Human-reviewed sending",
@@ -40,6 +43,7 @@
   },
   {
     "id": "tcp", "name": "TCP/IP Simulator", "jp": "通信", "category": "Networking · Interactive learning", "scene": "kage-sanmon-preview.webp", "repo": "TCP-Networking-Project",
+    "preview": "image/project-previews/tcp.jpg",
     "stack": ["JavaScript", "HTML", "CSS", "TCP/IP"],
     "description": "Follow a configured message through the TCP/IP layers, inspect protocol headers, and explore packet encapsulation at your own pace.",
     "status": "Live browser simulation · Educational model",
@@ -53,6 +57,7 @@
   },
   {
     "id": "drain", "name": "DrainSentinel", "jp": "水路", "category": "Civic technology · Hackathon", "scene": "kage-moonwater.webp", "repo": "DrainSentinel",
+    "preview": "image/project-previews/drain.jpg",
     "stack": ["React", "FastAPI", "Leaflet", "AWS adapters"],
     "description": "A map-based storm-drain inspection workflow combining risk prioritization, maintenance tasks, and a traceable path to resolution.",
     "status": "Hackathon prototype · Synthetic drain telemetry",
@@ -66,6 +71,7 @@
   },
   {
     "id": "library", "name": "LibraryLens", "jp": "書庫", "category": "Mobile development · Coursework", "scene": "kage-lantern-court.webp", "repo": "LibraryLens-Mobile-App",
+    "preview": "image/project-previews/library.jpg",
     "stack": ["React", "TypeScript", "Capacitor", "Android"],
     "description": "A library discovery and reservation prototype with searchable books, detail pages, a library map, and an Android project powered by Capacitor.",
     "status": "Coursework prototype · Local reservation storage",

@@ -1,6 +1,7 @@
 const esbuild = require('esbuild');
 const fs = require('node:fs');
 const path = require('node:path');
+const { createHash } = require('node:crypto');
 const outdir = path.resolve(__dirname, '../assets/interactions');
 esbuild.build({
   entryPoints: ['src/sanctuary.jsx'],
@@ -25,4 +26,12 @@ esbuild.build({
   for (const file of fs.readdirSync(outdir, { withFileTypes: true })) {
     if (file.isFile() && /\.(js|css|txt)$/.test(file.name) && !current.has(file.name)) fs.unlinkSync(path.join(outdir, file.name));
   }
+  const pagePath = path.resolve(__dirname, '../index.html');
+  let page = fs.readFileSync(pagePath, 'utf8');
+  for (const extension of ['js', 'css']) {
+    const name = `assets/interactions/sanctuary.${extension}`;
+    const hash = createHash('sha256').update(fs.readFileSync(path.resolve(__dirname, '..', name))).digest('hex').slice(0, 12);
+    page = page.replace(new RegExp(`assets/interactions/sanctuary\\.${extension}(?:\\?v=[^"\\s]+)?`), `${name}?v=${hash}`);
+  }
+  fs.writeFileSync(pagePath, page);
 }).catch(error => { console.error(error); process.exit(1); });

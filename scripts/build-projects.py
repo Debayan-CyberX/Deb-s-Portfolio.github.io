@@ -32,7 +32,7 @@ def render(projects):
         demo = link(project['demo'], 'Live demo') if project.get('demo') else ''
         cards.append(f'''<article class="project-card" id="project-{pid}" data-rv="up">
   <div class="project-art">
-    <img src="image/project-plates/{pid}.svg" width="1020" height="760" loading="lazy" alt="{name}: original workflow diagram">
+    <img src="{escape(project['preview'])}" width="1440" height="960" loading="lazy" alt="{name}: actual application landing page">
   </div>
   <div class="project-content"><span class="project-category">{escape(project['category'])}</span><h3>{name}</h3>
     <p class="project-description">{escape(project['description'])}</p>

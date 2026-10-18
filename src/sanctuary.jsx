@@ -16,7 +16,7 @@ import './sanctuary.css';
 const IdentityPass = lazy(() => import('./IdentityPass.jsx'));
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = window.matchMedia('(pointer: coarse)').matches;
-const items = projects.map(p => ({ src: `image/project-plates/${p.id}.svg`, title: p.name, subtitle: p.category, alt: `${p.name}: original workflow diagram` }));
+const items = projects.map(p => ({ src: p.preview, title: p.name, subtitle: p.category, alt: `${p.name}: actual application landing page` }));
 const cards = [...document.querySelectorAll('.project-card')];
 const grid = document.querySelector('.featured-grid');
 const themeItems = [{value:'sanctuary',label:'Sanctuary'},{value:'matrix',label:'Matrix'},{value:'violet',label:'Violet'},{value:'gold',label:'Ember'}];
@@ -38,6 +38,10 @@ function Collection() {
   const [ready, setReady] = useState(false);
   const [failed, setFailed] = useState(false);
   const [all, setAll] = useState(false);
+  const [autoplay, setAutoplay] = useState(!reduce);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [obscured, setObscured] = useState(false);
   const [command, setCommand] = useState({ index: 0, token: 0 });
   const available = ready && !failed;
   const change = useCallback(index => setActive(index), []);
@@ -46,6 +50,15 @@ function Collection() {
     setCommand(previous => ({ index, token: previous.token + 1 }));
   }, []);
   const open = useCallback(index => window.openPortfolioCase(`case-${projects[index].id}`, document.querySelector('.flex-carousel')), []);
+  useEffect(() => {
+    const sync = () => setObscured(document.body.classList.contains('modal-open') || Boolean(document.querySelector('.shoji-navigation[data-open]')));
+    const observer = new MutationObserver(sync);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+    const menu = document.querySelector('.shoji-navigation');
+    if (menu) observer.observe(menu, { attributes: true, attributeFilter: ['data-open'] });
+    sync();
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     grid.classList.toggle('collection-details', available && !all);
     cards.forEach((card, index) => {
@@ -71,13 +84,18 @@ function Collection() {
     if (hash >= 0) select(hash);
     return () => document.removeEventListener('click', onAnchor, true);
   }, [available, select]);
-  return <div className={`project-collection ${available ? 'is-ready' : ''}`}>
+  return <div className={`project-collection ${available ? 'is-ready' : ''}`}
+    onPointerEnter={event => { if (event.pointerType === 'mouse') setHovered(true); }}
+    onPointerLeave={event => { if (event.pointerType === 'mouse') setHovered(false); }}
+    onFocusCapture={event => setFocused(!event.target.closest('.collection-play'))}
+    onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
     {!failed && <IslandBoundary onError={() => setFailed(true)}>
       <div className="collection-stage">
-        <div className="collection-caption"><span>SELECTED WORK / SIX WORKFLOW STUDIES</span><span>DRAG TO EXPLORE</span></div>
+        <div className="collection-caption"><span>SELECTED WORK / APPLICATION PREVIEWS</span><span>DRAG TO EXPLORE</span></div>
         <FlexCarousel items={items} preset="ribbon" intro="fade" fit="natural" cardHeight={0.76} gap={26} radius={0}
           bend={0.16} reach={0.28} dispersion={0.05} squeeze={0.03} lensWidth={0.89} lensHeight={1.08}
-          captureWheel={false} focusOnClick={false} captions={false} autoplay={false}
+          captureWheel={false} focusOnClick={false} captions={false} interval={5}
+          autoplay={autoplay && !hovered && !focused && !obscured && !all}
           onChange={change} onSelect={open} selectedIndex={command.index} selectionToken={command.token}
           onReady={() => setReady(true)} onUnavailable={() => setFailed(true)} />
       </div>
@@ -85,9 +103,10 @@ function Collection() {
     {available && <>
       <div className="collection-controls"><div className="collection-arrows">
         <button type="button" aria-label="Previous project" onClick={() => select((active + projects.length - 1) % projects.length)}>←</button>
-        <span aria-live="polite">0{active + 1}<i> / 06</i></span>
+        <span aria-live={autoplay ? 'off' : 'polite'}>0{active + 1}<i> / 06</i></span>
         <button type="button" aria-label="Next project" onClick={() => select((active + 1) % projects.length)}>→</button>
-      </div><span className="collection-hint">Workflow diagrams, drawn for these projects.</span>
+        {!reduce && <button type="button" className="collection-play" aria-label={autoplay ? 'Pause automatic project rotation' : 'Start automatic project rotation'} aria-pressed={!autoplay} title={autoplay ? 'Pause automatic rotation' : 'Start automatic rotation'} onClick={() => setAutoplay(value => !value)}>{autoplay ? 'Ⅱ' : '▶'}</button>}
+      </div><span className="collection-hint">{reduce ? 'Manual browsing · Reduced motion' : 'Auto-advances every 5 seconds · Pauses while you explore'}</span>
       <button className="collection-view" type="button" aria-expanded={all} onClick={() => setAll(value => !value)}>{all ? 'Show selected project' : 'Show all six projects'} <span>↗</span></button></div>
       <div className="collection-index" role="group" aria-label="Choose a project">{projects.map((p,index) => <button key={p.id} type="button" aria-pressed={active === index} onClick={() => select(index)}><small>0{index+1}</small>{p.name}</button>)}</div>
     </>}

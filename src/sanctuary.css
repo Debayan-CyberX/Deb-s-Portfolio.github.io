@@ -13,6 +13,7 @@
 .collection-arrows { display: flex; align-items: center; gap: 17px; font: 12px monospace; color: var(--bone); }
 .collection-arrows button { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); background: #0d1517; color: var(--bone); font: 20px Georgia,serif; cursor: pointer; }
 .collection-arrows button:hover { border-color: var(--gold); }
+.collection-arrows .collection-play { font-size: 15px; }
 .collection-arrows i { font-style: normal; color: var(--muted); }
 .collection-hint { font-size: 11px; color: var(--muted); }
 .collection-view { font: inherit; font-size: 10px; letter-spacing: .07em; color: var(--bone-dim); cursor: pointer; min-height: 44px; }
@@ -125,6 +126,7 @@ body.modal-open .shoji-navigation { visibility: hidden; }
   .collection-caption > span:last-child { display: none; }
   .collection-controls { gap: 9px; }
   .collection-view { font-size: 9px; }
+  .collection-controls { flex-wrap: wrap; }
   .collection-arrows { gap: 9px; }
   .collection-index button { font-size: 10px; padding: 13px 8px; }
   .shoji-navigation .staggered-menu-panel { padding: 88px 24px 24px; }
