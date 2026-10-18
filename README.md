@@ -38,7 +38,7 @@ Actual application previews are stored in `image/inbox-live-preview.png` and `im
 
 The existing HTML and Three.js scene remain the page foundation. `src/sanctuary.jsx` adds small React islands using source obtained through the official React Bits MCP registry:
 
-- Flex Carousel automatically advances every five seconds, with pause/play, drag, arrow keys, explicit project buttons, previous/next controls, and a show-all view. It pauses on hover, keyboard interaction, open overlays, and while offscreen or the document is hidden. Reduced-motion mode uses manual navigation. A static six-card layout remains available when WebGL is unavailable or its context is lost.
+- Flex Carousel glides continuously at 48 pixels per second, including while hovered, with pause/play, drag, arrow keys, explicit project buttons, previous/next controls, and a show-all view. Direct interaction briefly takes control; gliding resumes after the interaction settles. Open overlays, offscreen content, and hidden documents pause the renderer. Reduced-motion mode uses manual navigation. A static six-card layout remains available when WebGL is unavailable or its context is lost.
 - Staggered Menu styled as layered shoji screens, with focus containment, Escape, CV access, and palette controls.
 - Spotlight Card adds a restrained lantern glow to Skills and Playground; keyboard focus receives a corresponding highlight.
 - Stepper turns each project's documented walkthrough into four selectable steps with implementation evidence.

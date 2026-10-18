@@ -276,6 +276,8 @@ const FlexCarousel = ({
   squeeze = 0.2,
   focusOnClick = true,
   autoplay = false,
+  autoplayMode = 'steps',
+  autoplaySpeed = 48,
   interval = 4,
   captions = true,
   captureWheel = true,
@@ -329,6 +331,8 @@ const FlexCarousel = ({
       squeeze,
       focusOnClick,
       autoplay,
+      autoplayMode,
+      autoplaySpeed,
       interval,
       captureWheel
     };
@@ -616,6 +620,7 @@ const FlexCarousel = ({
     };
 
     const goTo = (m, index) => {
+      interactedAt = performance.now();
       const i = ((index % m.centers.length) + m.centers.length) % m.centers.length;
       goal = goal + wrap(m.centers[i] - goal, m.loop);
       mode = 'spring';
@@ -768,7 +773,15 @@ const FlexCarousel = ({
         goal = snapPoint(m, goal);
         mode = 'spring';
       }
-      if (!pointer.dragging) {
+      const continuous = s.autoplay && s.autoplayMode === 'continuous' && !reducedMotion &&
+        introState.done && focus.target === 0 && focus.t < 0.01 && !pointer.down &&
+        mode === 'spring' && now - interactedAt > 800 && Math.abs(goal - pos) < 1 && Math.abs(vel) < 4;
+      if (continuous) {
+        pos += Math.min(120, Math.max(8, s.autoplaySpeed)) * dt;
+        goal = pos;
+        vel = 0;
+        animating = true;
+      } else if (!pointer.dragging) {
         const spinning = introState.running && introState.kind === 'spin';
         const stiffness = spinning ? 9 : mode === 'wheel' ? 80 : 55;
         const damping = 2 * Math.sqrt(stiffness);
@@ -809,7 +822,7 @@ const FlexCarousel = ({
       }
 
       if (
-        s.autoplay &&
+        s.autoplay && s.autoplayMode !== 'continuous' &&
         !reducedMotion &&
         introState.done &&
         focus.target === 0 &&

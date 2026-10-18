@@ -1,7 +1,7 @@
 [
   {
     "id": "aegis", "name": "AEGIS-X", "jp": "守護", "category": "Security operations", "scene": "kage-sanmon-preview.webp", "repo": "AEGIS-X",
-    "preview": "image/project-previews/aegis.jpg",
+    "preview": "image/project-previews/aegis-redesign.jpg",
     "stack": ["Next.js", "FastAPI", "SQLAlchemy", "PostgreSQL"],
     "description": "From security events to evidence-linked investigations. A SOC prototype with correlation rules, incident timelines, access controls, and an auditable response workflow.",
     "status": "Portfolio prototype · Synthetic telemetry · Simulated containment",

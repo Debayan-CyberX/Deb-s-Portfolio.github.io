@@ -39,8 +39,6 @@ function Collection() {
   const [failed, setFailed] = useState(false);
   const [all, setAll] = useState(false);
   const [autoplay, setAutoplay] = useState(!reduce);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
   const [obscured, setObscured] = useState(false);
   const [command, setCommand] = useState({ index: 0, token: 0 });
   const available = ready && !failed;
@@ -84,18 +82,15 @@ function Collection() {
     if (hash >= 0) select(hash);
     return () => document.removeEventListener('click', onAnchor, true);
   }, [available, select]);
-  return <div className={`project-collection ${available ? 'is-ready' : ''}`}
-    onPointerEnter={event => { if (event.pointerType === 'mouse') setHovered(true); }}
-    onPointerLeave={event => { if (event.pointerType === 'mouse') setHovered(false); }}
-    onFocusCapture={event => setFocused(!event.target.closest('.collection-play'))}
-    onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}>
+  return <div className={`project-collection ${available ? 'is-ready' : ''}`}>
     {!failed && <IslandBoundary onError={() => setFailed(true)}>
       <div className="collection-stage">
         <div className="collection-caption"><span>SELECTED WORK / APPLICATION PREVIEWS</span><span>DRAG TO EXPLORE</span></div>
         <FlexCarousel items={items} preset="ribbon" intro="fade" fit="natural" cardHeight={0.76} gap={26} radius={0}
           bend={0.16} reach={0.28} dispersion={0.05} squeeze={0.03} lensWidth={0.89} lensHeight={1.08}
-          captureWheel={false} focusOnClick={false} captions={false} interval={5}
-          autoplay={autoplay && !hovered && !focused && !obscured && !all}
+          captureWheel={false} focusOnClick={false} captions={false}
+          autoplayMode="continuous" autoplaySpeed={48}
+          autoplay={autoplay && !obscured && !all}
           onChange={change} onSelect={open} selectedIndex={command.index} selectionToken={command.token}
           onReady={() => setReady(true)} onUnavailable={() => setFailed(true)} />
       </div>
@@ -106,7 +101,7 @@ function Collection() {
         <span aria-live={autoplay ? 'off' : 'polite'}>0{active + 1}<i> / 06</i></span>
         <button type="button" aria-label="Next project" onClick={() => select((active + 1) % projects.length)}>→</button>
         {!reduce && <button type="button" className="collection-play" aria-label={autoplay ? 'Pause automatic project rotation' : 'Start automatic project rotation'} aria-pressed={!autoplay} title={autoplay ? 'Pause automatic rotation' : 'Start automatic rotation'} onClick={() => setAutoplay(value => !value)}>{autoplay ? 'Ⅱ' : '▶'}</button>}
-      </div><span className="collection-hint">{reduce ? 'Manual browsing · Reduced motion' : 'Auto-advances every 5 seconds · Pauses while you explore'}</span>
+      </div><span className="collection-hint">{reduce ? 'Manual browsing · Reduced motion' : 'Continuous glide · Drag to explore'}</span>
       <button className="collection-view" type="button" aria-expanded={all} onClick={() => setAll(value => !value)}>{all ? 'Show selected project' : 'Show all six projects'} <span>↗</span></button></div>
       <div className="collection-index" role="group" aria-label="Choose a project">{projects.map((p,index) => <button key={p.id} type="button" aria-pressed={active === index} onClick={() => select(index)}><small>0{index+1}</small>{p.name}</button>)}</div>
     </>}
